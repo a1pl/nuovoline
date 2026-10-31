@@ -166,11 +166,14 @@ public final class KillAura extends AbstractModule {
     public void onEnable() {
         setSuffix(mode.get());
         alpha = 0;
-        iyaw = mc.player.rotationYaw;
-        ipitch = mc.player.rotationPitch;
         lossTimer.reset();
 
-        if (blink.get()) {
+        if (mc.player == null) return;
+
+        iyaw = mc.player.rotationYaw;
+        ipitch = mc.player.rotationPitch;
+
+        if (Boolean.TRUE.equals(blink.get())) {
             toDispatch.clear();
             blinking = true;
         } else {

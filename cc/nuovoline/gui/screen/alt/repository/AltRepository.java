@@ -1,9 +1,11 @@
 package cc.nuovoline.gui.screen.alt.repository;
 
 import cc.nuovoline.Nuovoline;
+import cc.nuovoline.gui.screen.alt.login.AltType;
 import cc.nuovoline.gui.screen.alt.repository.credential.AltCredential;
 import lombok.Getter;
 import lombok.Setter;
+import net.minecraft.util.Session;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -17,6 +19,7 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 import java.util.concurrent.ThreadLocalRandom;
 
 // alt storage
@@ -27,6 +30,8 @@ public class AltRepository {
     private static final AltRepository INSTANCE = new AltRepository();
 
     private final List<Alt> alts = new ArrayList<>();
+    //launcher session
+    private Alt sessionAlt;
     @Setter
     private Alt currentAlt;
 
@@ -36,6 +41,48 @@ public class AltRepository {
 
     public static AltRepository get() {
         return INSTANCE;
+    }
+
+
+    public Alt registerSession(Session session) {
+        if (session == null || session.getUsername() == null || session.getUsername().isEmpty()) return null;
+
+        String uuid = normalizeUuid(session.getPlayerID());
+        if (uuid == null) return null;
+
+        Alt alt = new Alt(new AltCredential(session.getUsername(), null));
+        alt.type = AltType.SESSION;
+        alt.uuid = uuid;
+        alt.token = session.getToken();
+        alt.addedTimestamp = System.currentTimeMillis();
+
+        sessionAlt = alt;
+        currentAlt = alt;
+        return alt;
+    }
+
+    private static String normalizeUuid(String value) {
+        if (value == null) return null;
+        String trimmed = value.trim();
+        try {
+            if (trimmed.length() == 32) {
+                trimmed = trimmed.substring(0, 8) + "-" + trimmed.substring(8, 12) + "-"
+                        + trimmed.substring(12, 16) + "-" + trimmed.substring(16, 20) + "-"
+                        + trimmed.substring(20);
+            }
+            return UUID.fromString(trimmed).toString();
+        } catch (IllegalArgumentException ignored) {
+            return null;
+        }
+    }
+
+    // dont save launcher session
+    public List<Alt> getAlts() {
+        if (sessionAlt == null) return alts;
+        List<Alt> all = new ArrayList<>(alts.size() + 1);
+        all.add(sessionAlt);
+        all.addAll(alts);
+        return all;
     }
 
     public void addAlt(Alt alt) {
@@ -50,9 +97,13 @@ public class AltRepository {
     }
 
     public void removeAlt(Alt alt) {
-        alts.remove(alt);
+        if (sessionAlt == alt) {
+            sessionAlt = null;
+        } else {
+            alts.remove(alt);
+            save();
+        }
         if (currentAlt == alt) currentAlt = null;
-        save();
     }
 
     public Alt getRandomAlt() {

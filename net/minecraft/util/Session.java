@@ -4,6 +4,7 @@ import com.google.common.collect.Maps;
 import com.mojang.authlib.GameProfile;
 import com.mojang.util.UUIDTypeAdapter;
 
+import java.nio.charset.StandardCharsets;
 import java.util.Map;
 import java.util.UUID;
 
@@ -38,12 +39,24 @@ public class Session {
     }
 
     public GameProfile getProfile() {
+        UUID uuid;
         try {
-            UUID uuid = UUIDTypeAdapter.fromString(this.getPlayerID());
-            return new GameProfile(uuid, this.username);
-        } catch (IllegalArgumentException var2) {
-            return new GameProfile(null, this.username);
+            uuid = UUIDTypeAdapter.fromString(this.getPlayerID());
+        } catch (IllegalArgumentException | NullPointerException var2) {
+            // Offline/cracked sessions (and launches without --uuid) have no real
+            // player id. Derive the standard offline UUID so the profile is never
+            // null; authlib's joinServer serialises the id and NPEs on null.
+            uuid = getOfflineUUID(this.username);
         }
+        return new GameProfile(uuid, this.username);
+    }
+
+    public static UUID getOfflineUUID(String username) {
+        return UUID.nameUUIDFromBytes(("OfflinePlayer:" + username).getBytes(StandardCharsets.UTF_8));
+    }
+
+    public static Session createOffline(String username) {
+        return new Session(username, getOfflineUUID(username).toString(), "0", "legacy");
     }
 
     /**

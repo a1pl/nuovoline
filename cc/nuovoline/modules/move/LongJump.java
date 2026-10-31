@@ -47,6 +47,7 @@ public class LongJump extends AbstractModule {
     public void onEnable() {
         if (mc.player == null) {
             super.onDisable();
+            return;
         }
         if (mc.player.isMoving()) {
             mc.player.motionY = 0.42;

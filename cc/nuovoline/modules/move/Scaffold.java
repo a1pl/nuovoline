@@ -841,6 +841,11 @@ public final class Scaffold extends AbstractModule {
     public void onEnable() {
         setSuffix("Watchdog");
 
+        if (mc.player == null || mc.world == null) {
+            canDisable = false;
+            return;
+        }
+
         if (getBlockCount() == 0) {
             canDisable = false;
             return;

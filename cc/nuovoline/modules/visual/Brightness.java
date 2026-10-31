@@ -23,7 +23,7 @@ import static cc.nuovoline.modules.EnumModuleType.VISUALS;
 public final class Brightness extends AbstractModule {
 
     private float oldGamma;
-    
+
     @Getter
     @Property("mode")
     private final StringProperty mode = PropertyFactory.createString("Gamma").acceptableValues("Gamma", "Effect");

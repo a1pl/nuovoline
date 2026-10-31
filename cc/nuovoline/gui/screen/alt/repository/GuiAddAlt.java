@@ -266,7 +266,7 @@ public final class GuiAddAlt extends GuiScreen {
                 String uname = nameField.getText().trim();
                 if (uname.isEmpty()) { status = "Enter a username"; statusError = true; return; }
                 SessionChanger.getInstance().setUserOffline(uname);
-                mc.setSession(new Session(uname, uname, "0", "legacy"));
+                mc.setSession(Session.createOffline(uname));
                 AltRepository.get().addAlt(new Alt(new AltCredential(uname, null)));
                 mc.displayGuiScreen(parent);
                 break;

@@ -55,3 +55,39 @@ tasks.register('runClient', JavaExec) {
         languageVersion = JavaLanguageVersion.of(8)
     }
 }
+
+// fat jar for launcher
+tasks.register('launcherJar', Jar) {
+    group = 'nuovoline'
+    description = 'builds jjar for prism and stuff'
+    archiveBaseName = 'nuovoline'
+    archiveVersion = ''
+    archiveClassifier = '1.8.8'
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+
+    manifest {
+        attributes(
+                'Main-Class': 'net.minecraft.client.main.Main',
+                'Implementation-Title': 'Nuovoline',
+                'Implementation-Version': project.version
+        )
+    }
+
+    from sourceSets.main.output
+
+    // patches
+    def runtimeJars = configurations.runtimeClasspath.filter {
+        it.name.endsWith('.jar') &&
+                !it.name.startsWith('lwjgl') &&
+                it.name != 'lombok.jar'
+    }
+    def patchJars = runtimeJars.filter { it.name == 'netty-1.8.8.jar' }
+    def otherJars = runtimeJars.filter { it.name != 'netty-1.8.8.jar' }
+
+    from { patchJars.collect { zipTree(it) } }
+    from { otherJars.collect { zipTree(it) } }
+
+    exclude 'META-INF/MANIFEST.MF'
+    exclude 'META-INF/*.SF', 'META-INF/*.DSA', 'META-INF/*.RSA'
+    exclude 'META-INF/INDEX.LIST'
+}

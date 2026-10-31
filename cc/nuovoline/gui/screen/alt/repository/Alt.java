@@ -33,6 +33,21 @@ public class Alt {
     }
 
     public CompletableFuture<Session> logIn(boolean announce) {
+        // launcher session
+        if ((type == AltType.SESSION || type == AltType.TOKEN)
+                && uuid != null && !uuid.isEmpty()
+                && token != null && !token.isEmpty()) {
+            Session session = new Session(getDisplayName(), uuid, token, "mojang");
+            invalid = false;
+            AltRepository.get().setCurrentAlt(this);
+            Minecraft.getInstance().session = session;
+            if (announce) {
+                Nuovoline.getInstance().getNotificationManager()
+                        .pop("Logged in as " + session.getUsername(), NotificationType.SUCCESS);
+            }
+            return CompletableFuture.completedFuture(session);
+        }
+
         return CompletableFuture.supplyAsync(() -> new AltLoginThread(credential, new AltLoginListener() {
             @Override
             public void onLoginSuccess(AltType type, Session session) {
@@ -62,7 +77,8 @@ public class Alt {
 
     public String getTypeLabel() {
         if (type == AltType.MICROSOFT) return "Microsoft";
-        if (type == AltType.TOKEN || type == AltType.SESSION) return "Token";
+        if (type == AltType.SESSION) return "Session";
+        if (type == AltType.TOKEN) return "Token";
         return credential.getPassword() == null ? "Cracked" : "Mojang";
     }
 

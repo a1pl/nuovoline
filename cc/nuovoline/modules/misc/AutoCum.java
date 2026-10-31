@@ -13,6 +13,7 @@ public final class AutoCum extends AbstractModule {
     @Override
     public void onEnable()  {
         System.out.println("AutoCum module enabled. Cumming...");
+        if (mc.player == null) return;
         mc.player.sendChatMessage("cum for mommy | ft. nuovoline!");
     }
 

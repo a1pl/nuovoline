@@ -1,14 +1,10 @@
 package cc.nuovoline.gui.screen.alt.repository;
 
 import cc.nuovoline.Nuovoline;
-import cc.nuovoline.gui.screen.alt.login.AltLoginThread;
-import cc.nuovoline.gui.screen.alt.login.AltType;
-import cc.nuovoline.gui.screen.alt.login.SessionUpdatingAltLoginListener;
 import cc.nuovoline.gui.screen.alt.repository.credential.AltCredential;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.gui.GuiTextField;
-import net.minecraft.util.Session;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
 
@@ -72,6 +68,12 @@ public class AltRepositoryGUI extends GuiScreen {
         searchField.setMaxStringLength(64);
 
         refreshVisible();
+
+        Alt current = AltRepository.get().getCurrentAlt();
+        if (current != null) {
+            int index = visible.indexOf(current);
+            if (index >= 0) selectedIndex = index;
+        }
     }
 
     @Override
@@ -171,28 +173,18 @@ public class AltRepositoryGUI extends GuiScreen {
         status = "Logging in...";
         statusError = false;
 
-        new Thread(() -> new AltLoginThread(alt.credential, new SessionUpdatingAltLoginListener() {
-            @Override
-            public void onLoginSuccess(AltType type, Session session) {
-                super.onLoginSuccess(type, session);
-                alt.invalid = false;
-                mc.addScheduledTask(() -> {
-                    status = "Logged in as " + session.getUsername();
-                    statusError = false;
-                    loggingIn = false;
-                });
-            }
-
-            @Override
-            public void onLoginFailed() {
+        alt.logIn(false).whenComplete((session, error) -> mc.addScheduledTask(() -> {
+            if (error != null || session == null) {
                 alt.invalid = true;
-                mc.addScheduledTask(() -> {
-                    status = "Invalid credentials";
-                    statusError = true;
-                    loggingIn = false;
-                });
+                status = "Invalid credentials";
+                statusError = true;
+            } else {
+                alt.invalid = false;
+                status = "Logged in as " + session.getUsername();
+                statusError = false;
             }
-        }).run(), "Alt-Login").start();
+            loggingIn = false;
+        }));
     }
 
     @Override

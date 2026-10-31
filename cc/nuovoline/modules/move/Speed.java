@@ -154,6 +154,7 @@ public final class Speed extends AbstractModule {
         setSuffix(this.speed_mode.get());
         checkModule(Flight.class);
 
+        if (mc.player == null) return;
 
         moveSpeed = mc.player.getBaseMoveSpeed();
         mc.player.resetLastTickDistance();

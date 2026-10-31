@@ -60,7 +60,6 @@ public final class Nuovoline {
     public DiscordGUI discordGUI;
     @Getter
     public DropdownGUI dropDownGUI;
-    @Getter
     public AltRepositoryGUI altRepositoryGUI;
 
 //    public IRCClient irc;
@@ -101,6 +100,13 @@ public final class Nuovoline {
 //    public IRCClient getIRC() {
 //        return irc;
 //    }
+
+    public AltRepositoryGUI getAltRepositoryGUI() {
+        if (altRepositoryGUI == null) {
+            altRepositoryGUI = new AltRepositoryGUI(this);
+        }
+        return altRepositoryGUI;
+    }
 
     public String getVersion() {
         String version = this.version.toCharArray()[0] != '@' ? this.version : new SimpleDateFormat("MMddyy").format(new Date());

@@ -46,26 +46,34 @@ public class NetHandlerLoginClient implements INetHandlerLoginClient {
         final String s = packetIn.getServerId();
         final PublicKey publickey = packetIn.getPublicKey();
         final String s1 = new BigInteger(CryptManager.getServerIdHash(s, publickey, secretkey)).toString(16);
+        final GameProfile profile = this.mc.getSession().getProfile();
+
+        if (profile == null || profile.getId() == null) {
+            LOGGER.error("Cannot authenticate: current session has no profile UUID (username={})", this.mc.getSession().getUsername());
+            this.networkManager.closeChannel(new ChatComponentTranslation("disconnect.loginFailedInfo",
+                    new ChatComponentTranslation("disconnect.loginFailedInfo.invalidSession")));
+            return;
+        }
 
         if (this.mc.getCurrentServerData() != null && this.mc.getCurrentServerData().func_181041_d()) {
             try {
-                this.getSessionService()
-                        .joinServer(this.mc.getSession().getProfile(), this.mc.getSession().getToken(), s1);
+                this.getSessionService().joinServer(profile, this.mc.getSession().getToken(), s1);
             } catch (AuthenticationException var10) {
                 LOGGER.warn("Couldn't connect to auth servers but will continue to join LAN");
             }
         } else {
             try {
-                this.getSessionService()
-                        .joinServer(this.mc.getSession().getProfile(), this.mc.getSession().getToken(), s1);
+                this.getSessionService().joinServer(profile, this.mc.getSession().getToken(), s1);
             } catch (AuthenticationUnavailableException var7) {
+                LOGGER.warn("Couldn't contact the authentication servers for server {}", new Object[]{s}, var7);
                 this.networkManager.closeChannel(new ChatComponentTranslation("disconnect.loginFailedInfo", new ChatComponentTranslation("disconnect.loginFailedInfo.serversUnavailable")));
                 return;
             } catch (InvalidCredentialsException var8) {
+                LOGGER.warn("Invalid session for {} (is this an offline account on an online-mode server?)", new Object[]{profile, var8});
                 this.networkManager.closeChannel(new ChatComponentTranslation("disconnect.loginFailedInfo", new ChatComponentTranslation("disconnect.loginFailedInfo.invalidSession")));
                 return;
             } catch (AuthenticationException authenticationexception) {
-                //todo
+                LOGGER.warn("Failed to authenticate {} with the session servers", new Object[]{profile, authenticationexception});
                 this.networkManager.closeChannel(new ChatComponentTranslation("disconnect.loginFailedInfo", authenticationexception.getMessage()));
                 return;
             }

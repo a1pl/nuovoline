@@ -69,6 +69,7 @@ public class GuiConnecting extends GuiScreen {
         previousGuiScreen = previousScreen;
 
         mc.loadWorld(null);
+        mc.setServerData(new ServerData(hostName, port == 25565 ? hostName : hostName + ":" + port, false));
         connect(hostName, port);
     }
 

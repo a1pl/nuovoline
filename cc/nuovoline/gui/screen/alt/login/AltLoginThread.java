@@ -32,7 +32,7 @@ public final class AltLoginThread {
         final String password = this.credentials.getPassword();
 
         if (password == null) {
-            final Session crackedSession = new Session(this.credentials.getLogin(), "", "", "mojang");
+            final Session crackedSession = Session.createOffline(this.credentials.getLogin());
 
             if (this.handler != null) this.handler.onLoginSuccess(AltType.CRACKED, crackedSession);
             return crackedSession;

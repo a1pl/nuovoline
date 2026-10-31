@@ -26,12 +26,26 @@ import viaversion.viarewind.utils.PacketUtil;
 
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.concurrent.ThreadLocalRandom;
 
 
 public class Flight extends AbstractModule {
 
+    private static final int LAG_EXPLOIT_TICKS = 120;
+    private static final double BRUH_MIN = 0.00000014D;
+    private static final double BRUH_MAX = 0.00000043D;
+    private static final double[] LAG_EXPLOIT_OFFSETS = {
+            0.41999998688697815D,
+            0.7531999805212024D,
+            1.0013359791121417D
+    };
+
     private int tick;
     private int ticks;
+
+    private int bruhTick;
+    private double bruh;
+    private int lagExploitTicks;
 
     private boolean wait;
     private int key;
@@ -76,7 +90,9 @@ public class Flight extends AbstractModule {
             }
             wait = false;
             tick = 0;
-
+            bruhTick = 0;
+            bruh = 0.0D;
+            lagExploitTicks = 0;
         }
     }
 
@@ -86,10 +102,19 @@ public class Flight extends AbstractModule {
         checkModule(Speed.class,Scaffold.class);
         setSuffix(fly_mode.get());
 
+        if (mc.player == null) return;
+
         if (fly_mode.get().equals("Hypixel")) {
-            if (mc.player.onGround && pearl.get() && pearlSlot() != -1) {
+            tick = 0;
+            bruhTick = 0;
+            wait = false;
+            lagExploitTicks = LAG_EXPLOIT_TICKS;
+            sendLagExploit();
+
+            int projectile = projectileSlot();
+            if (mc.player.onGround && pearl.get() && projectile != -1) {
                 wait = true;
-                throwPearl();
+                throwProjectile(projectile);
                 mc.player.motionY = mc.player.getBaseMotionY();
             }
         }else if (fly_mode.get().equals("Karhu")){
@@ -100,23 +125,44 @@ public class Flight extends AbstractModule {
 
     }
 
-    public int pearlSlot() {
+    private void sendLagExploit() {
+        for (double offset : LAG_EXPLOIT_OFFSETS) {
+            sendPacketNoEvent(new C03PacketPlayer.C04PacketPlayerPosition(
+                    mc.player.posX, mc.player.posY + offset, mc.player.posZ, false));
+        }
+    }
+
+    public int projectileSlot() {
+        int fireCharge = -1;
+
         for (int i = 0; i < 9; i++) {
             ItemStack stack = mc.player.inventory.getStackInSlot(i);
 
-            if (stack != null && stack.getItem() == Items.ender_pearl && (!ServerUtils.serverIs(Servers.SW) ||
-                    ServerUtils.inGameSeconds() >= 30 || !stack.getDisplayName().contains("\u00A7"))) {
+            if (stack == null) continue;
+
+            if (stack.getItem() == Items.ender_pearl) {
+                if (ServerUtils.serverIs(Servers.SW) && ServerUtils.inGameSeconds() < 30 &&
+                        stack.getDisplayName().contains("\u00A7")) {
+                    continue;
+                }
+
                 return i;
+            }
+
+            if (stack.getItem() == Items.fire_charge && fireCharge == -1) {
+                fireCharge = i;
             }
         }
 
-        return -1;
+        return fireCharge;
     }
 
-    private void throwPearl() {
-        sendPacketNoEvent(new C09PacketHeldItemChange(pearlSlot()));
-        sendPacketNoEvent(new C03PacketPlayer.C05PacketPlayerLook(mc.player.rotationYaw, 90, mc.player.onGround));
-        sendPacketNoEvent(new C08PacketPlayerBlockPlacement(mc.player.getHeldItem()));
+    private void throwProjectile(int slot) {
+        ItemStack held = mc.player.inventory.getStackInSlot(slot);
+
+        sendPacketNoEvent(new C09PacketHeldItemChange(slot));
+        sendPacketNoEvent(new C03PacketPlayer.C05PacketPlayerLook(mc.player.rotationYaw, 89.4F, mc.player.onGround));
+        sendPacketNoEvent(new C08PacketPlayerBlockPlacement(held));
         sendPacketNoEvent(new C03PacketPlayer.C05PacketPlayerLook(mc.player.rotationYaw, mc.player.rotationPitch, mc.player.onGround));
         sendPacketNoEvent(new C09PacketHeldItemChange(mc.player.inventory.currentItem));
     }
@@ -128,7 +174,7 @@ public class Flight extends AbstractModule {
                 if (event.getPacket() instanceof S08PacketPlayerPosLook) {
                     if (wait) {
                         wait = false;
-                    } else if (tick > 3) {
+                    } else if (tick > 3 && lagExploitTicks <= 0) {
                         checkModule(getClass());
                     }
                 }
@@ -140,6 +186,12 @@ public class Flight extends AbstractModule {
     @EventTarget
     public void onTick(TickUpdateEvent event) {
         if (fly_mode.get().equals("Hypixel")) {
+            if (lagExploitTicks > 0) {
+                lagExploitTicks--;
+            } else if (wait) {
+                wait = false;
+            }
+
             if (!wait && mc.player.isMoving()) {
                 tick++;
             }
@@ -170,13 +222,20 @@ public class Flight extends AbstractModule {
             if (event.getState() == MotionUpdateEvent.State.PRE) {
                 mc.player.cameraYaw = view_bobbing.get() / 1000.0F;
 
-                if (mc.player.movementInput().jump()) {
+                boolean up = mc.player.movementInput().jump();
+
+                if (up) {
                     mc.player.motionY = 1.8;
                 } else if (mc.player.movementInput().sneak()) {
                     mc.player.motionY = -1.8;
                 } else if (!mc.player.onGround) {
                     mc.player.motionY = 0.0;
                 }
+
+                bruhTick++;
+                bruh = ThreadLocalRandom.current().nextDouble(BRUH_MIN, BRUH_MAX);
+                event.setY(event.getY() + (float) bruh);
+                event.setOnGround((bruhTick % 5 == 0 || up) && ServerUtils.isHypixel());
             }
         }else if (fly_mode.get().equals("Karhu")){
             final float speed = 1;

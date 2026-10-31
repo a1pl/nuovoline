@@ -31,6 +31,6 @@ public class SessionChanger {
 
     public void setUserOffline(String username) {
         auth.logOut();
-        Minecraft.getInstance().setSession(new Session(username, username, "0", "legacy"));
+        Minecraft.getInstance().setSession(Session.createOffline(username));
     }
 }
