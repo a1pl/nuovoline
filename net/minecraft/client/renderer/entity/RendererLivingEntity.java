@@ -1,17 +1,17 @@
 package net.minecraft.client.renderer.entity;
 
-import cc.novoline.Novoline;
-import cc.novoline.events.EventManager;
-import cc.novoline.events.events.RenderEntityEvent;
-import cc.novoline.events.events.RenderNameTagEvent;
-import cc.novoline.modules.ModuleManager;
-import cc.novoline.modules.PlayerManager;
-import cc.novoline.modules.combat.KillAura;
-import cc.novoline.modules.move.Scaffold;
-import cc.novoline.modules.visual.Chams;
-import cc.novoline.modules.visual.ESP;
-import cc.novoline.utils.OutlineUtils;
-import cc.novoline.utils.RenderUtils;
+import cc.nuovoline.Nuovoline;
+import cc.nuovoline.events.EventManager;
+import cc.nuovoline.events.events.RenderEntityEvent;
+import cc.nuovoline.events.events.RenderNameTagEvent;
+import cc.nuovoline.modules.ModuleManager;
+import cc.nuovoline.modules.PlayerManager;
+import cc.nuovoline.modules.combat.KillAura;
+import cc.nuovoline.modules.move.Scaffold;
+import cc.nuovoline.modules.visual.Chams;
+import cc.nuovoline.modules.visual.ESP;
+import cc.nuovoline.utils.OutlineUtils;
+import cc.nuovoline.utils.RenderUtils;
 import com.google.common.collect.Lists;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
@@ -144,8 +144,8 @@ public abstract class RendererLivingEntity<T extends EntityLivingBase> extends R
 
 
                 if (entity instanceof EntityPlayerSP) {
-                    if (Novoline.getInstance().getModuleManager().getModule(Scaffold.class).isEnabled()) {
-                        Scaffold scaffold = Novoline.getInstance().getModuleManager().getModule(Scaffold.class);
+                    if (Nuovoline.getInstance().getModuleManager().getModule(Scaffold.class).isEnabled()) {
+                        Scaffold scaffold = Nuovoline.getInstance().getModuleManager().getModule(Scaffold.class);
 
                         if (scaffold.renderRotations()) {
                             if (((EntityPlayerSP) entity).isMoving() || Keyboard.isKeyDown(Minecraft.getInstance().gameSettings.keyBindJump.getKeyCode())) {
@@ -157,8 +157,8 @@ public abstract class RendererLivingEntity<T extends EntityLivingBase> extends R
                             }
                         }
 
-                    } else if (Novoline.getInstance().getModuleManager().getModule(KillAura.class).isEnabled()) {
-                        KillAura killAura = Novoline.getInstance().getModuleManager().getModule(KillAura.class);
+                    } else if (Nuovoline.getInstance().getModuleManager().getModule(KillAura.class).isEnabled()) {
+                        KillAura killAura = Nuovoline.getInstance().getModuleManager().getModule(KillAura.class);
 
                         if (killAura.shouldAttack()) {
                             f = this.interpolateRotation(killAura.getIYaw(), killAura.getIYaw(), partialTicks);
@@ -273,8 +273,8 @@ public abstract class RendererLivingEntity<T extends EntityLivingBase> extends R
      * Renders the model in RenderLiving
      */
     protected void renderModel(T entityLivingBase, float p_77036_2_, float p_77036_3_, float p_77036_4_, float p_77036_5_, float p_77036_6_, float p_77036_7_) {
-        final Novoline novoline = Novoline.getInstance();
-        final ModuleManager moduleManager = novoline.getModuleManager();
+        final Nuovoline nuovoline = Nuovoline.getInstance();
+        final ModuleManager moduleManager = nuovoline.getModuleManager();
         final ESP esp = moduleManager.getModule(ESP.class);
         final Chams chams = moduleManager.getModule(Chams.class);
         final float[] rgba = RenderUtils.getRGBAs(RenderUtils.getRainbow(6_000, -15));
@@ -393,7 +393,7 @@ public abstract class RendererLivingEntity<T extends EntityLivingBase> extends R
     }
 
     private void setupColor(T entityLivingBase, float[] rgba, float red, float blue, float green, float alpha, boolean b0, boolean b1, String formattedText) {
-        final boolean friend = Novoline.getInstance().getPlayerManager().hasType(entityLivingBase.getName(), PlayerManager.EnumPlayerType.FRIEND);
+        final boolean friend = Nuovoline.getInstance().getPlayerManager().hasType(entityLivingBase.getName(), PlayerManager.EnumPlayerType.FRIEND);
 
         if (b0) {
             setupColorChams(red, blue, green, alpha, rgba, b1, friend);

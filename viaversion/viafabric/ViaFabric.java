@@ -25,8 +25,8 @@
 
 package viaversion.viafabric;
 
-import cc.novoline.viaversion.platform.ViaBackwardsPlatformImplementation;
-import cc.novoline.viaversion.platform.ViaRewindPlatformImplementation;
+import cc.nuovoline.viaversion.platform.ViaBackwardsPlatformImplementation;
+import cc.nuovoline.viaversion.platform.ViaRewindPlatformImplementation;
 import viaversion.viafabric.platform.VRInjector;
 import viaversion.viafabric.platform.VRLoader;
 import viaversion.viafabric.platform.VRPlatform;

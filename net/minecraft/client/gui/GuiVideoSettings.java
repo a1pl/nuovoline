@@ -1,6 +1,6 @@
 package net.minecraft.client.gui;
 
-import cc.novoline.gui.screen.alt.repository.AltRepositoryGUI;
+import cc.nuovoline.gui.screen.alt.repository.AltRepositoryGUI;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.client.settings.GameSettings;
 import net.optifine.*;

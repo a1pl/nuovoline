@@ -1,9 +1,9 @@
 package net.minecraft.client.renderer.entity.layers;
 
-import cc.novoline.Novoline;
-import cc.novoline.modules.configurations.property.object.ColorProperty;
-import cc.novoline.modules.visual.GlintColorize;
-import cc.novoline.utils.RenderUtils;
+import cc.nuovoline.Nuovoline;
+import cc.nuovoline.modules.configurations.property.object.ColorProperty;
+import cc.nuovoline.modules.visual.GlintColorize;
+import cc.nuovoline.utils.RenderUtils;
 import com.google.common.collect.Maps;
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.renderer.GlStateManager;
@@ -187,8 +187,8 @@ public abstract class LayerArmorBase<T extends ModelBase> implements LayerRender
     }
 
     private void setupColor(float r, float g, float b) {
-        if (Novoline.getInstance().getModuleManager().getModule(GlintColorize.class).isEnabled()) {
-            GlintColorize glintColorize = Novoline.getInstance().getModuleManager().getModule(GlintColorize.class);
+        if (Nuovoline.getInstance().getModuleManager().getModule(GlintColorize.class).isEnabled()) {
+            GlintColorize glintColorize = Nuovoline.getInstance().getModuleManager().getModule(GlintColorize.class);
             ColorProperty colorSet = glintColorize.getColor();
             if (glintColorize.getRainbow().get()) {
                 float hue = glintColorize.getOffset() / 255.0F;

@@ -1,7 +1,7 @@
 package net.minecraft.client.network;
 
-import cc.novoline.Novoline;
-import cc.novoline.modules.combat.Velocity;
+import cc.nuovoline.Nuovoline;
+import cc.nuovoline.modules.combat.Velocity;
 import com.google.common.collect.Maps;
 import com.google.common.util.concurrent.FutureCallback;
 import com.google.common.util.concurrent.Futures;
@@ -160,8 +160,8 @@ public class NetHandlerPlayClient implements INetHandlerPlayClient {
 
         // Отправление обновления IRC
         //REMOVED SKIDUNION
-//        if (Novoline.getInstance().getIRC().isAuthenticated()) {
-//            Novoline.getInstance().getIRC().update(new MinecraftServerEntity(
+//        if (Nuovoline.getInstance().getIRC().isAuthenticated()) {
+//            Nuovoline.getInstance().getIRC().update(new MinecraftServerEntity(
 //                    getInstance().session.getUsername(),
 //                    getInstance().getCurrentServerData() == null ? "Singleplayer" : getInstance().getCurrentServerData().serverIP
 //            )).queue();
@@ -910,8 +910,8 @@ public class NetHandlerPlayClient implements INetHandlerPlayClient {
                 packetIn.getY(), packetIn.getZ(), packetIn.getStrength(), packetIn.getAffectedBlockPositions());
         explosion.doExplosionB(true);
 
-        if (Novoline.getInstance().getModuleManager().getModule(Velocity.class).isEnabled()) {
-            Velocity velocity = Novoline.getInstance().getModuleManager().getModule(Velocity.class);
+        if (Nuovoline.getInstance().getModuleManager().getModule(Velocity.class).isEnabled()) {
+            Velocity velocity = Nuovoline.getInstance().getModuleManager().getModule(Velocity.class);
             velocity.handleExplosion(gameController, packetIn);
         } else {
             gameController.player.motionX += packetIn.getMotionX();

@@ -1,7 +1,7 @@
 package net.minecraft.client.entity;
 
-import cc.novoline.Novoline;
-import cc.novoline.utils.tasks.FutureTask;
+import cc.nuovoline.Nuovoline;
+import cc.nuovoline.utils.tasks.FutureTask;
 import com.mojang.authlib.GameProfile;
 import static net.minecraft.client.Minecraft.getInstance;
 
@@ -43,7 +43,7 @@ public abstract class AbstractClientPlayer extends EntityPlayer {
         CapeUtils.downloadCape(this);
         AbstractClientPlayer niggastrudel = this;
 
-        Novoline.getInstance().getTaskManager().queue(new FutureTask(500) {
+        Nuovoline.getInstance().getTaskManager().queue(new FutureTask(500) {
             @Override
             public void execute() {
 
@@ -51,21 +51,21 @@ public abstract class AbstractClientPlayer extends EntityPlayer {
 
             @Override
             public void run() {
-                tryDownloadNovolineCape(niggastrudel);
+                tryDownloadNuovolineCape(niggastrudel);
             }
         });
 
         PlayerConfigurations.getPlayerConfiguration(this);
     }
 
-    public static void tryDownloadNovolineCape(AbstractClientPlayer player) {
+    public static void tryDownloadNuovolineCape(AbstractClientPlayer player) {
         String nameClear = player.getNameClear();
 
         if (nameClear != null && !nameClear.isEmpty() && player.getLocationCape() == null && player == getInstance().player) {
-//            UserEntity user = Novoline.getInstance().getIRC().getUserManager().findByNickname(nameClear);
+//            UserEntity user = Nuovoline.getInstance().getIRC().getUserManager().findByNickname(nameClear);
 
 
-            String url = "https://assets.novoline.wtf/capes/" + /*user.getUsername()*/ "gast" + ".png";
+            String url = "https://assets.nuovoline.wtf/capes/" + /*user.getUsername()*/ "gast" + ".png";
             String baseName = FilenameUtils.getBaseName(url);
             ResourceLocation resourceLocation = new ResourceLocation("capeof/" + baseName);
             TextureManager textureManager = getInstance().getTextureManager();

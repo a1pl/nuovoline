@@ -1,0 +1,57 @@
+plugins {
+    id 'java'
+}
+
+group = 'cc.nuovoline'
+version = '1.0'
+
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(8)
+    }
+}
+
+def osName = System.getProperty('os.name').toLowerCase()
+def lwjglVersion = '2.9.4-nightly-20150209'
+def lwjglNatives = osName.contains('win') ? 'natives-windows' : (osName.contains('mac') ? 'natives-osx' : 'natives-linux')
+
+repositories {
+    mavenCentral()
+    maven { url = 'https://libraries.minecraft.net' }
+}
+
+sourceSets {
+    main {
+        java {
+            srcDirs = ['.']
+            include '*.java', 'cc/**', 'net/**', 'me/**', 'ninja/**', 'viaversion/**'
+        }
+        resources {
+            srcDirs = ['.']
+            include 'assets/**', 'log4j2.xml'
+        }
+    }
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'], excludes: ['lwjgl*.jar', 'lombok.jar'])
+
+    implementation "org.lwjgl.lwjgl:lwjgl:${lwjglVersion}"
+    implementation "org.lwjgl.lwjgl:lwjgl_util:${lwjglVersion}"
+    runtimeOnly "org.lwjgl.lwjgl:lwjgl-platform:${lwjglVersion}:${lwjglNatives}"
+
+    compileOnly 'org.projectlombok:lombok:1.18.38'
+    annotationProcessor 'org.projectlombok:lombok:1.18.38'
+}
+
+tasks.register('runClient', JavaExec) {
+    group = 'nuovoline'
+    mainClass = 'Start'
+    classpath = sourceSets.main.runtimeClasspath
+    workingDir = file('run')
+    jvmArgs = ["-Djava.library.path=${file('natives')}"]
+
+    javaLauncher = javaToolchains.launcherFor {
+        languageVersion = JavaLanguageVersion.of(8)
+    }
+}

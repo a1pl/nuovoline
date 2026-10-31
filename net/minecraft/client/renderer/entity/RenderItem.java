@@ -1,7 +1,7 @@
 package net.minecraft.client.renderer.entity;
 
-import cc.novoline.Novoline;
-import cc.novoline.modules.visual.GlintColorize;
+import cc.nuovoline.Nuovoline;
+import cc.nuovoline.modules.visual.GlintColorize;
 import net.minecraft.block.*;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
@@ -151,8 +151,8 @@ public class RenderItem implements IResourceManagerReloadListener {
     }
 
     private int effectColor() {
-        if (Novoline.getInstance().getModuleManager().getModule(GlintColorize.class).isEnabled()) {
-            GlintColorize glintColorize = Novoline.getInstance().getModuleManager().getModule(GlintColorize.class);
+        if (Nuovoline.getInstance().getModuleManager().getModule(GlintColorize.class).isEnabled()) {
+            GlintColorize glintColorize = Nuovoline.getInstance().getModuleManager().getModule(GlintColorize.class);
             return glintColorize.glintColor();
         } else {
             return -8372020;
@@ -415,7 +415,7 @@ public class RenderItem implements IResourceManagerReloadListener {
         }
     }
 
-    public void renderItemOverlaysCR(cc.novoline.utils.fonts.api.FontRenderer p_175030_1_, ItemStack p_175030_2_, int p_175030_3_, int p_175030_4_) {
+    public void renderItemOverlaysCR(cc.nuovoline.utils.fonts.api.FontRenderer p_175030_1_, ItemStack p_175030_2_, int p_175030_3_, int p_175030_4_) {
         renderItemOverlayIntoGUI(p_175030_1_, p_175030_2_, p_175030_3_, p_175030_4_, null);
     }
 
@@ -542,7 +542,7 @@ public class RenderItem implements IResourceManagerReloadListener {
         }
     }
 
-    public void renderItemOverlayIntoGUI(cc.novoline.utils.fonts.api.FontRenderer cr, ItemStack stack, float xPosition, float yPosition, String text) {
+    public void renderItemOverlayIntoGUI(cc.nuovoline.utils.fonts.api.FontRenderer cr, ItemStack stack, float xPosition, float yPosition, String text) {
         if (stack != null) {
             if (stack.stackSize != 1 || text != null) {
                 String s = text == null ? String.valueOf(stack.stackSize) : text;

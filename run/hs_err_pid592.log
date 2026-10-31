@@ -89,9 +89,9 @@ C  0x0000000003901df0
 Java frames: (J=compiled Java code, j=interpreted, Vv=VM code)
 j  org.lwjgl.opengl.GL20.nglCompileShader(IJ)V+0
 j  org.lwjgl.opengl.GL20.glCompileShader(I)V+15
-j  cc.novoline.utils.shader.GLSLSandboxShader.createShader(Ljava/io/InputStream;I)I+15
-j  cc.novoline.utils.shader.GLSLSandboxShader.<init>(Ljava/lang/String;)V+18
-j  cc.novoline.gui.screen.login.GuiLogin.<init>()V+194
+j  cc.nuovoline.utils.shader.GLSLSandboxShader.createShader(Ljava/io/InputStream;I)I+15
+j  cc.nuovoline.utils.shader.GLSLSandboxShader.<init>(Ljava/lang/String;)V+18
+j  cc.nuovoline.gui.screen.login.GuiLogin.<init>()V+194
 j  net.minecraft.client.Minecraft.startGame()V+1075
 j  net.minecraft.client.Minecraft.run()V+6
 j  net.minecraft.client.main.Main.main([Ljava/lang/String;)V+1041
@@ -307,8 +307,8 @@ Event: 12.786 Thread 0x00000000037e5000 Implicit null exception at 0x00000000043
 Events (10 events):
 Event: 13.208 loading class java/awt/FontFormatException
 Event: 13.208 loading class java/awt/FontFormatException done
-Event: 13.208 loading class cc/novoline/utils/fonts/api/FontType
-Event: 13.208 loading class cc/novoline/utils/fonts/api/FontType done
+Event: 13.208 loading class cc/nuovoline/utils/fonts/api/FontType
+Event: 13.208 loading class cc/nuovoline/utils/fonts/api/FontType done
 Event: 13.209 loading class java/nio/file/Paths
 Event: 13.209 loading class java/nio/file/Paths done
 Event: 13.209 loading class sun/nio/fs/WindowsPath$1
@@ -381,7 +381,7 @@ Dynamic libraries:
 0x00007ffb59db0000 - 0x00007ffb59dbc000 	C:\Windows\SYSTEM32\CRYPTBASE.dll
 0x00007ffb53470000 - 0x00007ffb53487000 	C:\Windows\SYSTEM32\dhcpcsvc6.DLL
 0x00007ffb546f0000 - 0x00007ffb5470d000 	C:\Windows\SYSTEM32\dhcpcsvc.DLL
-0x0000000180000000 - 0x0000000180053000 	C:\Users\Windows10\Desktop\novoline-eclipse-ready\natives\lwjgl64.dll
+0x0000000180000000 - 0x0000000180053000 	C:\Users\Windows10\Desktop\nuovoline-eclipse-ready\natives\lwjgl64.dll
 0x00007ffb46810000 - 0x00007ffb46935000 	C:\Windows\SYSTEM32\OPENGL32.dll
 0x00007ffb47ab0000 - 0x00007ffb47adc000 	C:\Windows\SYSTEM32\GLU32.dll
 0x00007ffb3cec0000 - 0x00007ffb3d059000 	C:\Program Files\Java\jdk1.8.0_202\jre\bin\awt.dll
@@ -415,14 +415,14 @@ Dynamic libraries:
 0x00007ffb59f40000 - 0x00007ffb59f68000 	C:\Windows\SYSTEM32\ncrypt.dll
 0x00007ffb59f00000 - 0x00007ffb59f3b000 	C:\Windows\SYSTEM32\NTASN1.dll
 0x000000001d9b0000 - 0x000000001d9e8000 	C:\Users\Windows10\AppData\Local\Temp\jna\jna8114167473926199286.dll
-0x0000000070a40000 - 0x0000000070adc000 	C:\Users\Windows10\Desktop\novoline-eclipse-ready\natives\avutil-ttv-51.dll
-0x000000001da60000 - 0x000000001dab6000 	C:\Users\Windows10\Desktop\novoline-eclipse-ready\natives\swresample-ttv-0.dll
-0x000000006eb80000 - 0x000000006ec50000 	C:\Users\Windows10\Desktop\novoline-eclipse-ready\natives\libmp3lame-ttv.dll
-0x00007ffb2fc30000 - 0x00007ffb30fd4000 	C:\Users\Windows10\Desktop\novoline-eclipse-ready\natives\libmfxsw64.dll
-0x00007ffb33080000 - 0x00007ffb331ed000 	C:\Users\Windows10\Desktop\novoline-eclipse-ready\natives\twitchsdk.dll
+0x0000000070a40000 - 0x0000000070adc000 	C:\Users\Windows10\Desktop\nuovoline-eclipse-ready\natives\avutil-ttv-51.dll
+0x000000001da60000 - 0x000000001dab6000 	C:\Users\Windows10\Desktop\nuovoline-eclipse-ready\natives\swresample-ttv-0.dll
+0x000000006eb80000 - 0x000000006ec50000 	C:\Users\Windows10\Desktop\nuovoline-eclipse-ready\natives\libmp3lame-ttv.dll
+0x00007ffb2fc30000 - 0x00007ffb30fd4000 	C:\Users\Windows10\Desktop\nuovoline-eclipse-ready\natives\libmfxsw64.dll
+0x00007ffb33080000 - 0x00007ffb331ed000 	C:\Users\Windows10\Desktop\nuovoline-eclipse-ready\natives\twitchsdk.dll
 0x00007ffb5cc60000 - 0x00007ffb5cd8a000 	C:\Windows\System32\ole32.dll
 0x00007ffb4ce90000 - 0x00007ffb4d369000 	C:\Windows\SYSTEM32\WININET.dll
-0x000000001f0c0000 - 0x000000001f124000 	C:\Users\Windows10\Desktop\novoline-eclipse-ready\natives\OpenAL64.dll
+0x000000001f0c0000 - 0x000000001f124000 	C:\Users\Windows10\Desktop\nuovoline-eclipse-ready\natives\OpenAL64.dll
 0x00007ffb50f20000 - 0x00007ffb50fa5000 	C:\Windows\System32\MMDevApi.dll
 0x00007ffb5a220000 - 0x00007ffb5a24c000 	C:\Windows\System32\DEVOBJ.dll
 0x00007ffb34f00000 - 0x00007ffb34f9c000 	C:\Windows\SYSTEM32\dsound.dll
@@ -432,9 +432,9 @@ Dynamic libraries:
 0x00007ffb4ddc0000 - 0x00007ffb4dfa4000 	C:\Windows\SYSTEM32\dbghelp.dll
 
 VM Arguments:
-jvm_args: -agentlib:jdwp=transport=dt_socket,address=127.0.0.1:49822,suspend=y,server=n -Djava.library.path=&quot;C:/Users/Windows10/Desktop/novoline-eclipse-ready/natives -javaagent:C:\Users\Windows10\AppData\Local\JetBrains\IdeaIC2023.1\captureAgent\debugger-agent.jar -Dfile.encoding=UTF-8 
+jvm_args: -agentlib:jdwp=transport=dt_socket,address=127.0.0.1:49822,suspend=y,server=n -Djava.library.path=&quot;C:/Users/Windows10/Desktop/nuovoline-eclipse-ready/natives -javaagent:C:\Users\Windows10\AppData\Local\JetBrains\IdeaIC2023.1\captureAgent\debugger-agent.jar -Dfile.encoding=UTF-8 
 java_command: Start
-java_class_path (initial): C:\Program Files\Java\jdk1.8.0_202\jre\lib\charsets.jar;C:\Program Files\Java\jdk1.8.0_202\jre\lib\deploy.jar;C:\Program Files\Java\jdk1.8.0_202\jre\lib\ext\access-bridge-64.jar;C:\Program Files\Java\jdk1.8.0_202\jre\lib\ext\cldrdata.jar;C:\Program Files\Java\jdk1.8.0_202\jre\lib\ext\dnsns.jar;C:\Program Files\Java\jdk1.8.0_202\jre\lib\ext\jaccess.jar;C:\Program Files\Java\jdk1.8.0_202\jre\lib\ext\jfxrt.jar;C:\Program Files\Java\jdk1.8.0_202\jre\lib\ext\localedata.jar;C:\Program Files\Java\jdk1.8.0_202\jre\lib\ext\nashorn.jar;C:\Program Files\Java\jdk1.8.0_202\jre\lib\ext\sunec.jar;C:\Program Files\Java\jdk1.8.0_202\jre\lib\ext\sunjce_provider.jar;C:\Program Files\Java\jdk1.8.0_202\jre\lib\ext\sunmscapi.jar;C:\Program Files\Java\jdk1.8.0_202\jre\lib\ext\sunpkcs11.jar;C:\Program Files\Java\jdk1.8.0_202\jre\lib\ext\zipfs.jar;C:\Program Files\Java\jdk1.8.0_202\jre\lib\javaws.jar;C:\Program Files\Java\jdk1.8.0_202\jre\lib\jce.jar;C:\Program Files\Java\jdk1.8.0_202\jre\lib\jfr.jar;C:\Program Files\Java\jdk1.8.0_202\jre\lib\jfxswt.jar;C:\Program Files\Java\jdk1.8.0_202\jre\lib\jsse.jar;C:\Program Files\Java\jdk1.8.0_202\jre\lib\management-agent.jar;C:\Program Files\Java\jdk1.8.0_202\jre\lib\plugin.jar;C:\Program Files\Java\jdk1.8.0_202\jre\lib\resources.jar;C:\Program Files\Java\jdk1.8.0_202\jre\lib\rt.jar;C:\Users\Windows10\Desktop\novoline-eclipse-ready\out\production\novoline-eclipse-ready;C:\Users\Windows10\Desktop\novoline-eclipse-ready\libs\commons-lang3-3.3.2.jar;C:\Users\Windows10\Desktop\novoline-eclipse-ready\libs\slf4j-api-1.7.25.jar;C:\Users\Windows10\Desktop\novoline-eclipse-ready\libs\codecwav-20101023.jar;C:\Users\Windows10\Desktop\novoline-eclipse-ready\libs\commons-logging-1.1.3.jar;C:\Users\Windows10\Desktop\novoline-eclipse-ready\libs\Intent-HWID-API-v1.1.jar;C:\Users\Windows10\Desktop\novoline-eclipse-ready\libs\opennbt-1.2_SNAPSHOT.jar;C:\Users\Windows10\Desktop\novoline-eclipse-ready\libs\jinput-2.0.5.jar;C:\Users\Windows
+java_class_path (initial): C:\Program Files\Java\jdk1.8.0_202\jre\lib\charsets.jar;C:\Program Files\Java\jdk1.8.0_202\jre\lib\deploy.jar;C:\Program Files\Java\jdk1.8.0_202\jre\lib\ext\access-bridge-64.jar;C:\Program Files\Java\jdk1.8.0_202\jre\lib\ext\cldrdata.jar;C:\Program Files\Java\jdk1.8.0_202\jre\lib\ext\dnsns.jar;C:\Program Files\Java\jdk1.8.0_202\jre\lib\ext\jaccess.jar;C:\Program Files\Java\jdk1.8.0_202\jre\lib\ext\jfxrt.jar;C:\Program Files\Java\jdk1.8.0_202\jre\lib\ext\localedata.jar;C:\Program Files\Java\jdk1.8.0_202\jre\lib\ext\nashorn.jar;C:\Program Files\Java\jdk1.8.0_202\jre\lib\ext\sunec.jar;C:\Program Files\Java\jdk1.8.0_202\jre\lib\ext\sunjce_provider.jar;C:\Program Files\Java\jdk1.8.0_202\jre\lib\ext\sunmscapi.jar;C:\Program Files\Java\jdk1.8.0_202\jre\lib\ext\sunpkcs11.jar;C:\Program Files\Java\jdk1.8.0_202\jre\lib\ext\zipfs.jar;C:\Program Files\Java\jdk1.8.0_202\jre\lib\javaws.jar;C:\Program Files\Java\jdk1.8.0_202\jre\lib\jce.jar;C:\Program Files\Java\jdk1.8.0_202\jre\lib\jfr.jar;C:\Program Files\Java\jdk1.8.0_202\jre\lib\jfxswt.jar;C:\Program Files\Java\jdk1.8.0_202\jre\lib\jsse.jar;C:\Program Files\Java\jdk1.8.0_202\jre\lib\management-agent.jar;C:\Program Files\Java\jdk1.8.0_202\jre\lib\plugin.jar;C:\Program Files\Java\jdk1.8.0_202\jre\lib\resources.jar;C:\Program Files\Java\jdk1.8.0_202\jre\lib\rt.jar;C:\Users\Windows10\Desktop\nuovoline-eclipse-ready\out\production\nuovoline-eclipse-ready;C:\Users\Windows10\Desktop\nuovoline-eclipse-ready\libs\commons-lang3-3.3.2.jar;C:\Users\Windows10\Desktop\nuovoline-eclipse-ready\libs\slf4j-api-1.7.25.jar;C:\Users\Windows10\Desktop\nuovoline-eclipse-ready\libs\codecwav-20101023.jar;C:\Users\Windows10\Desktop\nuovoline-eclipse-ready\libs\commons-logging-1.1.3.jar;C:\Users\Windows10\Desktop\nuovoline-eclipse-ready\libs\Intent-HWID-API-v1.1.jar;C:\Users\Windows10\Desktop\nuovoline-eclipse-ready\libs\opennbt-1.2_SNAPSHOT.jar;C:\Users\Windows10\Desktop\nuovoline-eclipse-ready\libs\jinput-2.0.5.jar;C:\Users\Windows
 Launcher Type: SUN_STANDARD
 
 Environment Variables:

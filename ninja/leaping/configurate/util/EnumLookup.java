@@ -17,7 +17,7 @@
 
 package ninja.leaping.configurate.util;
 
-import cc.novoline.utils.java.Checks;
+import cc.nuovoline.utils.java.Checks;
 import com.google.common.cache.CacheBuilder;
 import com.google.common.cache.CacheLoader;
 import com.google.common.cache.LoadingCache;

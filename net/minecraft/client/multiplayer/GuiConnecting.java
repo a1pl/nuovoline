@@ -1,6 +1,6 @@
 package net.minecraft.client.multiplayer;
 
-import cc.novoline.utils.ServerUtils;
+import cc.nuovoline.utils.ServerUtils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiDisconnected;

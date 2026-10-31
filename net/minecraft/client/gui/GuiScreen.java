@@ -1,7 +1,7 @@
 package net.minecraft.client.gui;
 
-import cc.novoline.Novoline;
-import cc.novoline.utils.notifications.NotificationRenderer;
+import cc.nuovoline.Nuovoline;
+import cc.nuovoline.utils.notifications.NotificationRenderer;
 import com.google.common.base.Splitter;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
@@ -108,7 +108,7 @@ public abstract class GuiScreen extends Gui implements GuiYesNoCallback {
             guiLabel.drawLabel(this.mc, mouseX, mouseY);
         }
 
-        if (!Novoline.getInstance().isAnythingNull()) {
+        if (!Nuovoline.getInstance().isAnythingNull()) {
             NotificationRenderer.draw(new ScaledResolution(mc));
         }
     }
@@ -465,8 +465,8 @@ public abstract class GuiScreen extends Gui implements GuiYesNoCallback {
      * window resizes, the buttonList is cleared beforehand.
      */
     public void initGui() {
-/*        if (!Novoline.getInstance().isAnythingNull()) {
-            Novoline.getInstance().getNotificationManager().getNotifications().clear();
+/*        if (!Nuovoline.getInstance().isAnythingNull()) {
+            Nuovoline.getInstance().getNotificationManager().getNotifications().clear();
         }*/
     }
 

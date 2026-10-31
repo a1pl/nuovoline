@@ -1,7 +1,7 @@
 package net.minecraft.client.settings;
 
-import cc.novoline.events.EventManager;
-import cc.novoline.events.events.KeyPressEvent;
+import cc.nuovoline.events.EventManager;
+import cc.nuovoline.events.events.KeyPressEvent;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
 import net.minecraft.client.resources.I18n;

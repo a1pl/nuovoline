@@ -1,13 +1,13 @@
 package net.minecraft.client.gui.inventory;
 
-import cc.novoline.Novoline;
-import cc.novoline.events.EventManager;
-import cc.novoline.events.events.RenderScreenEvent;
-import cc.novoline.modules.ModuleManager;
-import cc.novoline.modules.combat.KillAura;
-import cc.novoline.modules.player.AutoArmor;
-import cc.novoline.modules.player.ChestStealer;
-import cc.novoline.modules.player.InvManager;
+import cc.nuovoline.Nuovoline;
+import cc.nuovoline.events.EventManager;
+import cc.nuovoline.events.events.RenderScreenEvent;
+import cc.nuovoline.modules.ModuleManager;
+import cc.nuovoline.modules.combat.KillAura;
+import cc.nuovoline.modules.player.AutoArmor;
+import cc.nuovoline.modules.player.ChestStealer;
+import cc.nuovoline.modules.player.InvManager;
 import com.google.common.collect.Sets;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
@@ -361,7 +361,7 @@ public abstract class GuiContainer extends GuiScreen {
         if (mouseButton == 0) {
             for (GuiButton guibutton : this.buttonList) {
                 if (guibutton.mousePressed(this.mc, mouseX, mouseY)) {
-                    final ModuleManager moduleManager = Novoline.getInstance().getModuleManager();
+                    final ModuleManager moduleManager = Nuovoline.getInstance().getModuleManager();
 
                     switch (guibutton.id) {
                         case 1001:

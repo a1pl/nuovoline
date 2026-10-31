@@ -1,21 +1,21 @@
 package net.minecraft.client;
 
-import cc.novoline.Initializer;
-import cc.novoline.Novoline;
-import cc.novoline.events.EventManager;
-import cc.novoline.events.events.KeyPressEvent;
-import cc.novoline.events.events.RightClickEvent;
-import cc.novoline.events.events.TickUpdateEvent;
-import cc.novoline.gui.screen.login.GuiLogin;
-import cc.novoline.modules.AbstractModule;
-import cc.novoline.modules.binds.KeyboardKeybind;
-import cc.novoline.modules.binds.ModuleKeybind;
-import cc.novoline.modules.binds.MouseKeybind;
-import cc.novoline.modules.configurations.holder.ModuleHolder;
-import cc.novoline.modules.misc.FastPlace;
-import cc.novoline.modules.misc.Killsults;
-import cc.novoline.modules.visual.XRay;
-import cc.novoline.utils.notifications.NotificationType;
+import cc.nuovoline.Initializer;
+import cc.nuovoline.Nuovoline;
+import cc.nuovoline.events.EventManager;
+import cc.nuovoline.events.events.KeyPressEvent;
+import cc.nuovoline.events.events.RightClickEvent;
+import cc.nuovoline.events.events.TickUpdateEvent;
+import cc.nuovoline.gui.screen.login.GuiLogin;
+import cc.nuovoline.modules.AbstractModule;
+import cc.nuovoline.modules.binds.KeyboardKeybind;
+import cc.nuovoline.modules.binds.ModuleKeybind;
+import cc.nuovoline.modules.binds.MouseKeybind;
+import cc.nuovoline.modules.configurations.holder.ModuleHolder;
+import cc.nuovoline.modules.misc.FastPlace;
+import cc.nuovoline.modules.misc.Killsults;
+import cc.nuovoline.modules.visual.XRay;
+import cc.nuovoline.utils.notifications.NotificationType;
 import com.google.common.collect.*;
 import com.google.common.util.concurrent.Futures;
 import com.google.common.util.concurrent.ListenableFuture;
@@ -152,7 +152,7 @@ public class Minecraft implements IThreadListener, IPlayerUsage {
      * Set to 'this' in Minecraft constructor; used by some settings get methods
      */
     private static Minecraft theMinecraft;
-    private Novoline novoline;
+    private Nuovoline nuovoline;
     /**
      * This is set to fpsCounter every debug screen update, and is shown on the debug screen. It's also sent as part of
      * the usage snooping.
@@ -358,8 +358,8 @@ public class Minecraft implements IThreadListener, IPlayerUsage {
         Bootstrap.register();
     }
 
-    public Novoline getNovoline() {
-        return novoline;
+    public Nuovoline getNuovoline() {
+        return nuovoline;
     }
 
     /**
@@ -595,7 +595,7 @@ public class Minecraft implements IThreadListener, IPlayerUsage {
         checkGLError("Post startup");
         this.ingameGUI = new GuiIngame(this);
 
-        (this.novoline = Novoline.getInstance()).onStart();
+        (this.nuovoline = Nuovoline.getInstance()).onStart();
 
         if (serverName != null) {
             displayGuiScreen(new GuiConnecting(new GuiMainMenu(), this, serverName, serverPort));
@@ -619,7 +619,7 @@ public class Minecraft implements IThreadListener, IPlayerUsage {
         }
 
         renderGlobal.makeEntityOutlineShader();
-        novoline.onLoaded();
+        nuovoline.onLoaded();
     }
 
     private void setInitialDisplayMode() throws LWJGLException {
@@ -681,10 +681,10 @@ public class Minecraft implements IThreadListener, IPlayerUsage {
         Bootstrap.printToSYSOUT(crashReportIn.getCompleteReport());
 
         if (XRay.isEnabled) {
-            novoline.getModuleManager().getModule(XRay.class).toggle();
+            nuovoline.getModuleManager().getModule(XRay.class).toggle();
         }
 
-        novoline.onDisable();
+        nuovoline.onDisable();
 
         if (crashReportIn.getFile() != null) {
             Bootstrap.printToSYSOUT("#@!@# Game crashed! Crash report saved to: #@!@# " + crashReportIn.getFile());
@@ -1004,10 +1004,10 @@ public class Minecraft implements IThreadListener, IPlayerUsage {
     public void shutdownMinecraftApplet() {
         try {
             if (XRay.isEnabled) {
-                novoline.getModuleManager().getModule(XRay.class).toggle();
+                nuovoline.getModuleManager().getModule(XRay.class).toggle();
             }
 
-            novoline.onDisable();
+            nuovoline.onDisable();
             stream.shutdownStream();
 
             getLogger().info("Stopping!");
@@ -1288,7 +1288,7 @@ public class Minecraft implements IThreadListener, IPlayerUsage {
      */
     private void rightClickMouse() {
         if (!playerController.isHittingBlock()) {
-            FastPlace fastPlace = novoline.getModuleManager().getModule(FastPlace.class);
+            FastPlace fastPlace = nuovoline.getModuleManager().getModule(FastPlace.class);
 
             if (fastPlace.isEnabled()) {
                 if (world != null) {
@@ -1566,11 +1566,11 @@ public class Minecraft implements IThreadListener, IPlayerUsage {
     public void runTick() throws IOException {
         EventManager.call(new TickUpdateEvent());
 
-        if (!Novoline.getInstance().isAnythingNull()) {
-            Novoline.getInstance().getTaskManager().getFutureTasks().forEach(task -> {
+        if (!Nuovoline.getInstance().isAnythingNull()) {
+            Nuovoline.getInstance().getTaskManager().getFutureTasks().forEach(task -> {
                 if (task.delay()) {
                     task.execute();
-                    Novoline.getInstance().getTaskManager().getFutureTasks().remove(task);
+                    Nuovoline.getInstance().getTaskManager().getFutureTasks().remove(task);
                     EventManager.unregister(task);
                 } else {
                     task.run();
@@ -1649,7 +1649,7 @@ public class Minecraft implements IThreadListener, IPlayerUsage {
                 KeyBinding.setKeyBindState(i - 100, Mouse.getEventButtonState());
 
                 if (i != -1) {
-                    for (ModuleHolder<?> holder : novoline.getModuleManager().getModuleManager().values()) {
+                    for (ModuleHolder<?> holder : nuovoline.getModuleManager().getModuleManager().values()) {
                         AbstractModule module = holder.getModule();
                         ModuleKeybind moduleKeybind = module.getKeybind().get();
 
@@ -1742,7 +1742,7 @@ public class Minecraft implements IThreadListener, IPlayerUsage {
                             displayInGameMenu();
                         }
 
-                        for (ModuleHolder<?> holder : novoline.getModuleManager().getModuleManager().values()) {
+                        for (ModuleHolder<?> holder : nuovoline.getModuleManager().getModuleManager().values()) {
                             AbstractModule module = holder.getModule();
                             int key = module.getKeybind().get().getKey();
 
@@ -1780,7 +1780,7 @@ public class Minecraft implements IThreadListener, IPlayerUsage {
                         }
 
                         if (k == 49 && Keyboard.isKeyDown(61)) {
-                            Path path = novoline.getDataFolder().toAbsolutePath();
+                            Path path = nuovoline.getDataFolder().toAbsolutePath();
                             String s = path.toString();
 
                             String command = null;
@@ -2697,7 +2697,7 @@ public class Minecraft implements IThreadListener, IPlayerUsage {
                     toggleFullscreen();
                 } else if (i == gameSettings.keyBindScreenshot.getKeyCode()) {
                     ScreenShotHelper.saveScreenshot(mcDataDir, displayWidth, displayHeight, framebufferMc);
-                    Novoline.getInstance().getNotificationManager().pop("Screenshot Taken!", 500, NotificationType.SUCCESS);
+                    Nuovoline.getInstance().getNotificationManager().pop("Screenshot Taken!", 500, NotificationType.SUCCESS);
                 }
             } else if (i == gameSettings.keyBindStreamToggleMic.getKeyCode()) {
                 stream.muteMicrophone(false);
@@ -2726,7 +2726,7 @@ public class Minecraft implements IThreadListener, IPlayerUsage {
 
     private void writeKillsults() {
         try {
-            Killsults killsults = Novoline.getInstance().getModuleManager().getModule(Killsults.class);
+            Killsults killsults = Nuovoline.getInstance().getModuleManager().getModule(Killsults.class);
             BufferedWriter writer = new BufferedWriter(new FileWriter(killsults.getPath().toString()));
 
             for (String string : killsults.getKillsults()) {

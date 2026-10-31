@@ -1,6 +1,6 @@
 package net.minecraft.client.multiplayer;
 
-import cc.novoline.Novoline;
+import cc.nuovoline.Nuovoline;
 import com.google.common.collect.Sets;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
@@ -254,8 +254,8 @@ public class WorldClient extends World {
      * If on MP, sends a quitting packet.
      */
     public void sendQuittingDisconnectingPacket() {
-//        if (Novoline.getInstance().getIRC().isAuthenticated()) {
-//            Novoline.getInstance().getIRC().update(new MinecraftServerEntity(null, null)).queue();
+//        if (Nuovoline.getInstance().getIRC().isAuthenticated()) {
+//            Nuovoline.getInstance().getIRC().update(new MinecraftServerEntity(null, null)).queue();
 //        }
 
         this.sendQueue.getNetworkManager().closeChannel(new ChatComponentText("Quitting"));

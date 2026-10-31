@@ -1,11 +1,11 @@
 package net.minecraft.client.renderer;
 
-import cc.novoline.Novoline;
-import cc.novoline.events.EventManager;
-import cc.novoline.events.events.Render3DEvent;
-import cc.novoline.modules.visual.Atmosphere;
-import cc.novoline.modules.visual.Camera;
-import cc.novoline.modules.visual.motionblur.CustomShaderGroup;
+import cc.nuovoline.Nuovoline;
+import cc.nuovoline.events.EventManager;
+import cc.nuovoline.events.events.Render3DEvent;
+import cc.nuovoline.modules.visual.Atmosphere;
+import cc.nuovoline.modules.visual.Camera;
+import cc.nuovoline.modules.visual.motionblur.CustomShaderGroup;
 import com.google.common.base.Predicates;
 import com.google.gson.JsonSyntaxException;
 import net.minecraft.block.Block;
@@ -75,7 +75,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Random;
 
-import static cc.novoline.modules.visual.XRay.isEnabled;
+import static cc.nuovoline.modules.visual.XRay.isEnabled;
 
 public class EntityRenderer implements IResourceManagerReloadListener {
 
@@ -613,8 +613,8 @@ public class EntityRenderer implements IResourceManagerReloadListener {
 
     private void hurtCameraEffect(float partialTicks) {
         if (this.mc.getRenderViewEntity() instanceof EntityLivingBase) {
-            if (Novoline.getInstance().getModuleManager().getModule(Camera.class).isEnabled() &&
-                    Novoline.getInstance().getModuleManager().getModule(Camera.class).getNoHurtCam().get()) {
+            if (Nuovoline.getInstance().getModuleManager().getModule(Camera.class).isEnabled() &&
+                    Nuovoline.getInstance().getModuleManager().getModule(Camera.class).getNoHurtCam().get()) {
                 return;
             }
 
@@ -667,7 +667,7 @@ public class EntityRenderer implements IResourceManagerReloadListener {
         double d1 = entity.prevPosY + (entity.posY - entity.prevPosY) * (double) partialTicks + (double) f;
         double d2 = entity.prevPosZ + (entity.posZ - entity.prevPosZ) * (double) partialTicks;
 
-        Camera module = Novoline.getInstance().getModuleManager().getModule(Camera.class);
+        Camera module = Nuovoline.getInstance().getModuleManager().getModule(Camera.class);
         if (entity instanceof EntityLivingBase && ((EntityLivingBase) entity).isPlayerSleeping()) {
             f = (float) ((double) f + 1.0D);
             GlStateManager.translate(0.0F, 0.3F, 0.0F);
@@ -1711,9 +1711,9 @@ public class EntityRenderer implements IResourceManagerReloadListener {
 
         if (f != 0.0F && Config.isRainSplash()) {
 
-            if (Novoline.getInstance().getModuleManager().getModule(Atmosphere.class).isEnabled()) {
-                if (Novoline.getInstance().getModuleManager().getModule(Atmosphere.class).getWeather_mode().equalsIgnoreCase("Snowfall") ||
-                        Novoline.getInstance().getModuleManager().getModule(Atmosphere.class).getWeather_mode().equalsIgnoreCase("Snowstorm")) {
+            if (Nuovoline.getInstance().getModuleManager().getModule(Atmosphere.class).isEnabled()) {
+                if (Nuovoline.getInstance().getModuleManager().getModule(Atmosphere.class).getWeather_mode().equalsIgnoreCase("Snowfall") ||
+                        Nuovoline.getInstance().getModuleManager().getModule(Atmosphere.class).getWeather_mode().equalsIgnoreCase("Snowstorm")) {
                     return;
                 }
             }
@@ -1860,9 +1860,9 @@ public class EntityRenderer implements IResourceManagerReloadListener {
                             this.random.setSeed(j1 * j1 * 3121 + j1 * 45238971 ^ i1 * i1 * 418711 + i1 * 13761);
                             blockpos$mutableblockpos.func_181079_c(j1, i2, i1);
                             float f1 = biomegenbase.getFloatTemperature(blockpos$mutableblockpos);
-                            boolean snow = Novoline.getInstance().getModuleManager().getModule(Atmosphere.class).isEnabled() &&
-                                    (Novoline.getInstance().getModuleManager().getModule(Atmosphere.class).getWeather_mode().equalsIgnoreCase("Snowstorm")
-                                            || Novoline.getInstance().getModuleManager().getModule(Atmosphere.class).getWeather_mode().equalsIgnoreCase("Snowfall"));
+                            boolean snow = Nuovoline.getInstance().getModuleManager().getModule(Atmosphere.class).isEnabled() &&
+                                    (Nuovoline.getInstance().getModuleManager().getModule(Atmosphere.class).getWeather_mode().equalsIgnoreCase("Snowstorm")
+                                            || Nuovoline.getInstance().getModuleManager().getModule(Atmosphere.class).getWeather_mode().equalsIgnoreCase("Snowfall"));
 
                             if (!(worldclient.getWorldChunkManager().getTemperatureAtHeight(f1, l1) >= 0.15F) || snow) {
                                 if (b1 != 1) {

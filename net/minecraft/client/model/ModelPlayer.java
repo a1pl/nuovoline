@@ -1,7 +1,7 @@
 package net.minecraft.client.model;
 
-import cc.novoline.events.EventManager;
-import cc.novoline.events.events.UpdateModelEvent;
+import cc.nuovoline.events.EventManager;
+import cc.nuovoline.events.events.UpdateModelEvent;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.entity.Entity;
 

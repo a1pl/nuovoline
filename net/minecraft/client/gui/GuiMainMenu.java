@@ -1,10 +1,10 @@
 package net.minecraft.client.gui;
 
-import cc.novoline.Novoline;
-import cc.novoline.gui.button.HydraButton;
-import cc.novoline.utils.RenderUtils;
-import cc.novoline.utils.fonts.impl.Fonts;
-import cc.novoline.utils.shader.GLSLSandboxShader;
+import cc.nuovoline.Nuovoline;
+import cc.nuovoline.gui.button.HydraButton;
+import cc.nuovoline.utils.RenderUtils;
+import cc.nuovoline.utils.fonts.impl.Fonts;
+import cc.nuovoline.utils.shader.GLSLSandboxShader;
 import net.minecraft.client.renderer.GlStateManager;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL20;
@@ -24,7 +24,7 @@ public class GuiMainMenu extends GuiScreen implements GuiYesNoCallback {
     public float halfTotalHeight = totalHeight / 2, fraction = 0;
     public boolean darkTheme = true, guiWasSwitched;
     public int alpha = 0;
-    private final String path = Novoline.getInstance().getPathString() + "theme.txt";
+    private final String path = Nuovoline.getInstance().getPathString() + "theme.txt";
 
 
     private GLSLSandboxShader shader;
@@ -46,7 +46,7 @@ public class GuiMainMenu extends GuiScreen implements GuiYesNoCallback {
 
     public GuiMainMenu() {
         try {
-            this.shader = new GLSLSandboxShader("/assets/minecraft/shaders/program/novoline_menu.fsh");
+            this.shader = new GLSLSandboxShader("/assets/minecraft/shaders/program/nuovoline_menu.fsh");
         } catch (IOException e) {
             throw new IllegalStateException("Failed to load background shader", e);
         }
@@ -180,7 +180,7 @@ public class GuiMainMenu extends GuiScreen implements GuiYesNoCallback {
     protected void actionPerformed(GuiButton button) throws IOException {
         switch (button.id) {
             case 1337:
-                this.mc.displayGuiScreen(this.mc.getNovoline().getAltRepositoryGUI());
+                this.mc.displayGuiScreen(this.mc.getNuovoline().getAltRepositoryGUI());
                 break;
             case 0:
                 this.mc.displayGuiScreen(new GuiOptions(this, this.mc.gameSettings));

@@ -1,7 +1,7 @@
 package net.minecraft.client.renderer;
 
-import cc.novoline.modules.visual.XRay;
-import cc.novoline.utils.ColorUtils;
+import cc.nuovoline.modules.visual.XRay;
+import cc.nuovoline.utils.ColorUtils;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.client.renderer.vertex.VertexFormat;

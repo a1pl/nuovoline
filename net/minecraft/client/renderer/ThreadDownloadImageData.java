@@ -111,7 +111,7 @@ public class ThreadDownloadImageData extends SimpleTexture {
                 } else {
                     try {
                         httpurlconnection = (HttpURLConnection) new URL(ThreadDownloadImageData.this.imageUrl).openConnection(Minecraft.getInstance().getProxy());
-                        httpurlconnection.setRequestProperty("User-Agent", "Novoline-Networking/1.0"); // bypass cf
+                        httpurlconnection.setRequestProperty("User-Agent", "Nuovoline-Networking/1.0"); // bypass cf
                         httpurlconnection.setDoInput(true);
                         httpurlconnection.setDoOutput(false);
                         httpurlconnection.connect();
@@ -166,7 +166,7 @@ public class ThreadDownloadImageData extends SimpleTexture {
     private void loadPipelined() {
         try {
             final HttpRequest httprequest = HttpPipeline.makeRequest(this.imageUrl, Minecraft.getInstance().getProxy());
-            httprequest.getHeaders().put("User-Agent", "Novoline-Networking/1.0");
+            httprequest.getHeaders().put("User-Agent", "Nuovoline-Networking/1.0");
 
             final HttpResponse httpresponse = HttpPipeline.executeRequest(httprequest);
 

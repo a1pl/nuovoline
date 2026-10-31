@@ -1,7 +1,7 @@
 package net.minecraft.server;
 
-import cc.novoline.Novoline;
-import cc.novoline.utils.ChatUtils;
+import cc.nuovoline.Nuovoline;
+import cc.nuovoline.utils.ChatUtils;
 import com.google.common.base.Charsets;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Queues;
@@ -815,7 +815,7 @@ public abstract class MinecraftServer implements Runnable, ICommandSender, IThre
         if (input.startsWith("/")) {
             complete(sender, input, pos, list, this.commandManager, "/");
         } else if (input.startsWith(".")) {
-            complete(sender, input, pos, list, Novoline.getInstance().getNovoCommandHandler(), ".");
+            complete(sender, input, pos, list, Nuovoline.getInstance().getNovoCommandHandler(), ".");
         } else {
             final String[] astring = input.split(" ", -1);
             final String s = astring[astring.length - 1];

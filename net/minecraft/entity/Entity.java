@@ -1,12 +1,12 @@
 package net.minecraft.entity;
 
-import cc.novoline.Novoline;
-import cc.novoline.events.EventManager;
-import cc.novoline.events.events.StepConfirmEvent;
-import cc.novoline.modules.combat.HitBox;
-import cc.novoline.modules.move.Scaffold;
-import cc.novoline.modules.player.Freecam;
-import cc.novoline.modules.visual.Camera;
+import cc.nuovoline.Nuovoline;
+import cc.nuovoline.events.EventManager;
+import cc.nuovoline.events.events.StepConfirmEvent;
+import cc.nuovoline.modules.combat.HitBox;
+import cc.nuovoline.modules.move.Scaffold;
+import cc.nuovoline.modules.player.Freecam;
+import cc.nuovoline.modules.visual.Camera;
 import net.minecraft.block.*;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
@@ -381,7 +381,7 @@ public abstract class Entity implements ICommandSender {
     public void setAngles(float yaw, float pitch) {
         float f = rotationPitch;
         float f1 = rotationYaw;
-        Camera module = Novoline.getInstance().getModuleManager().getModule(Camera.class);
+        Camera module = Nuovoline.getInstance().getModuleManager().getModule(Camera.class);
         if (!(module.isEnabled() && module.getMcLock().get() && Mouse.isButtonDown(2))) {
             this.rotationYaw = (float) ((double) rotationYaw + (double) yaw * 0.15D);
             this.rotationPitch = (float) ((double) rotationPitch - (double) pitch * 0.15D);
@@ -583,7 +583,7 @@ public abstract class Entity implements ICommandSender {
             double d4 = y;
             double d5 = z;
 
-            Scaffold scaffold = Novoline.getInstance().getModuleManager().getModule(Scaffold.class);
+            Scaffold scaffold = Nuovoline.getInstance().getModuleManager().getModule(Scaffold.class);
             boolean safewalk = onGround && isSneaking() && this instanceof EntityPlayer || this instanceof EntityPlayerSP && scaffold.isEnabled() && scaffold.safeWalk();
 
             if (safewalk) {
@@ -1630,7 +1630,7 @@ public abstract class Entity implements ICommandSender {
      * Checks if this entity is inside of an opaque block
      */
     public boolean isEntityInsideOpaqueBlock() {
-        if (!noClip && !Novoline.getInstance().getModuleManager().getModule(Freecam.class).isEnabled()) {
+        if (!noClip && !Nuovoline.getInstance().getModuleManager().getModule(Freecam.class).isEnabled()) {
             BlockPos.MutableBlockPos blockpos$mutableblockpos = new BlockPos.MutableBlockPos(Integer.MIN_VALUE,
                     Integer.MIN_VALUE, Integer.MIN_VALUE);
 
@@ -1807,8 +1807,8 @@ public abstract class Entity implements ICommandSender {
     }
 
     public float getCollisionBorderSize() {
-        if (Novoline.getInstance().getModuleManager().getModule(HitBox.class).isEnabled()) {
-            return Novoline.getInstance().getModuleManager().getModule(HitBox.class).getHitBoxSize().get();
+        if (Nuovoline.getInstance().getModuleManager().getModule(HitBox.class).isEnabled()) {
+            return Nuovoline.getInstance().getModuleManager().getModule(HitBox.class).getHitBoxSize().get();
         } else {
             return 0.1F;
         }

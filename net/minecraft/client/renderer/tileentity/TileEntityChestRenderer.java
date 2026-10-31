@@ -1,7 +1,7 @@
 package net.minecraft.client.renderer.tileentity;
 
-import cc.novoline.Novoline;
-import cc.novoline.modules.visual.ChestESP;
+import cc.nuovoline.Nuovoline;
+import cc.nuovoline.modules.visual.ChestESP;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockChest;
 import net.minecraft.client.model.ModelChest;
@@ -154,8 +154,8 @@ public class TileEntityChestRenderer extends TileEntitySpecialRenderer<TileEntit
             f = 1.0F - f * f * f;
             modelchest.chestLid.rotateAngleX = -(f * (float) Math.PI / 2.0F);
 
-            if (Novoline.getInstance().getModuleManager().getModule(ChestESP.class).isEnabled() && te.hasWorldObj()) {
-                ChestESP chestESP = Novoline.getInstance().getModuleManager().getModule(ChestESP.class);
+            if (Nuovoline.getInstance().getModuleManager().getModule(ChestESP.class).isEnabled() && te.hasWorldObj()) {
+                ChestESP chestESP = Nuovoline.getInstance().getModuleManager().getModule(ChestESP.class);
 
                 if (chestESP.getMode().equalsIgnoreCase("Outline") || chestESP.getMode().equalsIgnoreCase("Combined")) {
                     float[] hexColor = chestESP.getColorForTileEntity();

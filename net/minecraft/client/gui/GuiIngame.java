@@ -1,15 +1,15 @@
 package net.minecraft.client.gui;
 
-import cc.novoline.Novoline;
-import cc.novoline.events.EventManager;
-import cc.novoline.events.events.Render2DEvent;
-import cc.novoline.events.events.ScoreBoardEvent;
-import cc.novoline.gui.screen.dropdown.DropdownGUI;
-import cc.novoline.modules.misc.Streamer;
-import cc.novoline.modules.visual.Crosshair;
-import cc.novoline.modules.visual.HUD;
-import cc.novoline.utils.RenderUtils;
-import cc.novoline.utils.fonts.impl.Fonts;
+import cc.nuovoline.Nuovoline;
+import cc.nuovoline.events.EventManager;
+import cc.nuovoline.events.events.Render2DEvent;
+import cc.nuovoline.events.events.ScoreBoardEvent;
+import cc.nuovoline.gui.screen.dropdown.DropdownGUI;
+import cc.nuovoline.modules.misc.Streamer;
+import cc.nuovoline.modules.visual.Crosshair;
+import cc.nuovoline.modules.visual.HUD;
+import cc.nuovoline.utils.RenderUtils;
+import cc.nuovoline.utils.fonts.impl.Fonts;
 import viaversion.viafabric.ViaFabric;
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
@@ -484,7 +484,7 @@ public class GuiIngame extends Gui {
 
     protected boolean showCrosshair() {
         if (this.mc.gameSettings.showDebugInfo && !this.mc.player
-                .hasReducedDebug() && !this.mc.gameSettings.reducedDebugInfo || Novoline.getInstance()
+                .hasReducedDebug() && !this.mc.gameSettings.reducedDebugInfo || Nuovoline.getInstance()
                 .getModuleManager().getModule(Crosshair.class).isEnabled()) {
             return false;
         } else if (this.mc.playerController.isSpectator()) {
@@ -532,7 +532,7 @@ public class GuiIngame extends Gui {
         }
 
         int j1 = arraylist1.size() * getHeight();
-        int k1 = p_180475_2_.getScaledHeight() / 2 + j1 / 3 + Novoline.getInstance().getModuleManager()
+        int k1 = p_180475_2_.getScaledHeight() / 2 + j1 / 3 + Nuovoline.getInstance().getModuleManager()
                 .getModule(HUD.class).getScoreboard().get();
         byte b0 = 3;
         int j = p_180475_2_.getScaledWidth() - i - b0 + (isClientStyle() ? 6 : 9);
@@ -545,19 +545,19 @@ public class GuiIngame extends Gui {
             EventManager.call(new ScoreBoardEvent(k, s1));
 
             if (k == 1) {
-                s1 = s1.replace("www.hypixel.ne\uD83C\uDF82\u00a7et", "www.novoline.wtf");
+                s1 = s1.replace("www.hypixel.ne\uD83C\uDF82\u00a7et", "www.nuovoline.wtf");
             }
 
             int l = k1 - k * getHeight();
             int i1 = p_180475_2_.getScaledWidth() - b0 + 3;
             int fix = isClientStyle() ? 1 : 0;
 
-            if (Novoline.getInstance().getModuleManager().getModule(HUD.class).getHudElements()
+            if (Nuovoline.getInstance().getModuleManager().getModule(HUD.class).getHudElements()
                     .contains("Scoreboard")) {
                 drawRect(j - 2, l - fix, i1, l + getHeight() - fix, 1342177280);
 
-                boolean hide = Novoline.getInstance().getModuleManager().getModule(Streamer.class)
-                        .isEnabled() && Novoline.getInstance().getModuleManager().getModule(Streamer.class)
+                boolean hide = Nuovoline.getInstance().getModuleManager().getModule(Streamer.class)
+                        .isEnabled() && Nuovoline.getInstance().getModuleManager().getModule(Streamer.class)
                         .isHideServerId().get();
 
                 if (hide && k == arraylist1.size()) {
@@ -568,7 +568,7 @@ public class GuiIngame extends Gui {
                     }
                 }
 
-                if (!s1.contains("novoline")) {
+                if (!s1.contains("nuovoline")) {
                     this.drawString(s1, j, l, 553648127);
                 } else {
                     if (isClientStyle()) {
@@ -581,7 +581,7 @@ public class GuiIngame extends Gui {
 
             if (k == arraylist1.size()) {
                 String s3 = p_180475_1_.getDisplayName();
-                if (Novoline.getInstance().getModuleManager().getModule(HUD.class).getHudElements()
+                if (Nuovoline.getInstance().getModuleManager().getModule(HUD.class).getHudElements()
                         .contains("Scoreboard")) {
                     drawRect(j - 2, l - getHeight() - (isClientStyle() ? 2 : 1), i1, l - 1, 1610612736);
                     drawRect(j - 2, l - 1 + fix, i1, l, 1342177280);
@@ -831,7 +831,7 @@ public class GuiIngame extends Gui {
      * Renders dragon's (boss) health on the HUD
      */
     private void renderBossHealth() {
-        if (!Novoline.getInstance().getModuleManager().getModule(HUD.class).getHudElements().contains("Bossbar")) {
+        if (!Nuovoline.getInstance().getModuleManager().getModule(HUD.class).getHudElements().contains("Bossbar")) {
             return;
         }
         if (BossStatus.bossName != null && BossStatus.statusBarTime > 0) {
@@ -1107,8 +1107,8 @@ public class GuiIngame extends Gui {
     }
 
     private boolean isClientStyle() {
-        return Novoline.getInstance().getModuleManager().getModule(HUD.class).isEnabled() &&
-                Novoline.getInstance().getModuleManager().getModule(HUD.class).getScoreBoardStyle();
+        return Nuovoline.getInstance().getModuleManager().getModule(HUD.class).isEnabled() &&
+                Nuovoline.getInstance().getModuleManager().getModule(HUD.class).getScoreBoardStyle();
     }
 
     private float getWidth(String string) {
@@ -1131,7 +1131,7 @@ public class GuiIngame extends Gui {
         return Minecraft.getInstance().fontRendererObj;
     }
 
-    private cc.novoline.utils.fonts.api.FontRenderer getClientFont() {
+    private cc.nuovoline.utils.fonts.api.FontRenderer getClientFont() {
         return Fonts.SF.SF_18.SF_18;
     }
 

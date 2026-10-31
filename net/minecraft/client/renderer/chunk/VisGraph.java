@@ -1,7 +1,7 @@
 package net.minecraft.client.renderer.chunk;
 
-import cc.novoline.Novoline;
-import cc.novoline.modules.player.Freecam;
+import cc.nuovoline.Nuovoline;
+import cc.nuovoline.modules.player.Freecam;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumFacing;
 import net.optifine.IntegerCache;
@@ -11,7 +11,7 @@ import java.util.BitSet;
 import java.util.EnumSet;
 import java.util.Set;
 
-import static cc.novoline.modules.visual.XRay.isEnabled;
+import static cc.nuovoline.modules.visual.XRay.isEnabled;
 
 public class VisGraph {
 
@@ -24,7 +24,7 @@ public class VisGraph {
     private static final String __OBFID = "CL_00002450";
 
     public void func_178606_a(BlockPos pos) {
-        if (isEnabled || Novoline.getInstance().getModuleManager().getModule(Freecam.class).isEnabled()) return;
+        if (isEnabled || Nuovoline.getInstance().getModuleManager().getModule(Freecam.class).isEnabled()) return;
         this.field_178612_d.set(getIndex(pos), true);
         --this.field_178611_f;
     }

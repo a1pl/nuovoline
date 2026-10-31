@@ -1,6 +1,6 @@
 package net.minecraft.client.renderer;
 
-import cc.novoline.modules.visual.ESP;
+import cc.nuovoline.modules.visual.ESP;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
@@ -67,7 +67,7 @@ import net.shadersmod.client.ShadowUtils;
 import java.io.IOException;
 import java.util.*;
 
-import static cc.novoline.Novoline.getInstance;
+import static cc.nuovoline.Nuovoline.getInstance;
 
 public class RenderGlobal implements IWorldAccess, IResourceManagerReloadListener {
 

@@ -1,7 +1,7 @@
 package net.minecraft.world;
 
-import cc.novoline.events.EventManager;
-import cc.novoline.events.events.SpawnCheckEvent;
+import cc.nuovoline.events.EventManager;
+import cc.nuovoline.events.events.SpawnCheckEvent;
 import com.google.common.base.Predicate;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;

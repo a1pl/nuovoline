@@ -17,7 +17,7 @@
 
 package ninja.leaping.configurate.objectmapping.serialize;
 
-import cc.novoline.utils.java.Checks;
+import cc.nuovoline.utils.java.Checks;
 import com.google.common.reflect.TypeToken;
 
 import java.lang.reflect.Method;

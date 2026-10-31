@@ -1,7 +1,7 @@
 //package net.minecraft.client.gui;
 //
-//import cc.novoline.Novoline;
-//import cc.novoline.modules.misc.Streamer;
+//import cc.nuovoline.Nuovoline;
+//import cc.nuovoline.modules.misc.Streamer;
 //import com.ibm.icu.text.ArabicShaping;
 //import com.ibm.icu.text.ArabicShapingException;
 //import com.ibm.icu.text.Bidi;
@@ -565,7 +565,7 @@
 //    }
 //
 //    private boolean isWorldContainsIRCUser(Minecraft mc, String name) {
-//        return mc.world.getPlayerEntityByName(Novoline.getInstance().getIRC().getUserManager().findByNickname(name).getServerEntity().getInGameName()) != null;
+//        return mc.world.getPlayerEntityByName(Nuovoline.getInstance().getIRC().getUserManager().findByNickname(name).getServerEntity().getInGameName()) != null;
 //    }
 //
 //    /**
@@ -576,11 +576,11 @@
 //            return 0;
 //        } else {
 //            Minecraft mc = Minecraft.getInstance();
-//            Novoline novoline = Novoline.getInstance();
+//            Nuovoline nuovoline = Nuovoline.getInstance();
 //
 //            if (mc.world != null) {
-//                if (novoline.getModuleManager().getModule(Streamer.class).isEnabled()) {
-//                    Streamer streamer = novoline.getModuleManager().getModule(Streamer.class);
+//                if (nuovoline.getModuleManager().getModule(Streamer.class).isEnabled()) {
+//                    Streamer streamer = nuovoline.getModuleManager().getModule(Streamer.class);
 //
 //                    for (String name : streamer.name_data) {
 //                        if (!name.isEmpty()) {
@@ -632,11 +632,11 @@
 //            return 0;
 //        } else {
 //            Minecraft mc = Minecraft.getInstance();
-//            Novoline novoline = Novoline.getInstance();
+//            Nuovoline nuovoline = Nuovoline.getInstance();
 //
 //            if (mc.world != null) {
-//                if (novoline.getModuleManager().getModule(Streamer.class).isEnabled()) {
-//                    Streamer streamer = novoline.getModuleManager().getModule(Streamer.class);
+//                if (nuovoline.getModuleManager().getModule(Streamer.class).isEnabled()) {
+//                    Streamer streamer = nuovoline.getModuleManager().getModule(Streamer.class);
 //
 //                    for (String name : streamer.name_data) {
 //                        if (!name.isEmpty()) {
@@ -1007,8 +1007,8 @@
 
 package net.minecraft.client.gui;
 
-import cc.novoline.Novoline;
-import cc.novoline.modules.misc.Streamer;
+import cc.nuovoline.Nuovoline;
+import cc.nuovoline.modules.misc.Streamer;
 import com.ibm.icu.text.ArabicShaping;
 import com.ibm.icu.text.ArabicShapingException;
 import com.ibm.icu.text.Bidi;
@@ -1576,11 +1576,11 @@ public class FontRenderer implements IResourceManagerReloadListener {
             return 0;
         } else {
             Minecraft mc = Minecraft.getInstance();
-            Novoline novoline = Novoline.getInstance();
+            Nuovoline nuovoline = Nuovoline.getInstance();
 
             if (mc.world != null) {
-                if (novoline.getModuleManager().getModule(Streamer.class).isEnabled()) {
-                    Streamer streamer = novoline.getModuleManager().getModule(Streamer.class);
+                if (nuovoline.getModuleManager().getModule(Streamer.class).isEnabled()) {
+                    Streamer streamer = nuovoline.getModuleManager().getModule(Streamer.class);
 
                     for (String name : streamer.name_data) {
                         if (!name.isEmpty()) {
@@ -1630,11 +1630,11 @@ public class FontRenderer implements IResourceManagerReloadListener {
             return 0;
         } else {
             Minecraft mc = Minecraft.getInstance();
-            Novoline novoline = Novoline.getInstance();
+            Nuovoline nuovoline = Nuovoline.getInstance();
 
             if (mc.world != null) {
-                if (novoline.getModuleManager().getModule(Streamer.class).isEnabled()) {
-                    Streamer streamer = novoline.getModuleManager().getModule(Streamer.class);
+                if (nuovoline.getModuleManager().getModule(Streamer.class).isEnabled()) {
+                    Streamer streamer = nuovoline.getModuleManager().getModule(Streamer.class);
 
                     for (String name : streamer.name_data) {
                         if (!name.isEmpty()) {

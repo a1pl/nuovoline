@@ -1,7 +1,7 @@
 package net.minecraft.util;
 
-import cc.novoline.Novoline;
-import cc.novoline.modules.move.FastSneak;
+import cc.nuovoline.Nuovoline;
+import cc.nuovoline.modules.move.FastSneak;
 import net.minecraft.client.settings.GameSettings;
 
 public class MovementInputFromOptions extends MovementInput {
@@ -34,7 +34,7 @@ public class MovementInputFromOptions extends MovementInput {
         this.setJump(this.gameSettings.keyBindJump.isKeyDown());
         this.setSneak(this.gameSettings.keyBindSneak.isKeyDown());
 
-        if (this.sneak() && !Novoline.getInstance().getModuleManager().getModule(FastSneak.class).isEnabled()) {
+        if (this.sneak() && !Nuovoline.getInstance().getModuleManager().getModule(FastSneak.class).isEnabled()) {
             this.setMoveStrafe(this.getMoveStrafe() * 0.3F);
             this.setMoveForward(this.getMoveForward() * 0.3F);
         }

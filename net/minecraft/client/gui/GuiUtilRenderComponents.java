@@ -89,7 +89,7 @@ public class GuiUtilRenderComponents {
         return list;
     }
 
-    public static List<IChatComponent> func_178908_a(IChatComponent p_178908_0_, int p_178908_1_, cc.novoline.utils.fonts.api.FontRenderer p_178908_2_, boolean p_178908_3_, boolean p_178908_4_) {
+    public static List<IChatComponent> func_178908_a(IChatComponent p_178908_0_, int p_178908_1_, cc.nuovoline.utils.fonts.api.FontRenderer p_178908_2_, boolean p_178908_3_, boolean p_178908_4_) {
         int i = 0;
         IChatComponent ichatcomponent = new ChatComponentText("");
         List<IChatComponent> list = Lists.newArrayList();

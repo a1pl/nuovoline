@@ -16,7 +16,7 @@ ao:2
 renderClouds:false
 resourcePacks:["§4§lDr3m2 Red Edit.zip"]
 incompatibleResourcePacks:[]
-lastServer:localhost:25508
+lastServer:rewound.cc
 lang:en_US
 chatVisibility:0
 chatColors:true

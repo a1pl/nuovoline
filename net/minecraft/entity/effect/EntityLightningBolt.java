@@ -1,6 +1,6 @@
 package net.minecraft.entity.effect;
 
-import cc.novoline.utils.ChatUtils;
+import cc.nuovoline.utils.ChatUtils;
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.Entity;
 import net.minecraft.init.Blocks;

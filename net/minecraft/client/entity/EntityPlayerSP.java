@@ -1,11 +1,11 @@
 package net.minecraft.client.entity;
 
-import cc.novoline.Novoline;
-import cc.novoline.events.EventManager;
-import cc.novoline.events.events.*;
-import cc.novoline.modules.combat.Criticals;
-import cc.novoline.modules.combat.KillAura;
-import cc.novoline.modules.misc.GuiMove;
+import cc.nuovoline.Nuovoline;
+import cc.nuovoline.events.EventManager;
+import cc.nuovoline.events.events.*;
+import cc.nuovoline.modules.combat.Criticals;
+import cc.nuovoline.modules.combat.KillAura;
+import cc.nuovoline.modules.misc.GuiMove;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockAir;
 import net.minecraft.block.BlockLiquid;
@@ -211,7 +211,7 @@ public class EntityPlayerSP extends AbstractClientPlayer {
             double d3 = preUpdate.getYaw() - this.lastReportedYaw;
             double d4 = preUpdate.getPitch() - this.lastReportedPitch;
             boolean flag2 = d0 * d0 + d1 * d1 + d2 * d2 > 9.0E-4D || this.positionUpdateTicks >= 20 ||
-                    Novoline.getInstance().getModuleManager().getModule(Criticals.class).shouldCrit(Novoline.getInstance().getModuleManager().getModule(KillAura.class));
+                    Nuovoline.getInstance().getModuleManager().getModule(Criticals.class).shouldCrit(Nuovoline.getInstance().getModuleManager().getModule(KillAura.class));
             boolean flag3 = d3 != 0.0D || d4 != 0.0D;
 
             if (this.ridingEntity == null) {
@@ -269,7 +269,7 @@ public class EntityPlayerSP extends AbstractClientPlayer {
     public void sendChatMessage(String message) {
         for (String command : this.coomands) {
             if (message.toLowerCase().startsWith(command)) {
-                this.mc.getNovoline().getNovoCommandHandler().executeCommand(this, message.toLowerCase());
+                this.mc.getNuovoline().getNovoCommandHandler().executeCommand(this, message.toLowerCase());
                 return;
             }
         }
@@ -740,8 +740,8 @@ public class EntityPlayerSP extends AbstractClientPlayer {
         final float f = 0.8F;
         final boolean flag2 = this.movementInput().getMoveForward() >= f;
 
-        if (Novoline.getInstance().getModuleManager().getModule(GuiMove.class).isEnabled() && !(mc.currentScreen instanceof GuiChat)) {
-            Novoline.getInstance().getModuleManager().getModule(GuiMove.class).updatePlayerMoveState();
+        if (Nuovoline.getInstance().getModuleManager().getModule(GuiMove.class).isEnabled() && !(mc.currentScreen instanceof GuiChat)) {
+            Nuovoline.getInstance().getModuleManager().getModule(GuiMove.class).updatePlayerMoveState();
         } else {
             this.movementInput().updatePlayerMoveState();
         }
@@ -1131,7 +1131,7 @@ public class EntityPlayerSP extends AbstractClientPlayer {
     }
 
 /*    public Block groundBlock() {
-        return !ServerUtils.isHypixel() || Novoline.getInstance().getModuleManager().getModule(Disabler.class).isEnabled() ? worldObj.getBlockState(new BlockPos(MathHelper.floor_double(posX),
+        return !ServerUtils.isHypixel() || Nuovoline.getInstance().getModuleManager().getModule(Disabler.class).isEnabled() ? worldObj.getBlockState(new BlockPos(MathHelper.floor_double(posX),
                 MathHelper.floor_double(getEntityBoundingBox().minY) - 1, MathHelper.floor_double(posZ))).getBlock() : Blocks.stone;
     }*/
 

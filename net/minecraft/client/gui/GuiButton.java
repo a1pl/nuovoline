@@ -1,8 +1,8 @@
 package net.minecraft.client.gui;
 
-import cc.novoline.utils.ColorUtils;
-import cc.novoline.utils.RenderUtils;
-import static cc.novoline.utils.fonts.impl.Fonts.SFTHIN.SFTHIN_19.SFTHIN_19;
+import cc.nuovoline.utils.ColorUtils;
+import cc.nuovoline.utils.RenderUtils;
+import static cc.nuovoline.utils.fonts.impl.Fonts.SFTHIN.SFTHIN_19.SFTHIN_19;
 import java.awt.*;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.audio.PositionedSoundRecord;

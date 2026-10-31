@@ -1,8 +1,8 @@
 package net.minecraft.client.gui;
 
-import cc.novoline.gui.screen.alt.repository.AltRepositoryGUI;
-import cc.novoline.gui.screen.click.DiscordGUI;
-import cc.novoline.gui.screen.login.GuiLogin;
+import cc.nuovoline.gui.screen.alt.repository.AltRepositoryGUI;
+import cc.nuovoline.gui.screen.click.DiscordGUI;
+import cc.nuovoline.gui.screen.login.GuiLogin;
 import net.minecraft.client.Minecraft;
 import net.minecraft.util.MathHelper;
 

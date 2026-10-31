@@ -1,10 +1,10 @@
 package net.minecraft.entity;
 
-import cc.novoline.Novoline;
-import cc.novoline.events.EventManager;
-import cc.novoline.events.events.JumpEvent;
-import cc.novoline.events.events.LivingUpdateEvent;
-import cc.novoline.modules.visual.Animations;
+import cc.nuovoline.Nuovoline;
+import cc.nuovoline.events.EventManager;
+import cc.nuovoline.events.events.JumpEvent;
+import cc.nuovoline.events.events.LivingUpdateEvent;
+import cc.nuovoline.modules.visual.Animations;
 import com.google.common.base.Predicates;
 import com.google.common.collect.Maps;
 import net.minecraft.block.Block;
@@ -1150,8 +1150,8 @@ public abstract class EntityLivingBase extends Entity {
      * progress indicator. Takes dig speed enchantments into account.
      */
     private int getArmSwingAnimationEnd() {
-        if (Novoline.getInstance().getModuleManager().getModule(Animations.class).isEnabled() && this == Minecraft.getInstance().player) {
-            return 6 + Novoline.getInstance().getModuleManager().getModule(Animations.class).getSlowdown().get();
+        if (Nuovoline.getInstance().getModuleManager().getModule(Animations.class).isEnabled() && this == Minecraft.getInstance().player) {
+            return 6 + Nuovoline.getInstance().getModuleManager().getModule(Animations.class).getSlowdown().get();
         } else {
             return this.isPotionActive(digSpeed) ? 6 - (1 + this.getActivePotionEffect(digSpeed).getAmplifier()) : this.isPotionActive(digSlowdown) ? 6 + (1 + this.getActivePotionEffect(digSlowdown).getAmplifier()) * 2 : 6;
         }

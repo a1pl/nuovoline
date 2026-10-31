@@ -1,6 +1,6 @@
 package net.minecraft.client.gui;
 
-import cc.novoline.Novoline;
+import cc.nuovoline.Nuovoline;
 import viaversion.viafabric.ViaFabric;
 import viaversion.viafabric.util.ProtocolUtils;
 import com.google.common.base.Splitter;
@@ -137,7 +137,7 @@ public class GuiMultiplayer extends GuiScreen implements GuiYesNoCallback {
             final GuiListExtended.IGuiListEntry guilistextended$iguilistentry = this.serverListSelector.func_148193_k() < 0 ? null : this.serverListSelector.getListEntry(this.serverListSelector.func_148193_k());
 
             if (button.id == 69){
-                ViaFabric.clientSideVersion = ViaFabric.clientSideVersion == 47 ? Novoline.getInstance().viaVersion() : 47;
+                ViaFabric.clientSideVersion = ViaFabric.clientSideVersion == 47 ? Nuovoline.getInstance().viaVersion() : 47;
                 button.setDisplayString(ProtocolUtils.getProtocolName(ViaFabric.clientSideVersion));
             }
 
@@ -333,7 +333,7 @@ public class GuiMultiplayer extends GuiScreen implements GuiYesNoCallback {
     }
 
     private void connectToServer(@NonNull ServerData server) {
-        mc.getNovoline().setLastConnectedServer(server);
+        mc.getNuovoline().setLastConnectedServer(server);
         mc.displayGuiScreen(new GuiConnecting(this, this.mc, server));
     }
 

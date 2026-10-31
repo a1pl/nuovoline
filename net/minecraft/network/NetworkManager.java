@@ -1,10 +1,10 @@
 package net.minecraft.network;
 
-import cc.novoline.Novoline;
-import cc.novoline.events.EventManager;
-import cc.novoline.events.events.PacketEvent;
-import cc.novoline.utils.java.Checks;
-import cc.novoline.viaversion.utils.Util;
+import cc.nuovoline.Nuovoline;
+import cc.nuovoline.events.EventManager;
+import cc.nuovoline.events.events.PacketEvent;
+import cc.nuovoline.utils.java.Checks;
+import cc.nuovoline.viaversion.utils.Util;
 import com.google.common.collect.Queues;
 import com.google.common.util.concurrent.ThreadFactoryBuilder;
 import io.netty.bootstrap.Bootstrap;
@@ -318,7 +318,7 @@ public class NetworkManager extends SimpleChannelInboundHandler<Packet> {
     }
 
     public static NetworkManager createNetworkManagerAndConnect(InetAddress address, int port, boolean useNativeTransport) {
-        if (ViaFabric.clientSideVersion == Novoline.getInstance().viaVersion()) {
+        if (ViaFabric.clientSideVersion == Nuovoline.getInstance().viaVersion()) {
             return linkingVia(address, port, useNativeTransport);
         } else {
             return linking(address, port, useNativeTransport);
@@ -559,7 +559,7 @@ public class NetworkManager extends SimpleChannelInboundHandler<Packet> {
     }
 
     public void setCompressionTreshold(int treshold) {
-        if (ViaFabric.clientSideVersion == Novoline.getInstance().viaVersion()) {
+        if (ViaFabric.clientSideVersion == Nuovoline.getInstance().viaVersion()) {
             setCompressionTresholdVia(treshold);
         } else {
             setCompressionTresholdVanilla(treshold);

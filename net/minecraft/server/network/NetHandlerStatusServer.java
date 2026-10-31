@@ -1,6 +1,6 @@
 package net.minecraft.server.network;
 
-import cc.novoline.utils.ChatUtils;
+import cc.nuovoline.utils.ChatUtils;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.status.INetHandlerStatusServer;
 import net.minecraft.network.status.client.C00PacketServerQuery;

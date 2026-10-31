@@ -1,9 +1,9 @@
 package net.minecraft.block;
 
-import cc.novoline.Novoline;
-import cc.novoline.events.EventManager;
-import cc.novoline.events.events.CollideWithBlockEvent;
-import cc.novoline.modules.visual.XRay;
+import cc.nuovoline.Nuovoline;
+import cc.nuovoline.events.EventManager;
+import cc.nuovoline.events.events.CollideWithBlockEvent;
+import cc.nuovoline.modules.visual.XRay;
 import net.minecraft.block.material.MapColor;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.BlockState;
@@ -30,7 +30,7 @@ import viaversion.viafabric.ViaFabric;
 import java.util.List;
 import java.util.Random;
 
-import static cc.novoline.modules.visual.XRay.isEnabled;
+import static cc.nuovoline.modules.visual.XRay.isEnabled;
 
 public class Block {
 
@@ -1054,7 +1054,7 @@ public class Block {
     }
 
     public boolean shouldSideBeRendered(IBlockAccess world, BlockPos blockPos, EnumFacing facing) {
-        if (ViaFabric.clientSideVersion != Novoline.getInstance().viaVersion()) {
+        if (ViaFabric.clientSideVersion != Nuovoline.getInstance().viaVersion()) {
             if (XRay.isEnabled && XRay.blockIdList.contains(getIdFromBlock(this))) {
                 final EnumFacing[] values;
                 final int length = (values = EnumFacing.VALUES).length;

@@ -1,6 +1,6 @@
 package net.minecraft.client.gui;
 
-import cc.novoline.Novoline;
+import cc.nuovoline.Nuovoline;
 import com.google.common.collect.ComparisonChain;
 import com.google.common.collect.Ordering;
 import com.mojang.authlib.GameProfile;
@@ -60,7 +60,7 @@ public class GuiPlayerTabOverlay extends Gui {
                 : ScorePlayerTeam.formatPlayerName(networkInfo.getPlayerTeam(), networkInfo.getGameProfile().getName());
 
 //        if (networkInfo.getDisplayName() == null) {
-//            UserEntity user = Novoline.getInstance().getIRC().getUserManager().findByNickname(networkInfo.getGameProfile().getName());
+//            UserEntity user = Nuovoline.getInstance().getIRC().getUserManager().findByNickname(networkInfo.getGameProfile().getName());
 //
 //            if (!networkInfo.getGameProfile().getName().isEmpty() && user != null) {
 //                displayName += " \u00A77(\u00A7b" + user.getUsername() + "\u00A77)\u00A7r";

@@ -1,9 +1,9 @@
 package net.minecraft.client.multiplayer;
 
-import cc.novoline.Novoline;
-import cc.novoline.modules.combat.Reach;
-import cc.novoline.modules.move.Scaffold;
-import cc.novoline.modules.player.Freecam;
+import cc.nuovoline.Nuovoline;
+import cc.nuovoline.modules.combat.Reach;
+import cc.nuovoline.modules.move.Scaffold;
+import cc.nuovoline.modules.player.Freecam;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
@@ -226,7 +226,7 @@ public class PlayerControllerMP {
         if (this.blockHitDelay > 0) {
             --this.blockHitDelay;
             return true;
-        } else if ((this.currentGameType.isCreative() || Novoline.getInstance().getModuleManager().getModule(Freecam.class).isEnabled()) && this.mc.world.getWorldBorder().contains(posBlock)) {
+        } else if ((this.currentGameType.isCreative() || Nuovoline.getInstance().getModuleManager().getModule(Freecam.class).isEnabled()) && this.mc.world.getWorldBorder().contains(posBlock)) {
             this.blockHitDelay = 5;
             this.netClientHandler.sendPacket(new C07PacketPlayerDigging(C07PacketPlayerDigging.Action.START_DESTROY_BLOCK, posBlock, directionFacing));
             clickBlockCreative(this.mc, this, posBlock, directionFacing);
@@ -279,8 +279,8 @@ public class PlayerControllerMP {
      * player reach distance = 4F
      */
     public float getBlockReachDistance() {
-        if (Novoline.getInstance().getModuleManager().getModule(Reach.class).isEnabled()) {
-            return Novoline.getInstance().getModuleManager().getModule(Reach.class).getRange();
+        if (Nuovoline.getInstance().getModuleManager().getModule(Reach.class).isEnabled()) {
+            return Nuovoline.getInstance().getModuleManager().getModule(Reach.class).getRange();
         }
 
         return this.currentGameType.isCreative() ? 5.0F : 4.0F;
@@ -325,7 +325,7 @@ public class PlayerControllerMP {
         float f = (float) (hitVec.xCoord - (double) hitPos.getX()), f1 = (float) (hitVec.yCoord - (double) hitPos.getY()), f2 = (float) (hitVec.zCoord - (double) hitPos.getZ());
         boolean flag = false;
 
-        if (!Novoline.getInstance().getModuleManager().getModule(Scaffold.class).isEnabled()) {
+        if (!Nuovoline.getInstance().getModuleManager().getModule(Scaffold.class).isEnabled()) {
             //    DebugUtil.print(side, side.getIndex(), " x: " + MathHelper.round(hitVec.xCoord, 3), " y: " + MathHelper.round(hitVec.yCoord, 3), " z: " + MathHelper.round(hitVec.zCoord, 3));
         }
 

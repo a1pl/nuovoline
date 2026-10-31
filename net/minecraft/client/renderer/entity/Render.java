@@ -1,6 +1,6 @@
 package net.minecraft.client.renderer.entity;
 
-import cc.novoline.utils.minecraft.FakeEntityPlayer;
+import cc.nuovoline.utils.minecraft.FakeEntityPlayer;
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;

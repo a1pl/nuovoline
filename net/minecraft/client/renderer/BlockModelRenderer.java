@@ -1,6 +1,6 @@
 package net.minecraft.client.renderer;
 
-import cc.novoline.modules.visual.XRay;
+import cc.nuovoline.modules.visual.XRay;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockLeavesBase;
 import net.minecraft.block.BlockOre;

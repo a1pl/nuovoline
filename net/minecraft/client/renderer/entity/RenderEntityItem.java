@@ -1,7 +1,7 @@
 package net.minecraft.client.renderer.entity;
 
-import cc.novoline.Novoline;
-import cc.novoline.modules.visual.ItemPhysic;
+import cc.nuovoline.Nuovoline;
+import cc.nuovoline.modules.visual.ItemPhysic;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.RenderHelper;
@@ -247,7 +247,7 @@ public class RenderEntityItem extends Render<EntityItem> {
 
     @Override
     public void doRender(EntityItem entity, double x, double y, double z, float entityYaw, float partialTicks) {
-        if (Novoline.getInstance().getModuleManager().getModule(ItemPhysic.class).isEnabled()) {
+        if (Nuovoline.getInstance().getModuleManager().getModule(ItemPhysic.class).isEnabled()) {
             physicsRender(entity, x, y, z, entityYaw, partialTicks);
         } else {
             vanillaRender(entity, x, y, z, entityYaw, partialTicks);

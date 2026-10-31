@@ -1,6 +1,6 @@
 package net.minecraft.block;
 
-import cc.novoline.modules.visual.XRay;
+import cc.nuovoline.modules.visual.XRay;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.PropertyBool;
 import net.minecraft.block.state.BlockState;

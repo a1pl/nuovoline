@@ -1,8 +1,8 @@
 package net.minecraft.world.storage;
 
-import cc.novoline.Novoline;
-import cc.novoline.modules.visual.Atmosphere;
-import cc.novoline.utils.Timer;
+import cc.nuovoline.Nuovoline;
+import cc.nuovoline.modules.visual.Atmosphere;
+import cc.nuovoline.utils.Timer;
 import net.minecraft.crash.CrashReportCategory;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.server.MinecraftServer;
@@ -423,8 +423,8 @@ public class WorldInfo {
     private final Timer timer = new Timer();
 
     public void setWorldTime(long time) {
-        if (Novoline.getInstance().getModuleManager().getModule(Atmosphere.class).isEnabled()) {
-            final Atmosphere worldTime = Novoline.getInstance().getModuleManager().getModule(Atmosphere.class);
+        if (Nuovoline.getInstance().getModuleManager().getModule(Atmosphere.class).isEnabled()) {
+            final Atmosphere worldTime = Nuovoline.getInstance().getModuleManager().getModule(Atmosphere.class);
             this.worldTime = worldTime.getTime();
         } else {
             this.worldTime = time;

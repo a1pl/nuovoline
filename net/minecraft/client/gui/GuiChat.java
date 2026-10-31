@@ -1,11 +1,11 @@
 package net.minecraft.client.gui;
 
-import cc.novoline.Novoline;
-import cc.novoline.modules.combat.KillAura;
-import cc.novoline.modules.visual.HUD;
-import cc.novoline.modules.visual.Radar;
-import cc.novoline.utils.RenderUtils;
-import cc.novoline.utils.ScaleUtils;
+import cc.nuovoline.Nuovoline;
+import cc.nuovoline.modules.combat.KillAura;
+import cc.nuovoline.modules.visual.HUD;
+import cc.nuovoline.modules.visual.Radar;
+import cc.nuovoline.utils.RenderUtils;
+import cc.nuovoline.utils.ScaleUtils;
 import com.google.common.collect.Lists;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GlStateManager;
@@ -160,10 +160,10 @@ public class GuiChat extends GuiScreen {
             int x = ScaleUtils.getScaledMouseCoordinates(mc, mouseX, mouseY)[0];
             int y = ScaleUtils.getScaledMouseCoordinates(mc, mouseX, mouseY)[1];
 
-            HUD hud = Novoline.getInstance().getModuleManager().getModule(HUD.class);
-            Radar radar = Novoline.getInstance().getModuleManager().getModule(Radar.class);
+            HUD hud = Nuovoline.getInstance().getModuleManager().getModule(HUD.class);
+            Radar radar = Nuovoline.getInstance().getModuleManager().getModule(Radar.class);
             if (hover(x, y)) {
-                KillAura aura = Novoline.getInstance().getModuleManager().getModule(KillAura.class);
+                KillAura aura = Nuovoline.getInstance().getModuleManager().getModule(KillAura.class);
                 x2 = aura.getThx().get() - x;
                 y2 = aura.getThy().get() - y;
                 dragTH = true;
@@ -299,7 +299,7 @@ public class GuiChat extends GuiScreen {
             this.handleComponentHover(ichatcomponent, mouseX, mouseY - 5);
         }
 
-        KillAura aura = Novoline.getInstance().getModuleManager().getModule(KillAura.class);
+        KillAura aura = Nuovoline.getInstance().getModuleManager().getModule(KillAura.class);
 
         ScaledResolution sr = new ScaledResolution(mc);
         if (aura.getTarget() == null || aura.getTarget() instanceof EntityPlayer) {
@@ -333,7 +333,7 @@ public class GuiChat extends GuiScreen {
             }
         }
 
-        HUD hud = Novoline.getInstance().getModuleManager().getModule(HUD.class);
+        HUD hud = Nuovoline.getInstance().getModuleManager().getModule(HUD.class);
         if (hud.isEnabled()) {
             if (hud.getHudElements().get().contains("Inventory")) {
                 ScaleUtils.scale(mc);
@@ -417,7 +417,7 @@ public class GuiChat extends GuiScreen {
 
         }
 
-        Radar radar = Novoline.getInstance().getModuleManager().getModule(Radar.class);
+        Radar radar = Nuovoline.getInstance().getModuleManager().getModule(Radar.class);
         if (radar.isEnabled()) {
             radar.renderRadar();
 
@@ -450,7 +450,7 @@ public class GuiChat extends GuiScreen {
     }
 
     private boolean hover(int mouseX, int mouseY) {
-        KillAura aura = Novoline.getInstance().getModuleManager().getModule(KillAura.class);
+        KillAura aura = Nuovoline.getInstance().getModuleManager().getModule(KillAura.class);
         return mouseX >= aura.getThx().get() && mouseX <= aura.getThx().get() + getLength(mc.player) && mouseY >= aura.getThy().get() - 1.5 && mouseY <= aura.getThy().get() + 37.5;
     }
 

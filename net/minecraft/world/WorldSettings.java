@@ -1,9 +1,9 @@
 package net.minecraft.world;
 
-import cc.novoline.Novoline;
-import cc.novoline.modules.visual.ClickGUI;
-import cc.novoline.utils.ServerUtils;
-import cc.novoline.utils.Servers;
+import cc.nuovoline.Nuovoline;
+import cc.nuovoline.modules.visual.ClickGUI;
+import cc.nuovoline.utils.ServerUtils;
+import cc.nuovoline.utils.Servers;
 import net.minecraft.entity.player.PlayerAbilities;
 import net.minecraft.world.storage.WorldInfo;
 
@@ -175,7 +175,7 @@ public final class WorldSettings {
             abilities.setAllowEdit(!this.isAdventure());
 
             if (ServerUtils.isHypixel() && (ServerUtils.serverIs(Servers.NONE) || ServerUtils.serverIs(Servers.SG)) && !abilities.isAllowEdit()) {
-                Novoline.getInstance().getModuleManager().getModule(ClickGUI.class).setCurrentServer(Servers.LOBBY);
+                Nuovoline.getInstance().getModuleManager().getModule(ClickGUI.class).setCurrentServer(Servers.LOBBY);
             }
         }
 

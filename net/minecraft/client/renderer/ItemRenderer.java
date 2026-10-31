@@ -1,8 +1,8 @@
 package net.minecraft.client.renderer;
 
-import cc.novoline.Novoline;
-import cc.novoline.modules.visual.Animations;
-import cc.novoline.modules.visual.Chams;
+import cc.nuovoline.Nuovoline;
+import cc.nuovoline.modules.visual.Animations;
+import cc.nuovoline.modules.visual.Chams;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
@@ -79,7 +79,7 @@ public class ItemRenderer {
                     GlStateManager.depthMask(false);
                 }
             } else {
-                Animations animations = Novoline.getInstance().getModuleManager().getModule(Animations.class);
+                Animations animations = Nuovoline.getInstance().getModuleManager().getModule(Animations.class);
                 if (animations.isEnabled()) {
                     double factor = 1 - animations.getDownscaleFactor().get();
                     GlStateManager.scale(factor, factor, factor);
@@ -215,7 +215,7 @@ public class ItemRenderer {
     }
 
     private void func_178095_a(AbstractClientPlayer clientPlayer, float p_178095_2_, float p_178095_3_) {
-        Chams chams = Novoline.getInstance().getModuleManager().getModule(Chams.class);
+        Chams chams = Nuovoline.getInstance().getModuleManager().getModule(Chams.class);
 
         if(chams.isEnabled() && chams.isColored().get() && chams.getHand().get()) {
             int sexyShown = chams.getHandColor().getAwtColor().getRGB();
@@ -344,8 +344,8 @@ public class ItemRenderer {
      * Renders the active item in the player's hand when in first person mode. Args: partialTickTime
      */
     public void renderItemInFirstPerson(float partialTicks) {
-        float height = Novoline.getInstance().getModuleManager().getModule(Animations.class).isEnabled() ?
-                0.8F + Novoline.getInstance().getModuleManager().getModule(Animations.class).getHeight() / 100.0F : 1.0F;
+        float height = Nuovoline.getInstance().getModuleManager().getModule(Animations.class).isEnabled() ?
+                0.8F + Nuovoline.getInstance().getModuleManager().getModule(Animations.class).getHeight() / 100.0F : 1.0F;
         float f = height - (this.prevEquippedProgress + (this.equippedProgress - this.prevEquippedProgress) * partialTicks);
         EntityPlayerSP entityplayersp = this.mc.player;
         float f1 = entityplayersp.getSwingProgress(partialTicks);
@@ -379,8 +379,8 @@ public class ItemRenderer {
 
                     case BLOCK:
 
-                        if (Novoline.getInstance().getModuleManager().getModule(Animations.class).isEnabled()) {
-                            final Animations animations = Novoline.getInstance().getModuleManager()
+                        if (Nuovoline.getInstance().getModuleManager().getModule(Animations.class).isEnabled()) {
+                            final Animations animations = Nuovoline.getInstance().getModuleManager()
                                     .getModule(Animations.class);
 
                             if (animations.getRotating()) {
@@ -509,8 +509,8 @@ public class ItemRenderer {
                         this.func_178098_a(partialTicks, entityplayersp);
                 }
             } else {
-                if (Novoline.getInstance().getModuleManager().getModule(Animations.class).isEnabled()) {
-                    Animations animations = Novoline.getInstance().getModuleManager().getModule(Animations.class);
+                if (Nuovoline.getInstance().getModuleManager().getModule(Animations.class).isEnabled()) {
+                    Animations animations = Nuovoline.getInstance().getModuleManager().getModule(Animations.class);
                     if (!animations.getHit().equalsIgnoreCase("Smooth")) {
                         this.func_178105_d(f1);
                     }
