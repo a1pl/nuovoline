@@ -24,6 +24,8 @@ import com.mojang.authlib.GameProfile;
 import com.mojang.authlib.minecraft.MinecraftSessionService;
 import com.mojang.authlib.properties.PropertyMap;
 import com.mojang.authlib.yggdrasil.YggdrasilAuthenticationService;
+import lombok.Generated;
+import lombok.Getter;
 import lombok.Setter;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
@@ -130,7 +132,7 @@ import java.util.concurrent.FutureTask;
 import java.util.concurrent.ScheduledExecutorService;
 
 import static org.lwjgl.opengl.Display.*;
-
+@Getter
 public class Minecraft implements IThreadListener, IPlayerUsage {
 
     public ScheduledExecutorService niggerService;

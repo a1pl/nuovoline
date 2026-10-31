@@ -24,13 +24,13 @@ public class SessionChanger {
 
     private SessionChanger() {
         AuthenticationService authService = new YggdrasilAuthenticationService(
-                Minecraft.getMinecraft().getProxy(), UUID.randomUUID().toString());
+                Minecraft.getInstance().getProxy(), UUID.randomUUID().toString());
         auth = authService.createUserAuthentication(Agent.MINECRAFT);
         authService.createMinecraftSessionService();
     }
 
     public void setUserOffline(String username) {
         auth.logOut();
-        Minecraft.getMinecraft().setSession(new Session(username, username, "0", "legacy"));
+        Minecraft.getInstance().setSession(new Session(username, username, "0", "legacy"));
     }
 }
