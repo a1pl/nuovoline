@@ -38,7 +38,7 @@ public class Alt {
             public void onLoginSuccess(AltType type, Session session) {
                 invalid = false;
                 AltRepository.get().setCurrentAlt(Alt.this);
-                Minecraft.getMinecraft().session = session;
+                Minecraft.getInstance().session = session;
                 if (announce) {
                     Nuovoline.getInstance().getNotificationManager()
                             .pop("Logged in as " + session.getUsername(), NotificationType.SUCCESS);
