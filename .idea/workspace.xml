@@ -6,12 +6,10 @@
   <component name="ChangeListManager">
     <list default="true" id="21436c89-7e3a-43bb-99ef-153062d08ba5" name="更改" comment="did some stuff">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cc/nuovoline/gui/screen/alt/login/AltType.java" beforeDir="false" afterPath="$PROJECT_DIR$/cc/nuovoline/gui/screen/alt/login/AltType.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cc/nuovoline/gui/screen/alt/repository/Alt.java" beforeDir="false" afterPath="$PROJECT_DIR$/cc/nuovoline/gui/screen/alt/repository/Alt.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cc/nuovoline/gui/screen/alt/repository/AltRepositoryGUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/cc/nuovoline/gui/screen/alt/repository/AltRepositoryGUI.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cc/nuovoline/gui/screen/alt/repository/GuiAddAlt.java" beforeDir="false" afterPath="$PROJECT_DIR$/cc/nuovoline/gui/screen/alt/repository/GuiAddAlt.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/net/minecraft/client/Minecraft.java" beforeDir="false" afterPath="$PROJECT_DIR$/net/minecraft/client/Minecraft.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cc/nuovoline/modules/visual/Brightness.java" beforeDir="false" afterPath="$PROJECT_DIR$/cc/nuovoline/modules/visual/Brightness.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/run/logs/latest.log" beforeDir="false" afterPath="$PROJECT_DIR$/run/logs/latest.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/run/servers.dat" beforeDir="false" afterPath="$PROJECT_DIR$/run/servers.dat" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/run/usercache.json" beforeDir="false" afterPath="$PROJECT_DIR$/run/usercache.json" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

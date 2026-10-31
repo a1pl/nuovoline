@@ -12,6 +12,7 @@ import cc.nuovoline.modules.ModuleManager;
 import cc.nuovoline.modules.configurations.annotation.Property;
 import cc.nuovoline.modules.configurations.property.object.PropertyFactory;
 import cc.nuovoline.modules.configurations.property.object.StringProperty;
+import lombok.Getter;
 import net.minecraft.client.gui.GuiVideoSettings;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
@@ -22,51 +23,44 @@ import static cc.nuovoline.modules.EnumModuleType.VISUALS;
 public final class Brightness extends AbstractModule {
 
     private float oldGamma;
-
-    /* properties */
+    
+    @Getter
     @Property("mode")
     private final StringProperty mode = PropertyFactory.createString("Gamma").acceptableValues("Gamma", "Effect");
 
-    /* constructors */
     public Brightness(@NonNull ModuleManager moduleManager) {
         super(moduleManager, "Brightness", VISUALS, "It's too dark in here");
         Manager.put(new Setting("BN_MODE", "Mode", SettingType.COMBOBOX, this, mode));
     }
 
-    /* methods */
-
     @Override
     public void onEnable() {
-        setSuffix(mode.get());
-
-        if (mode.equals("Gamma")) {
-            if (mc.player.isPotionActive(16)) {
-                mc.player.removePotionEffect(16);
-            }
-
-            oldGamma = mc.gameSettings.gammaSetting;
-            mc.gameSettings.gammaSetting = 10_000.0F;
+        updateSuffix();
+        if ("Gamma".equals(mode.get())) {
+            enableGamma();
         }
     }
 
     @Override
     public void onDisable() {
-        if (mode.equals("Effect")) {
-            this.mc.player.removePotionEffect(Potion.nightVision.getId());
+        if ("Effect".equals(mode.get())) {
+            disableEffect();
         } else {
-            mc.gameSettings.gammaSetting = oldGamma;
+            disableGamma();
         }
     }
 
     @EventTarget
     public void onTick(TickUpdateEvent event) {
-        setSuffix(mode.get());
+        updateSuffix();
     }
 
     @EventTarget
     public void onUpdate(PlayerUpdateEvent event) {
-        if (mode.equals("Effect")) {
-            this.mc.player.addPotionEffect(new PotionEffect(Potion.nightVision.getId(), 5201, 1));
+        if (mc.player == null) return;
+
+        if ("Effect".equals(mode.get())) {
+            mc.player.addPotionEffect(new PotionEffect(Potion.nightVision.getId(), 5201, 1));
         } else if (mc.currentScreen instanceof GuiVideoSettings && mc.gameSettings.gammaSetting != 10_000.0F) {
             mc.gameSettings.gammaSetting = 10_000.0F;
         }
@@ -75,21 +69,39 @@ public final class Brightness extends AbstractModule {
     @EventTarget
     public void onSetting(SettingEvent event) {
         if (event.getSettingName().equals("BN_MODE")) {
-            if (mode.equals("Gamma")) {
-                if (mc.player.isPotionActive(16)) {
-                    mc.player.removePotionEffect(16);
-                }
-
-                oldGamma = mc.gameSettings.gammaSetting;
-                mc.gameSettings.gammaSetting = 10_000.0F;
-
-            } else if (mc.gameSettings.gammaSetting != oldGamma) {
-                mc.gameSettings.gammaSetting = oldGamma;
+            if ("Gamma".equals(mode.get())) {
+                enableGamma();
+            } else {
+                disableGamma();
             }
         }
     }
 
-    public StringProperty getMode() {
-        return mode;
+    private void updateSuffix() {
+        if (mode.get() != null) {
+            setSuffix(mode.get());
+        }
+    }
+
+    private void enableGamma() {
+        if (mc.player != null && mc.player.isPotionActive(16)) {
+            mc.player.removePotionEffect(16);
+        }
+        if (mc.gameSettings != null) {
+            oldGamma = mc.gameSettings.gammaSetting;
+            mc.gameSettings.gammaSetting = 10_000.0F;
+        }
+    }
+
+    private void disableGamma() {
+        if (mc.gameSettings != null) {
+            mc.gameSettings.gammaSetting = oldGamma;
+        }
+    }
+
+    private void disableEffect() {
+        if (mc.player != null) {
+            mc.player.removePotionEffect(Potion.nightVision.getId());
+        }
     }
 }
