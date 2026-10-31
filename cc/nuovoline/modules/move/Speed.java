@@ -24,6 +24,7 @@ public final class Speed extends AbstractModule {
     /* fields */
     private boolean shouldBoost, expBoost;
     private double moveSpeed, lastDist, baseSpeed, boostSpeed;
+    private int hops;
 
     @Property("Speed-Mode")
     private final StringProperty speed_mode = PropertyFactory.createString("NCP").acceptableValues("NCP", "Mospixel", "HypixelHvH");
@@ -88,6 +89,15 @@ public final class Speed extends AbstractModule {
                     if (MathHelper.round(event.getY(), 3) % 1 % 0.125 == 0) {
                         event.setY(MathHelper.round(event.getY(), 3));
                         event.setOnGround(true);
+                    }
+
+                    if (ServerUtils.isHypixel() && event.isOnGround()) {
+                        hops++;
+                        if (hops > 1) {
+                            event.setY(event.getY() + 0.005 + (0.0001 * Math.random()));
+                        }
+                    } else if (!event.isOnGround()) {
+                        hops = 0;
                     }
 
                 } else if (mc.player.onGround) {

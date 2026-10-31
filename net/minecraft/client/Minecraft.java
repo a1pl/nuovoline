@@ -7,6 +7,7 @@ import cc.nuovoline.events.events.KeyPressEvent;
 import cc.nuovoline.events.events.RightClickEvent;
 import cc.nuovoline.events.events.TickUpdateEvent;
 import cc.nuovoline.gui.screen.alt.repository.AltRepository;
+import cc.nuovoline.gui.screen.login.GuiLogin;
 import cc.nuovoline.modules.AbstractModule;
 import cc.nuovoline.modules.binds.KeyboardKeybind;
 import cc.nuovoline.modules.binds.ModuleKeybind;
@@ -601,11 +602,13 @@ public class Minecraft implements IThreadListener, IPlayerUsage {
 
         (this.nuovoline = Nuovoline.getInstance()).onStart();
 
-        Initializer.getInstance().onProtection(null);
         AltRepository.get().registerSession(this.session);
 
         if (serverName != null) {
+            Initializer.getInstance().onProtection(null);
             displayGuiScreen(new GuiConnecting(new GuiMainMenu(), this, serverName, serverPort));
+        } else {
+            displayGuiScreen(new GuiLogin());
         }
 
         renderEngine.deleteTexture(mojangLogo);

@@ -55,6 +55,7 @@ public class GuiLogin extends GuiScreen {
             throw new IllegalStateException("Failed to load backgound shader", e);
         }
         initTime = System.currentTimeMillis();
+        ticks = System.currentTimeMillis();
     }
 
     @Override
@@ -81,10 +82,10 @@ public class GuiLogin extends GuiScreen {
         GlStateManager.disableCull();
         shader.useShader(this.width, this.height, mouseX, mouseY, (System.currentTimeMillis() - initTime) / 1000f);
         GL11.glBegin(GL11.GL_QUADS);
-        GL11.glVertex2f(-1f, -1f);
-        GL11.glVertex2f(-1f, 1f);
-        GL11.glVertex2f(1f, 1f);
-        GL11.glVertex2f(1f, -1f);
+        GL11.glVertex2f(0f, this.height);
+        GL11.glVertex2f(0f, 0f);
+        GL11.glVertex2f(this.width, 0f);
+        GL11.glVertex2f(this.width, this.height);
         GL11.glEnd();
         GL20.glUseProgram(0);
         if (launched && darkTheme && fraction != 1.0049993F) {
@@ -166,12 +167,11 @@ public class GuiLogin extends GuiScreen {
         // CREDITS
         Fonts.SF.SF_18.SF_18.drawString("made by gast and tasteful. protected by skidunion", hWidth - Fonts.SF.SF_18.SF_18.stringWidth("made by gast and tasteful. protected by skidunion") / 2, scaledHeightScaled - Fonts.SF.SF_18.SF_18.getHeight() - 4, new Color(150, 150, 150).getRGB());
 
-//        if (authenticated) {
-            this.status = "Success";
-            if (System.currentTimeMillis() - ticks > 250) {
-                Initializer.getInstance().onProtection(token);
-            }
-//        }
+        this.status = "Success";
+        if (!authenticated && System.currentTimeMillis() - ticks > 1500) {
+            authenticated = true;
+            Initializer.getInstance().onProtection(token);
+        }
 
         if (falseError) {
             try {
