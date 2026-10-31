@@ -174,3 +174,22 @@ java.lang.NullPointerException
 	at Start.main(Start.java:13) [main/:?]
 [14:01:31] [Client thread/WARN]: Unable to play unknown soundEvent: minecraft:music.menu
 [14:01:37] [Client thread/WARN]: Unable to play unknown soundEvent: minecraft:music.menu
+[14:01:48] [Client thread/WARN]: Unable to play unknown soundEvent: minecraft:gui.button.press
+[14:01:48] [Client thread/ERROR]: Can't ping MLegacy.net: Internal Exception: java.io.IOException: Connection reset by peer
+[14:01:50] [Client thread/WARN]: Unable to play unknown soundEvent: minecraft:gui.button.press
+[14:01:51] [Client thread/INFO]: Connecting to tcpshield.rewound.cc., 25565
+[14:01:51] [Client thread/WARN]: Unable to play unknown soundEvent: minecraft:music.menu
+[14:01:53] [Client thread/WARN]: Unable to play unknown soundEvent: minecraft:gui.button.press
+[14:01:54] [Client thread/WARN]: Unable to play unknown soundEvent: minecraft:gui.button.press
+[14:01:55] [Client thread/WARN]: Unable to play unknown soundEvent: minecraft:gui.button.press
+[14:01:56] [Client thread/WARN]: Unable to play unknown soundEvent: minecraft:gui.button.press
+[14:02:01] [Client thread/WARN]: Unable to play unknown soundEvent: minecraft:gui.button.press
+[14:02:03] [Client thread/WARN]: Unable to play unknown soundEvent: minecraft:gui.button.press
+[14:02:08] [Client thread/WARN]: Unable to play unknown soundEvent: minecraft:gui.button.press
+[14:02:08] [Client thread/WARN]: Unable to play unknown soundEvent: minecraft:gui.button.press
+[14:02:10] [Client thread/WARN]: Unable to play unknown soundEvent: minecraft:gui.button.press
+[14:02:14] [Client thread/WARN]: Unable to play unknown soundEvent: minecraft:gui.button.press
+[14:02:14] [Client thread/WARN]: Unable to play unknown soundEvent: minecraft:music.menu
+[14:02:15] [Client thread/INFO]: Stopping!
+[14:02:15] [Client thread/INFO]: SoundSystem shutting down...
+[14:02:15] [Client thread/WARN]: Author: Paul Lamb, www.paulscode.com

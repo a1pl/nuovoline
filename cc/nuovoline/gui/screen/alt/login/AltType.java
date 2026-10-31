@@ -9,6 +9,9 @@ public enum AltType {
 
     CRACKED,
     PREMIUM,
+    MICROSOFT,
+    TOKEN,
+    SESSION,
     ;
 
     private final String capitalized;

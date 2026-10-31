@@ -19,6 +19,11 @@ public class Alt {
     public final AltCredential credential;
     public long addedTimestamp = System.currentTimeMillis();
     public boolean invalid;
+
+    public AltType type = AltType.CRACKED;
+    public String uuid;
+    public String token;
+    public String refreshToken;
     @Setter
     @Getter
     private long unbanDate;
@@ -56,6 +61,8 @@ public class Alt {
     }
 
     public String getTypeLabel() {
+        if (type == AltType.MICROSOFT) return "Microsoft";
+        if (type == AltType.TOKEN || type == AltType.SESSION) return "Token";
         return credential.getPassword() == null ? "Cracked" : "Mojang";
     }
 

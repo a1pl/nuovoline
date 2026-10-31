@@ -24,6 +24,7 @@ import com.mojang.authlib.GameProfile;
 import com.mojang.authlib.minecraft.MinecraftSessionService;
 import com.mojang.authlib.properties.PropertyMap;
 import com.mojang.authlib.yggdrasil.YggdrasilAuthenticationService;
+import lombok.Setter;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.pattern.BlockHelper;
@@ -192,6 +193,7 @@ public class Minecraft implements IThreadListener, IPlayerUsage {
     private final Queue<FutureTask<?>> scheduledTasks = Queues.newArrayDeque();
     private final long field_175615_aJ = 0L;
     private final Thread mcThread = Thread.currentThread();
+    @Setter
     public Session session;
     public PlayerControllerMP playerController;
     public int displayWidth;

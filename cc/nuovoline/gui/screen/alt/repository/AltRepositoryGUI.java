@@ -150,10 +150,7 @@ public class AltRepositoryGUI extends GuiScreen {
                 }
                 break;
             case ID_ADD:
-                mc.displayGuiScreen(new GuiAddAlt(this, "Add", "Add alt", (screen, credential) -> {
-                    addAlt(credential);
-                    mc.displayGuiScreen(this);
-                }));
+                mc.displayGuiScreen(new GuiAddAlt(this));
                 break;
             case ID_DELETE:
                 if (selectedIndex >= 0 && selectedIndex < visible.size()) {

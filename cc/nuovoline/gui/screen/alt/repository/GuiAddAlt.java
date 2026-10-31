@@ -1,223 +1,100 @@
 package cc.nuovoline.gui.screen.alt.repository;
 
-import cc.nuovoline.Nuovoline;
-import cc.nuovoline.gui.button.RoundedButton;
-import cc.nuovoline.gui.group.GuiGroupAltLogin;
+import cc.nuovoline.gui.screen.alt.login.AltType;
+import cc.nuovoline.gui.screen.alt.repository.comp.MicrosoftOAuthTranslation;
+import cc.nuovoline.gui.screen.alt.repository.comp.SessionChanger;
+import cc.nuovoline.gui.screen.alt.repository.comp.SessionIdLogin;
 import cc.nuovoline.gui.screen.alt.repository.credential.AltCredential;
-import cc.nuovoline.utils.fonts.api.FontRenderer;
-import static cc.nuovoline.utils.fonts.impl.Fonts.SFBOLD.SFBOLD_20.SFBOLD_20;
-import static cc.nuovoline.utils.fonts.impl.Fonts.SFTHIN.SFTHIN_18.SFTHIN_18;
-import cc.nuovoline.utils.java.Checks;
-import java.awt.*;
-import java.awt.datatransfer.DataFlavor;
-import java.awt.datatransfer.Transferable;
-import java.util.List;
-import java.util.function.BiConsumer;
-import java.util.regex.Pattern;
-
-import lombok.Getter;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.gui.GuiTextField;
-import static net.minecraft.util.EnumChatFormatting.RED;
-import org.apache.commons.lang3.StringUtils;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import net.minecraft.util.Session;
 import org.lwjgl.input.Keyboard;
+
+import java.awt.*;
+import java.awt.datatransfer.DataFlavor;
+import java.awt.datatransfer.StringSelection;
+import java.io.IOException;
+
 
 public final class GuiAddAlt extends GuiScreen {
 
-    private final AltRepositoryGUI gui;
-    private final BiConsumer<GuiAddAlt, ? super AltCredential> consumer;
+    private static final int BG = 0xFF0A0A0A;
+    private static final int GREEN = 0xFF55FF55;
+    private static final int RED = 0xFFFF5555;
+    private static final int MUTED = 0xFF888888;
 
-    private final String addAltButtonName;
-    private final String title;
+    public enum AccountType {
+        Mcrosoft("Microsoft"),
+        Brwsr("Browser"),
+        TOKEN("Token / Session"),
+        Offline("Cracked");
 
-    @Getter
-    private GuiGroupAltLogin groupAltInfo;
-    private PasswordTextField passwordField;
-    private GuiTextField usernameField;
+        final String label;
+        AccountType(String label) { this.label = label; }
+    }
 
-    public GuiAddAlt(@NotNull AltRepositoryGUI gui,
-                     @NotNull String addAltButtonName,
-                     @NotNull String title,
-                     @NotNull BiConsumer<GuiAddAlt, ? super AltCredential> consumer) {
-        this.gui = gui;
-        this.addAltButtonName = addAltButtonName;
-        this.title = title;
-        this.consumer = consumer;
+    private final GuiScreen parent;
+    private AccountType type = AccountType.Mcrosoft;
+
+    private GuiTextField tokenField;
+    private GuiTextField nameField;
+
+    private String status = "";
+    private boolean statusError;
+    private boolean busy;
+
+    private static final int IdDone = 0;
+    private static final int IdCancel = 1;
+    private static final int IdType = 2;
+    private static final int IdClipboard = 3;
+    private static final int IdOpenLink = 4;
+    private static final int IdCopyLink = 5;
+
+    private volatile String pendingRefreshToken = null;
+
+    public GuiAddAlt(GuiScreen parent) {
+        this.parent = parent;
     }
 
     @Override
     public void initGui() {
-        int height = this.height / 4 + 24;
-
-        this.groupAltInfo = new GuiGroupAltLogin(this, title);
-
-        List<GuiButton> buttonList = this.buttonList;
-        buttonList.add(new RoundedButton(addAltButtonName, 0, width / 2 - 100, height + 72 + 12, 15, SFBOLD_20));
-        buttonList.add(new RoundedButton("Back", 1, width / 2 - 100, height + 72 + 12 + 24, 15, SFBOLD_20));
-        buttonList.add(new RoundedButton("Import alt", 2, width / 2 - 100, height + 72 + 12 + -24, 15, SFBOLD_20));
-
-        this.usernameField = new TokenField(0, mc.fontRendererObj, width / 2 - 100, 60, 200, 20, "Alt Email:");
-        this.passwordField = new PasswordTextField(1, mc.fontRendererObj, width / 2 - 100, 100, 200, 20, "Password:");
-        usernameField.setFocused(true);
-
         Keyboard.enableRepeatEvents(true);
+        rebuildButtons();
+        super.initGui();
     }
 
-    @Override
-    public void drawScreen(int mouseX, int mouseY, float partialTicks) {
-        FontRenderer fontRenderer = SFTHIN_18;
+    private void rebuildButtons() {
+        buttonList.clear();
 
-        drawRect(0, 0, width, height, new Color(32, 34, 37).getRGB()); // background
+        int cx = width / 2;
+        int fieldW = 200;
+        int fieldX = cx - fieldW / 2;
+        int typeY = height / 2 + 40;
 
-        GuiTextField usernameField = this.usernameField;
-        PasswordTextField passwordField = this.passwordField;
+        tokenField = new GuiTextField(12, fontRendererObj, fieldX, 100, fieldW, 18);
+        tokenField.setMaxStringLength(2048);
+        nameField = new GuiTextField(13, fontRendererObj, fieldX, 110, fieldW, 18);
+        nameField.setMaxStringLength(16);
 
-        usernameField.drawTextBox();
-        passwordField.drawTextBox();
+        buttonList.add(new GuiButton(IdType,   cx - 100, typeY,      200, 20, "Account type: " + type.label));
+        buttonList.add(new GuiButton(IdDone,   cx - 126, typeY + 28, 120, 20, "Done"));
+        buttonList.add(new GuiButton(IdCancel, cx + 6,   typeY + 28, 120, 20, "Cancel"));
 
-        groupAltInfo.drawGroup(mc, mouseX, mouseY);
-
-        if (StringUtils.isBlank(usernameField.getText()) && !usernameField.isFocused()) {
-            fontRenderer.drawString("Username / E-Mail", width / 2F - 96, 64, 0xFF888888);
-        }
-
-        if (StringUtils.isBlank(passwordField.getText()) && !passwordField.isFocused()) {
-            fontRenderer.drawString("Password", width / 2F - 96, 104, 0xFF888888);
-        }
-
-        super.drawScreen(mouseX, mouseY, partialTicks);
-    }
-
-    private static final Pattern EMAIL_PATTERN = Pattern.compile(
-            "^(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|\"(?:[\\x01-\\x08\\x0b\\x0c\\x0e-\\x1f\\x21\\x23-\\x5b\\x5d-\\x7f]|\\\\[\\x01-\\x09\\x0b\\x0c\\x0e-\\x7f])*\")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\\x01-\\x08\\x0b\\x0c\\x0e-\\x1f\\x21-\\x5a\\x53-\\x7f]|\\\\[\\x01-\\x09\\x0b\\x0c\\x0e-\\x7f])+)])$");
-
-    static boolean isEmail(@NotNull String email) {
-        Checks.notBlank(email, "email");
-        return EMAIL_PATTERN.matcher(email).matches();
-    }
-
-    private void add_login(){
-        try {
-            if (usernameField.getText().trim().isEmpty()) return; // not gonna happen
-
-            AltCredential altCredential = new AltCredential(usernameField.getText(), passwordField.getText());
-            String login = altCredential.getLogin();
-
-            if (altCredential.getPassword() == null) {
-                if (!login.matches("^[a-zA-Z0-9_]+$")) {
-                    groupAltInfo.updateStatus(RED + "Illegal characters in username");
-                    return;
-                }
-
-                if (login.length() > 16) {
-                    groupAltInfo.updateStatus(RED + "Username is too long");
-                    return;
-                }
-            } else if (!isEmail(login)) {
-                groupAltInfo.updateStatus(RED + "Illegal e-mail");
-            }
-
-            consumer.accept(this, altCredential);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    @Override
-    protected void actionPerformed(GuiButton button) {
-        switch (button.id) {
-            case 0: // add alt button
-                add_login();
+        switch (type) {
+            case Mcrosoft:
+                buttonList.add(new GuiButton(IdClipboard, fieldX, 130, fieldW, 20, "Paste Refresh Token"));
                 break;
-
-            case 1: // back
-                mc.displayGuiScreen(gui);
+            case Brwsr:
+                buttonList.add(new GuiButton(IdOpenLink, fieldX, 100, fieldW, 20, "Open in Browser"));
+                buttonList.add(new GuiButton(IdCopyLink, fieldX, 128, fieldW, 20, "Copy Link"));
                 break;
-
-            case 2: // import
-                AltCredential parts = getDataFromClipboard();
-                if (parts == null) return;
-
-                try {
-                    usernameField.setText(parts.getLogin());
-                    passwordField.setText(parts.getPassword());
-                } catch (ArrayIndexOutOfBoundsException ignored) {
-                } catch (Throwable t) {
-                    Nuovoline.getLogger().warn("An unexpected error occurred while importing alt!", t);
-                }
-
+            case TOKEN:
+                buttonList.add(new GuiButton(IdClipboard, fieldX, 128, fieldW, 20, "Paste from Clipboard"));
+                break;
+            default:
                 break;
         }
-    }
-
-    @Override
-    protected void keyTyped(char character, int key) {
-        if (key == 1) {
-            mc.displayGuiScreen(gui);
-            return;
-        }
-        if(key == Keyboard.KEY_RETURN){
-            add_login();
-            return;
-        }
-
-        switch (character) {
-            case '\t':
-                boolean passwordFieldFocused = passwordField.isFocused();
-                boolean usernameFieldFocused = usernameField.isFocused();
-
-                if (usernameFieldFocused && !passwordFieldFocused) {
-                    usernameField.setFocused(false);
-                    passwordField.setFocused(true);
-                    return;
-                }
-
-                usernameField.setFocused(true);
-                passwordField.setFocused(false);
-                break;
-
-            case '\r':
-                actionPerformed(buttonList.get(0));
-                break;
-        }
-
-        usernameField.textboxKeyTyped(character, key);
-        passwordField.textboxKeyTyped(character, key);
-    }
-
-    @Override
-    protected void mouseClicked(int x2, int y2, int button) {
-        try {
-            super.mouseClicked(x2, y2, button);
-        } catch (Throwable t) {
-            Nuovoline.getLogger().warn(t);
-        }
-
-        usernameField.mouseClicked(x2, y2, button);
-        passwordField.mouseClicked(x2, y2, button);
-    }
-
-    private @Nullable AltCredential getDataFromClipboard() {
-        String s = null;
-
-        try {
-            Transferable transferable = Toolkit.getDefaultToolkit().getSystemClipboard().getContents(null);
-
-            if (transferable != null && transferable.isDataFlavorSupported(DataFlavor.stringFlavor)) {
-                s = ((String) transferable.getTransferData(DataFlavor.stringFlavor)).trim();
-            }
-        } catch (Throwable ignored) {
-        }
-
-        if (s == null) {
-            return null;
-        }
-
-        int index = s.indexOf(':');
-        return index == -1 ? null : new AltCredential(s.substring(0, index), s.substring(index + 1));
     }
 
     @Override
@@ -225,5 +102,233 @@ public final class GuiAddAlt extends GuiScreen {
         Keyboard.enableRepeatEvents(false);
     }
 
+    @Override
+    public void drawScreen(int mouseX, int mouseY, float partialTicks) {
+        drawRect(0, 0, width, height, BG);
+        for (int y = 0; y < height; y += 2) drawRect(0, y, width, y + 1, 0x08FFFFFF);
 
+        drawCenteredString(fontRendererObj, "Add account", width / 2, 30, 0xE0E0E0);
+
+        int cx = width / 2;
+        int fieldW = 200;
+        int fieldX = cx - fieldW / 2;
+
+        switch (type) {
+            case Mcrosoft:
+                drawCenteredString(fontRendererObj, "Paste your Microsoft refresh token", cx, 80, MUTED);
+                fontRendererObj.drawString("Refresh Token", fieldX, 90, MUTED);
+                tokenField.drawTextBox();
+                break;
+            case Brwsr:
+                drawCenteredString(fontRendererObj, "Complete login in your browser,", cx, 75, MUTED);
+                drawCenteredString(fontRendererObj, "then come back here.", cx, 87, MUTED);
+                if (pendingRefreshToken != null)
+                    drawCenteredString(fontRendererObj, "Token received!", cx, 75, GREEN);
+                break;
+            case TOKEN:
+                fontRendererObj.drawString("Token / Session ID", fieldX, 90, MUTED);
+                tokenField.drawTextBox();
+                break;
+            case Offline:
+                fontRendererObj.drawString("Username", fieldX, 98, MUTED);
+                nameField.drawTextBox();
+                break;
+        }
+
+        if (!status.isEmpty()) {
+            drawCenteredString(fontRendererObj, status, cx, height / 2 + 75, statusError ? RED : GREEN);
+        }
+        if (busy) drawCenteredString(fontRendererObj, "Working...", cx, height / 2 + 90, MUTED);
+
+        super.drawScreen(mouseX, mouseY, partialTicks);
+    }
+
+    @Override
+    protected void actionPerformed(GuiButton button) throws IOException {
+        switch (button.id) {
+            case IdType:
+                AccountType[] vals = AccountType.values();
+                type = vals[(type.ordinal() + 1) % vals.length];
+                pendingRefreshToken = null;
+                status = "";
+                rebuildButtons();
+                break;
+
+            case IdCancel:
+                mc.displayGuiScreen(parent);
+                break;
+
+            case IdDone:
+                doDone();
+                break;
+
+            case IdClipboard:
+                pasteFromClipboard();
+                break;
+
+            case IdOpenLink:
+                busy = true;
+                status = "Waiting for browser...";
+                statusError = false;
+                MicrosoftOAuthTranslation.getRefreshToken(token -> {
+                    pendingRefreshToken = token;
+                    mc.addScheduledTask(() -> {
+                        busy = false;
+                        if (token != null) {
+                            status = "Got token! Press Done.";
+                            statusError = false;
+                        } else {
+                            status = "Browser auth failed";
+                            statusError = true;
+                        }
+                    });
+                });
+                break;
+
+            case IdCopyLink:
+                String link = "https://login.live.com/oauth20_authorize.srf?client_id=9fbc7315-7200-4b2b-a655-bb38c865da17"
+                        + "&response_type=code&redirect_uri=http://localhost:8247&scope=XboxLive.signin%20offline_access";
+                try {
+                    Toolkit.getDefaultToolkit().getSystemClipboard()
+                            .setContents(new StringSelection(link), null);
+                    status = "Link copied!";
+                    statusError = false;
+                } catch (Exception e) {
+                    status = "Clipboard error";
+                    statusError = true;
+                }
+                break;
+        }
+    }
+
+    private void pasteFromClipboard() {
+        try {
+            Object data = Toolkit.getDefaultToolkit().getSystemClipboard()
+                    .getData(DataFlavor.stringFlavor);
+            if (data != null) {
+                String raw = data.toString().trim();
+                if (type == AccountType.Mcrosoft || type == AccountType.TOKEN) {
+                    tokenField.setText(raw);
+                }
+            }
+        } catch (Exception ignored) {}
+    }
+
+    private void doDone() {
+        if (busy) return;
+
+        switch (type) {
+            case Brwsr: {
+                String rt = pendingRefreshToken;
+                if (rt == null) { status = "No token yet — complete browser login first"; statusError = true; return; }
+                loginWithRefreshToken(rt);
+                break;
+            }
+            case Mcrosoft: {
+                String raw = tokenField.getText().trim();
+                if (raw.isEmpty()) { status = "Paste your refresh token first"; statusError = true; return; }
+                loginWithRefreshToken(raw);
+                break;
+            }
+            case TOKEN: {
+                String raw = tokenField.getText().trim();
+                if (raw.isEmpty()) { status = "Enter a token"; statusError = true; return; }
+                busy = true;
+                status = "Authenticating...";
+                statusError = false;
+                new Thread(() -> {
+                    try {
+                        if (MicrosoftOAuthTranslation.isRefreshToken(raw)) {
+                            loginWithRefreshToken(raw);
+                        } else {
+                            SessionIdLogin.LoginResult res = SessionIdLogin.login(raw);
+                            mc.addScheduledTask(() -> {
+                                mc.setSession(new Session(res.name, res.uuid, res.mcAccessToken, "mojang"));
+                                Alt alt = new Alt(new AltCredential(res.name, null));
+                                alt.token = res.mcAccessToken;
+                                alt.uuid = res.uuid;
+                                alt.type = AltType.TOKEN;
+                                AltRepository.get().addAlt(alt);
+                                status = "Logged in as " + res.name;
+                                statusError = false;
+                                busy = false;
+                                mc.displayGuiScreen(parent);
+                            });
+                        }
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                        mc.addScheduledTask(() -> { status = "Token auth failed"; statusError = true; busy = false; });
+                    }
+                }, "Token-Auth").start();
+                break;
+            }
+            case Offline: {
+                String uname = nameField.getText().trim();
+                if (uname.isEmpty()) { status = "Enter a username"; statusError = true; return; }
+                SessionChanger.getInstance().setUserOffline(uname);
+                mc.setSession(new Session(uname, uname, "0", "legacy"));
+                AltRepository.get().addAlt(new Alt(new AltCredential(uname, null)));
+                mc.displayGuiScreen(parent);
+                break;
+            }
+        }
+    }
+
+    private void loginWithRefreshToken(String rt) {
+        busy = true;
+        status = "Logging in with Microsoft...";
+        statusError = false;
+        new Thread(() -> {
+            try {
+                MicrosoftOAuthTranslation.LoginData data = MicrosoftOAuthTranslation.login(rt);
+                mc.addScheduledTask(() -> {
+                    if (data.isGood()) {
+                        mc.setSession(new Session(data.username, data.uuid, data.mcToken, "microsoft"));
+                        Alt alt = new Alt(new AltCredential(data.username, null));
+                        alt.uuid = data.uuid;
+                        alt.token = data.mcToken;
+                        alt.refreshToken = data.newRefreshToken != null ? data.newRefreshToken : rt;
+                        alt.type = AltType.MICROSOFT;
+                        AltRepository.get().addAlt(alt);
+                        status = "Logged in as " + data.username;
+                        statusError = false;
+                        busy = false;
+                        mc.displayGuiScreen(parent);
+                    } else {
+                        status = "Token expired / invalid";
+                        statusError = true;
+                        busy = false;
+                    }
+                });
+            } catch (Exception e) {
+                e.printStackTrace();
+                mc.addScheduledTask(() -> { status = "Microsoft login failed"; statusError = true; busy = false; });
+            }
+        }, "MS-Login").start();
+    }
+
+    @Override
+    protected void mouseClicked(int mouseX, int mouseY, int mouseButton) throws IOException {
+        if (type == AccountType.TOKEN) tokenField.mouseClicked(mouseX, mouseY, mouseButton);
+        if (type == AccountType.Offline) nameField.mouseClicked(mouseX, mouseY, mouseButton);
+        super.mouseClicked(mouseX, mouseY, mouseButton);
+    }
+
+    @Override
+    protected void keyTyped(char typedChar, int keyCode) throws IOException {
+        if (keyCode == Keyboard.KEY_ESCAPE) { mc.displayGuiScreen(parent); return; }
+        if (keyCode == Keyboard.KEY_RETURN) { doDone(); return; }
+        if (type == AccountType.TOKEN) tokenField.textboxKeyTyped(typedChar, keyCode);
+        if (type == AccountType.Offline) nameField.textboxKeyTyped(typedChar, keyCode);
+        super.keyTyped(typedChar, keyCode);
+    }
+
+    @Override
+    public void updateScreen() {
+        if (type == AccountType.TOKEN) tokenField.updateCursorCounter();
+        if (type == AccountType.Offline) nameField.updateCursorCounter();
+    }
+
+    @Override
+    public boolean doesGuiPauseGame() { return false; }
 }
