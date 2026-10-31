@@ -242,7 +242,7 @@ public class Initializer {
             }*/
 
             //endregion
-            setTitle("Femaline " + Nuovoline.getInstance().getVersion());
+            setTitle("Nuovoline " + Nuovoline.getInstance().getVersion());
             Nuovoline.getInstance().discordGUI = new DiscordGUI(Nuovoline.getInstance());
             Nuovoline.getInstance().dropDownGUI = new DropdownGUI();
             Nuovoline.getInstance().altRepositoryGUI = new AltRepositoryGUI(Nuovoline.getInstance());

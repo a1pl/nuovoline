@@ -322,3 +322,4 @@ coverage.xml
 !/.gitattributes
 !/README.md
 !/LICENSE
+/run/logs/

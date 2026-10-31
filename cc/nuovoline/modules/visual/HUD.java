@@ -68,7 +68,7 @@ public final class HUD extends AbstractModule {
 
     /* properties @off */
     @Property("client-name")
-    private final StringProperty clientName = createString("Femaline");
+    private final StringProperty clientName = createString("Nuovoline");
     @Property("scoreboard")
     private final IntProperty scoreboard = createInt(0).minimum(-150).maximum(200);
     @Property("scale")

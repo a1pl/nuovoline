@@ -159,8 +159,8 @@ public class GuiMainMenu extends GuiScreen implements GuiYesNoCallback {
 
         // LOGO
         Fonts.OXIDE.OXIDE_55.OXIDE_55.drawString(
-                "FEMALINE",
-                hWidth - Fonts.OXIDE.OXIDE_55.OXIDE_55.stringWidth("FEMALINE") / 2,
+                "NUOVOLINE",
+                hWidth - (float) Fonts.OXIDE.OXIDE_55.OXIDE_55.stringWidth("NUOVOLINE") / 2,
                 hHeight - halfTotalHeight - 35,
                 interpolateColor(blue, violet, fraction));
 
