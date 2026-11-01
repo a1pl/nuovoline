@@ -1,5 +1,6 @@
 package cc.nuovoline.modules.move;
 
+import cc.nuovoline.Nuovoline;
 import cc.nuovoline.events.EventTarget;
 import cc.nuovoline.events.events.*;
 import cc.nuovoline.gui.screen.setting.Manager;
@@ -13,6 +14,7 @@ import cc.nuovoline.modules.configurations.property.object.*;
 import cc.nuovoline.modules.exploits.Disabler;
 import cc.nuovoline.utils.ServerUtils;
 import cc.nuovoline.utils.Servers;
+import lombok.Getter;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.Packet;
@@ -25,6 +27,7 @@ import org.checkerframework.checker.nullness.qual.NonNull;
 import viaversion.viarewind.utils.PacketUtil;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.ThreadLocalRandom;
 
@@ -40,6 +43,7 @@ public class Flight extends AbstractModule {
             1.0013359791121417D
     };
 
+    @Getter
     private int tick;
     private int ticks;
     private int damageStage;
@@ -56,10 +60,11 @@ public class Flight extends AbstractModule {
     private List<Packet> listPosition = new CopyOnWriteArrayList();
     private List<Packet> listPing = new CopyOnWriteArrayList();
     @Property("Fly-mode")
-    private final StringProperty fly_mode = PropertyFactory.createString("Karhu").acceptableValues("Karhu", "Rewound", "Damage");
+    private final StringProperty fly_mode = PropertyFactory.createString("Karhu").acceptableValues("Karhu", "Rewound", "Vanilla", "Damage");
 
     @Property("dmg-mode")
     private final StringProperty dmg_mode = PropertyFactory.createString("Normal").acceptableValues("Fast", "Normal");
+    @Getter
     @Property("speed")
     private final DoubleProperty speed = PropertyFactory.createDouble(2.5D).maximum(9.0D).minimum(1.0D);
     @Property("viewbobbing")
@@ -81,27 +86,34 @@ public class Flight extends AbstractModule {
 
         getModule(Disabler.class).getTimer().reset();
 
-        if (fly_mode.get().equals("Karhu")){
-            mc.player.motionX = 0;
-            mc.player.motionZ = 0;
-        }else if (fly_mode.get().equals("Rewound")){
-            if (tick > 0) {
+        switch (Objects.requireNonNull(fly_mode.get())) {
+            case "Vanilla":
+                Nuovoline.getInstance().getMinecraft().player.abilities.setFlying(false);
+                mc.player.abilities.setAllowFlying(false);
+            case "Karhu":
                 mc.player.motionX = 0;
                 mc.player.motionZ = 0;
-                mc.player.motionY = -0.41999998688698;
+                break;
+            case "Rewound":
+                if (tick > 0) {
+                    mc.player.motionX = 0;
+                    mc.player.motionZ = 0;
+                    mc.player.motionY = -0.41999998688698;
+                    mc.timer.timerSpeed = 1.0F;
+                }
+                wait = false;
+                tick = 0;
+                bruhTick = 0;
+                bruh = 0.0D;
+                lagExploitTicks = 0;
+                break;
+            case "Damage":
+                mc.player.motionX = 0;
+                mc.player.motionZ = 0;
                 mc.timer.timerSpeed = 1.0F;
-            }
-            wait = false;
-            tick = 0;
-            bruhTick = 0;
-            bruh = 0.0D;
-            lagExploitTicks = 0;
-        } else if (fly_mode.get().equals("Damage")) {
-            mc.player.motionX = 0;
-            mc.player.motionZ = 0;
-            mc.timer.timerSpeed = 1.0F;
-            damageStage = 0;
-            damagePacketsRemaining = 0;
+                damageStage = 0;
+                damagePacketsRemaining = 0;
+                break;
         }
     }
 
@@ -113,33 +125,40 @@ public class Flight extends AbstractModule {
 
         if (mc.player == null) return;
 
-        if (fly_mode.get().equals("Rewound")) {
-            tick = 0;
-            bruhTick = 0;
-            wait = false;
-            lagExploitTicks = LAG_EXPLOIT_TICKS;
-            sendLagExploit();
+        switch (Objects.requireNonNull(fly_mode.get())) {
+            case "Vanilla":
+                Nuovoline.getInstance().getMinecraft().player.abilities.setFlying(true);
+                mc.player.abilities.setAllowFlying(true);
+            case "Rewound":
+                tick = 0;
+                bruhTick = 0;
+                wait = false;
+                lagExploitTicks = LAG_EXPLOIT_TICKS;
+                sendLagExploit();
 
-            if (mc.player.onGround && mc.player.hurtTime == 0) {
-                beginFakeFallDamage();
-                damageStage = 1;
-            } else {
-                damageStage = 2;
-            }
+                if (mc.player.onGround && mc.player.hurtTime == 0) {
+                    beginFakeFallDamage();
+                    damageStage = 1;
+                } else {
+                    damageStage = 2;
+                }
 
-            int projectile = projectileSlot();
-            if (mc.player.onGround && pearl.get() && projectile != -1) {
-                wait = true;
-                throwProjectile(projectile);
-                mc.player.motionY = mc.player.getBaseMotionY();
-            }
-        }else if (fly_mode.get().equals("Karhu")){
-            ticks = 0;
-            PacketUtil.send(new C03PacketPlayer.C06PacketPlayerPosLook(mc.player.posX, mc.player.posY - 2, mc.player.posZ,
-                    mc.player.rotationYaw, mc.player.rotationPitch, false));
-        } else if (fly_mode.get().equals("Damage")) {
-            damageStage = 0;
-            damagePacketsRemaining = 0;
+                int projectile = projectileSlot();
+                if (mc.player.onGround && Boolean.TRUE.equals(pearl.get()) && projectile != -1) {
+                    wait = true;
+                    throwProjectile(projectile);
+                    mc.player.motionY = mc.player.getBaseMotionY();
+                }
+                break;
+            case "Karhu":
+                ticks = 0;
+                PacketUtil.send(new C03PacketPlayer.C06PacketPlayerPosLook(mc.player.posX, mc.player.posY - 2, mc.player.posZ,
+                        mc.player.rotationYaw, mc.player.rotationPitch, false));
+                break;
+            case "Damage":
+                damageStage = 0;
+                damagePacketsRemaining = 0;
+                break;
         }
 
     }
@@ -273,100 +292,101 @@ public class Flight extends AbstractModule {
 
     @EventTarget
     public void onPre(MotionUpdateEvent event) {
-        if (fly_mode.get().equals("Rewound")) {
-            if (event.getState() == MotionUpdateEvent.State.PRE) {
-                if (damageStage == 1 && tickFakeFallDamage()) {
-                    damageStage = 2;
+        switch (Objects.requireNonNull(fly_mode.get())) {
+            case "Rewound":
+                if (event.getState() == MotionUpdateEvent.State.PRE) {
+                    if (damageStage == 1 && tickFakeFallDamage()) {
+                        damageStage = 2;
+                    }
+
+                    mc.player.cameraYaw = view_bobbing.get() / 1000.0F;
+
+                    boolean up = mc.player.movementInput().jump();
+
+                    if (up) {
+                        mc.player.motionY = 1.8;
+                    } else if (mc.player.movementInput().sneak()) {
+                        mc.player.motionY = -1.8;
+                    } else if (!mc.player.onGround) {
+                        mc.player.motionY = 0.0;
+                    }
+
+                    bruhTick++;
+                    bruh = ThreadLocalRandom.current().nextDouble(BRUH_MIN, BRUH_MAX);
+                    event.setY(event.getY() + (float) bruh);
+                    event.setOnGround((bruhTick % 5 == 0 || up) && ServerUtils.isRewound());
                 }
+                break;
+            case "Karhu":
+                final float speed = 1;
 
-                mc.player.cameraYaw = view_bobbing.get() / 1000.0F;
+                mc.player.motionY = -1E-10D
+                        + (mc.gameSettings.keyBindJump.isKeyDown() ? speed : 0.0D)
+                        - (mc.gameSettings.keyBindSneak.isKeyDown() ? speed : 0.0D);
 
-                boolean up = mc.player.movementInput().jump();
+                if (mc.player.getDistance(mc.player.lastReportedPosX, mc.player.lastReportedPosY, mc.player.lastReportedPosZ) <= 10 - speed - 0.15) {
+                    event.setCancelled(true);
+                } else {
+                    ticks++;
 
-                if (up) {
-                    mc.player.motionY = 1.8;
-                } else if (mc.player.movementInput().sneak()) {
-                    mc.player.motionY = -1.8;
-                } else if (!mc.player.onGround) {
-                    mc.player.motionY = 0.0;
+                    if (ticks >= 8) {
+                        mc.player.motionX = 0;
+                        mc.player.motionZ = 0;
+
+                        toggle();
+                        //getParent().toggle();
+                    }
                 }
-
-                bruhTick++;
-                bruh = ThreadLocalRandom.current().nextDouble(BRUH_MIN, BRUH_MAX);
-                event.setY(event.getY() + (float) bruh);
-                event.setOnGround((bruhTick % 5 == 0 || up) && ServerUtils.isRewound());
-            }
-        }else if (fly_mode.get().equals("Karhu")){
-            final float speed = 1;
-
-            mc.player.motionY = -1E-10D
-                    + (mc.gameSettings.keyBindJump.isKeyDown() ? speed : 0.0D)
-                    - (mc.gameSettings.keyBindSneak.isKeyDown() ? speed : 0.0D);
-
-            if (mc.player.getDistance(mc.player.lastReportedPosX, mc.player.lastReportedPosY, mc.player.lastReportedPosZ) <= 10 - speed - 0.15) {
-                event.setCancelled(true);
-            } else {
-                ticks++;
-
-                if (ticks >= 8) {
-                    mc.player.motionX = 0;
-                    mc.player.motionZ = 0;
-
-                    toggle();
-                    //getParent().toggle();
-                }
-            }
-        } else if (fly_mode.get().equals("Damage")) {
-            if (event.getState() == MotionUpdateEvent.State.PRE) {
-                switch (damageStage) {
-                    case 0:
-                        mc.timer.timerSpeed = 1.0F;
-
-                        if (mc.player.onGround && mc.player.hurtTime == 0) {
-                            beginFakeFallDamage();
-                            damageStage = 1;
-                        }
-                        break;
-
-                    case 1:
-                        mc.timer.timerSpeed = 0.25F;
-
-                        if (tickFakeFallDamage()) {
-                            damageStage = 2;
+                break;
+            case "Damage":
+                if (event.getState() == MotionUpdateEvent.State.PRE) {
+                    switch (damageStage) {
+                        case 0:
                             mc.timer.timerSpeed = 1.0F;
-                        }
-                        break;
 
-                    default:
-                        if (mc.gameSettings.keyBindJump.isKeyDown()) {
-                            mc.player.motionY = speed.get();
-                        } else if (mc.gameSettings.keyBindSneak.isKeyDown()) {
-                            mc.player.motionY = -speed.get();
-                        } else {
-                            mc.player.motionY = 0.0;
-                        }
-                        break;
+                            if (mc.player.onGround && mc.player.hurtTime == 0) {
+                                beginFakeFallDamage();
+                                damageStage = 1;
+                            }
+                            break;
+
+                        case 1:
+                            mc.timer.timerSpeed = 0.25F;
+
+                            if (tickFakeFallDamage()) {
+                                damageStage = 2;
+                                mc.timer.timerSpeed = 1.0F;
+                            }
+                            break;
+
+                        default:
+                            if (mc.gameSettings.keyBindJump.isKeyDown()) {
+                                mc.player.motionY = speed;
+                            } else if (mc.gameSettings.keyBindSneak.isKeyDown()) {
+                                mc.player.motionY = -speed;
+                            } else {
+                                mc.player.motionY = 0.0;
+                            }
+                            break;
+                    }
                 }
-            }
+                break;
         }
 
     }
 
     @EventTarget
     public void onMove(MoveEvent event) {
+        assert fly_mode.get() != null;
         if (fly_mode.get().equals("Rewound")) {
             event.setMoveSpeed(wait ? 0 : speed.get());
-        } else if (fly_mode.get().equals("Damage") && damageStage == 2) {
-            event.setMoveSpeed(speed.get());
+        } else {
+            assert fly_mode.get() != null;
+            if (fly_mode.get().equals("Damage") && damageStage == 2) {
+                event.setMoveSpeed(speed.get());
+            }
         }
 
     }
 
-    public DoubleProperty getSpeed() {
-        return speed;
-    }
-
-    public int getTick() {
-        return tick;
-    }
 }

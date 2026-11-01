@@ -5,34 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="21436c89-7e3a-43bb-99ef-153062d08ba5" name="更改" comment="did some stuff">
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cc/nuovoline/Nuovoline.java" beforeDir="false" afterPath="$PROJECT_DIR$/cc/nuovoline/Nuovoline.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cc/nuovoline/commands/impl/StatusCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/cc/nuovoline/commands/impl/StatusCommand.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cc/nuovoline/gui/screen/login/GuiLogin.java" beforeDir="false" afterPath="$PROJECT_DIR$/cc/nuovoline/gui/screen/login/GuiLogin.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cc/nuovoline/modules/combat/AntiBot.java" beforeDir="false" afterPath="$PROJECT_DIR$/cc/nuovoline/modules/combat/AntiBot.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cc/nuovoline/modules/combat/Criticals.java" beforeDir="false" afterPath="$PROJECT_DIR$/cc/nuovoline/modules/combat/Criticals.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cc/nuovoline/modules/combat/InfiniteAura.java" beforeDir="false" afterPath="$PROJECT_DIR$/cc/nuovoline/modules/combat/InfiniteAura.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cc/nuovoline/modules/combat/KillAura.java" beforeDir="false" afterPath="$PROJECT_DIR$/cc/nuovoline/modules/combat/KillAura.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cc/nuovoline/modules/exploits/Disabler.java" beforeDir="false" afterPath="$PROJECT_DIR$/cc/nuovoline/modules/exploits/Disabler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cc/nuovoline/modules/exploits/NoFall.java" beforeDir="false" afterPath="$PROJECT_DIR$/cc/nuovoline/modules/exploits/NoFall.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cc/nuovoline/modules/misc/AutoHypixel.java" beforeDir="false" afterPath="$PROJECT_DIR$/cc/nuovoline/modules/misc/AutoHypixel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cc/nuovoline/modules/misc/Killsults.java" beforeDir="false" afterPath="$PROJECT_DIR$/cc/nuovoline/modules/misc/Killsults.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cc/nuovoline/modules/misc/Spammer.java" beforeDir="false" afterPath="$PROJECT_DIR$/cc/nuovoline/modules/misc/Spammer.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cc/nuovoline/modules/move/Flight.java" beforeDir="false" afterPath="$PROJECT_DIR$/cc/nuovoline/modules/move/Flight.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cc/nuovoline/modules/move/Scaffold.java" beforeDir="false" afterPath="$PROJECT_DIR$/cc/nuovoline/modules/move/Scaffold.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cc/nuovoline/modules/move/Speed.java" beforeDir="false" afterPath="$PROJECT_DIR$/cc/nuovoline/modules/move/Speed.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cc/nuovoline/modules/move/Step.java" beforeDir="false" afterPath="$PROJECT_DIR$/cc/nuovoline/modules/move/Step.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cc/nuovoline/modules/player/ClickTeleport.java" beforeDir="false" afterPath="$PROJECT_DIR$/cc/nuovoline/modules/player/ClickTeleport.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cc/nuovoline/modules/player/FastUse.java" beforeDir="false" afterPath="$PROJECT_DIR$/cc/nuovoline/modules/player/FastUse.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cc/nuovoline/modules/visual/Arrows.java" beforeDir="false" afterPath="$PROJECT_DIR$/cc/nuovoline/modules/visual/Arrows.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cc/nuovoline/modules/visual/ClickGUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/cc/nuovoline/modules/visual/ClickGUI.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cc/nuovoline/utils/ServerUtils.java" beforeDir="false" afterPath="$PROJECT_DIR$/cc/nuovoline/utils/ServerUtils.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/net/minecraft/client/entity/AbstractClientPlayer.java" beforeDir="false" afterPath="$PROJECT_DIR$/net/minecraft/client/entity/AbstractClientPlayer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/net/minecraft/client/entity/EntityPlayerSP.java" beforeDir="false" afterPath="$PROJECT_DIR$/net/minecraft/client/entity/EntityPlayerSP.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/net/minecraft/client/gui/GuiMainMenu.java" beforeDir="false" afterPath="$PROJECT_DIR$/net/minecraft/client/gui/GuiMainMenu.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/net/minecraft/client/multiplayer/GuiConnecting.java" beforeDir="false" afterPath="$PROJECT_DIR$/net/minecraft/client/multiplayer/GuiConnecting.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/net/minecraft/world/WorldSettings.java" beforeDir="false" afterPath="$PROJECT_DIR$/net/minecraft/world/WorldSettings.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/rise/.gitattributes" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/rise/README.md" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/rise/Start.java" beforeDir="false" />
@@ -6442,7 +6416,6 @@
       <change beforePath="$PROJECT_DIR$/rise/store/intent/api/account/IntentAccount.java" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/rise/store/intent/api/util/ConstructableEntry.java" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/rise/store/intent/api/web/Browser.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/run/logs/latest.log" beforeDir="false" afterPath="$PROJECT_DIR$/run/logs/latest.log" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
