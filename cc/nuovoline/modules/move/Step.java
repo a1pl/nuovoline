@@ -26,7 +26,7 @@ public class Step extends AbstractModule {
 
     @Override
     public void onEnable() {
-        setSuffix("Watchdog");
+        setSuffix("Rewound");
     }
 
     @Override
@@ -37,7 +37,7 @@ public class Step extends AbstractModule {
 
     @EventTarget
     public void onTick(TickUpdateEvent event) {
-        setSuffix("Watchdog");
+        setSuffix("Rewound");
     }
 
     @EventTarget
@@ -60,7 +60,7 @@ public class Step extends AbstractModule {
         double posX = mc.player.posX, posY = mc.player.posY, posZ = mc.player.posZ;
 
         if (diffY > 0.625 && diffY <= 1.0) {
-            if (ServerUtils.isHypixel()) {
+            if (ServerUtils.isRewound()) {
                 sendPacketNoEvent(new C0BPacketEntityAction(mc.player, C0BPacketEntityAction.Action.START_SNEAKING));
                 mc.player.setSprinting(false);
                 mc.player.setSpeed(0);
@@ -89,7 +89,7 @@ public class Step extends AbstractModule {
             sendPacket(new C04PacketPlayerPosition(posX, posY + first, posZ, false));
             sendPacket(new C04PacketPlayerPosition(posX, posY + second, posZ, false));
 
-            if (ServerUtils.isHypixel()) {
+            if (ServerUtils.isRewound()) {
                 sendPacketNoEvent(new C0BPacketEntityAction(mc.player, C0BPacketEntityAction.Action.STOP_SNEAKING));
             }
 

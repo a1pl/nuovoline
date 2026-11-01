@@ -60,7 +60,7 @@ public final class Spammer extends AbstractModule {
 
                 if (text.get().startsWith("/")) {
                     sendPacket(new C01PacketChatMessage(text.get()));
-                } else if (!ServerUtils.isHypixel() || !ServerUtils.channelIs(Channels.PM)) {
+                } else if (!ServerUtils.isRewound() || !ServerUtils.channelIs(Channels.PM)) {
                     sendPacketNoEvent(new C01PacketChatMessage(msg.toString()));
                 }
 

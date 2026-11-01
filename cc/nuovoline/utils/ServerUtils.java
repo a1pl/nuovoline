@@ -17,8 +17,8 @@ public class ServerUtils {
     private static Nuovoline nuovoline = Nuovoline.getInstance();
     private static Minecraft mc = Minecraft.getInstance();
     private static ClickGUI clickGUI = nuovoline.getModuleManager().getModule(ClickGUI.class);
-    private static boolean hypixel;
-    private static boolean fakeHypixel;
+    private static boolean rewound;
+    private static boolean fakeRewound;
 
     public static boolean serverIs(Servers server) {
         if (!mc.isSingleplayer() && clickGUI.getCurrentServer() != null) {
@@ -32,16 +32,16 @@ public class ServerUtils {
         return clickGUI.getChannel().equals(channel);
     }
 
-    public static void checkHypixel(ServerData serverData) {
-        if (serverData.serverIP.toLowerCase().contains("hypixel.net") && !hostModified("hypixel") && !fakeHypixel) {
-            hypixel = true;
+    public static void checkRewound(ServerData serverData) {
+        if (serverData.serverIP.toLowerCase().contains("rewound.cc") && !hostModified("rewound") && !fakeRewound) {
+            rewound = true;
         } else {
-            hypixel = false;
+            rewound = false;
             clickGUI.setCurrentServer(Servers.NONE);
         }
     }
 
-    public static boolean isHypixel() {
+    public static boolean isRewound() {
         //removed shit packetlog check
         return true;
     }
@@ -61,12 +61,12 @@ public class ServerUtils {
         }
     }
 
-    public static void setFakeHypixel(boolean fakeHypixel) {
-        ServerUtils.fakeHypixel = fakeHypixel;
+    public static void setFakeRewound(boolean fakeRewound) {
+        ServerUtils.fakeRewound = fakeRewound;
     }
 
-    public static boolean isFakeHypixel() {
-        return fakeHypixel;
+    public static boolean isFakeRewound() {
+        return fakeRewound;
     }
 
     public static int inGameSeconds() {

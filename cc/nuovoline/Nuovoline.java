@@ -116,10 +116,6 @@ public final class Nuovoline {
         return version + (BETA ? "-BETA" : "") + (HOTFIX ? "-H" : "");
     }
 
-    public String getPathString() {
-        return mc.mcDataDir.getAbsolutePath() + "\\Nuovoline\\";
-    }
-
     public void setLastConnectedServer(@NotNull ServerData lastConnectedServer) {
         this.lastConnectedServer = lastConnectedServer;
     }

@@ -24,7 +24,7 @@ public class GuiMainMenu extends GuiScreen implements GuiYesNoCallback {
     public float halfTotalHeight = totalHeight / 2, fraction = 0;
     public boolean darkTheme = true, guiWasSwitched;
     public int alpha = 0;
-    private final String path = Nuovoline.getInstance().getPathString() + "theme.txt";
+    private final String path = Nuovoline.getInstance().getDataFolder().resolve("theme.txt").toString();
 
 
     private GLSLSandboxShader shader;

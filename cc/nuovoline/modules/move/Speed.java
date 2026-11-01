@@ -27,7 +27,7 @@ public final class Speed extends AbstractModule {
     private int hops;
 
     @Property("Speed-Mode")
-    private final StringProperty speed_mode = PropertyFactory.createString("NCP").acceptableValues("NCP", "Mospixel", "HypixelHvH");
+    private final StringProperty speed_mode = PropertyFactory.createString("NCP").acceptableValues("NCP", "Mospixel", "Rewound");
 
     @Property("lag-back")
     private final BooleanProperty lag_back = PropertyFactory.booleanFalse();
@@ -63,7 +63,7 @@ public final class Speed extends AbstractModule {
             lastDist = mc.player.getLastTickDistance();
             baseSpeed = mc.player.getBaseMoveSpeed(0.16) * (mc.player.isInLiquid() ? 0.5 : mc.player.movementInput().sneak() && !isEnabled(FastSneak.class) ? 0.8 : 1.0) * 1.15;
             return;
-        } if (this.speed_mode.get() == "HypixelHvH") {
+        } if (this.speed_mode.get() == "Rewound") {
             lastDist = mc.player.getLastTickDistance();
             baseSpeed = mc.player.getBaseMoveSpeed(0.16) * (mc.player.isInLiquid() ? 0.5 : mc.player.movementInput().sneak() && !isEnabled(FastSneak.class) ? 0.8 : 1.0) * 1.0439999;
             return;
@@ -91,7 +91,7 @@ public final class Speed extends AbstractModule {
                         event.setOnGround(true);
                     }
 
-                    if (ServerUtils.isHypixel() && event.isOnGround()) {
+                    if (ServerUtils.isRewound() && event.isOnGround()) {
                         hops++;
                         if (hops > 1) {
                             event.setY(event.getY() + 0.005 + (0.0001 * Math.random()));

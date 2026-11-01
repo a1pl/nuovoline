@@ -20,8 +20,8 @@ public class StatusCommand extends NovoCommand {
             return;
         }
 
-        String status = "Status: " + (ServerUtils.isHypixel() ? "Enabled" : "Disabled");
-        NotificationType type = ServerUtils.isHypixel() ? NotificationType.SUCCESS : NotificationType.ERROR;
+        String status = "Status: " + (ServerUtils.isRewound() ? "Enabled" : "Disabled");
+        NotificationType type = ServerUtils.isRewound() ? NotificationType.SUCCESS : NotificationType.ERROR;
 
         notifyClient("AutoBypass", status, 5000, type);
     }

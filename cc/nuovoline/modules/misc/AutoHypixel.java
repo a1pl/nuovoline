@@ -247,7 +247,7 @@ public class AutoHypixel extends AbstractModule {
             if (!isEnabled(Spammer.class) && packet.getMessage().getUnformattedText().equals("VICTORY!")) {
                 if (message.get().startsWith("/")) {
                     sendPacketNoEvent(new C01PacketChatMessage(message.get()));
-                } else if (!ServerUtils.isHypixel() || !ServerUtils.channelIs(Channels.PM)) {
+                } else if (!ServerUtils.isRewound() || !ServerUtils.channelIs(Channels.PM)) {
                     if (message.get().toLowerCase().startsWith("gg")) {
                         sendPacketNoEvent(new C01PacketChatMessage(message.get()));
                     } else {
@@ -278,7 +278,7 @@ public class AutoHypixel extends AbstractModule {
     }
 
     private void deathtp(PacketEvent event) {
-        if (ServerUtils.isHypixel()) {
+        if (ServerUtils.isRewound()) {
             if (event.getState().equals(PacketEvent.State.INCOMING)) {
                 if (ServerUtils.serverIs(Servers.PIT)) {
                     if (event.getPacket() instanceof S45PacketTitle) {

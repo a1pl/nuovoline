@@ -42,6 +42,7 @@ public class Flight extends AbstractModule {
 
     private int tick;
     private int ticks;
+    private int damageTick;
 
     private int bruhTick;
     private double bruh;
@@ -53,7 +54,7 @@ public class Flight extends AbstractModule {
     private List<Packet> listPosition = new CopyOnWriteArrayList();
     private List<Packet> listPing = new CopyOnWriteArrayList();
     @Property("Fly-mode")
-    private final StringProperty fly_mode = PropertyFactory.createString("Karhu").acceptableValues("Karhu", "Hypixel");
+    private final StringProperty fly_mode = PropertyFactory.createString("Karhu").acceptableValues("Karhu", "Rewound", "Damage");
 
     @Property("dmg-mode")
     private final StringProperty dmg_mode = PropertyFactory.createString("Normal").acceptableValues("Fast", "Normal");
@@ -68,9 +69,9 @@ public class Flight extends AbstractModule {
         super(nuovoline, EnumModuleType.MOVEMENT, "Flight", "Flight");
         //   Manager.put(new Setting("FLY_DMG_MODE", "Damage", SettingType.COMBOBOX, this, dmg_mode));
         Manager.put(new Setting("Fly_Mode","Mode",SettingType.COMBOBOX,this,fly_mode));
-        Manager.put(new Setting("FLY_SPEED", "Speed", SettingType.SLIDER, this, speed, 0.1,()->fly_mode.get().equals("Hypixel")));
-        Manager.put(new Setting("FLY_VB", "Viewbobbing", SettingType.SLIDER, this, view_bobbing, 5.0F,()->fly_mode.get().equals("Hypixel")));
-        Manager.put(new Setting("FLY_PEARL", "Pearl boost", SettingType.CHECKBOX, this, pearl,()->fly_mode.get().equals("Hypixel")));
+        Manager.put(new Setting("FLY_SPEED", "Speed", SettingType.SLIDER, this, speed, 0.1,()->fly_mode.get().equals("Rewound") || fly_mode.get().equals("Damage")));
+        Manager.put(new Setting("FLY_VB", "Viewbobbing", SettingType.SLIDER, this, view_bobbing, 5.0F,()->fly_mode.get().equals("Rewound")));
+        Manager.put(new Setting("FLY_PEARL", "Pearl boost", SettingType.CHECKBOX, this, pearl,()->fly_mode.get().equals("Rewound")));
     }
 
     @Override
@@ -81,7 +82,7 @@ public class Flight extends AbstractModule {
         if (fly_mode.get().equals("Karhu")){
             mc.player.motionX = 0;
             mc.player.motionZ = 0;
-        }else if (fly_mode.get().equals("Hypixel")){
+        }else if (fly_mode.get().equals("Rewound")){
             if (tick > 0) {
                 mc.player.motionX = 0;
                 mc.player.motionZ = 0;
@@ -93,6 +94,11 @@ public class Flight extends AbstractModule {
             bruhTick = 0;
             bruh = 0.0D;
             lagExploitTicks = 0;
+        } else if (fly_mode.get().equals("Damage")) {
+            mc.player.motionX = 0;
+            mc.player.motionZ = 0;
+            mc.timer.timerSpeed = 1.0F;
+            damageTick = 0;
         }
     }
 
@@ -104,7 +110,7 @@ public class Flight extends AbstractModule {
 
         if (mc.player == null) return;
 
-        if (fly_mode.get().equals("Hypixel")) {
+        if (fly_mode.get().equals("Rewound")) {
             tick = 0;
             bruhTick = 0;
             wait = false;
@@ -121,6 +127,8 @@ public class Flight extends AbstractModule {
             ticks = 0;
             PacketUtil.send(new C03PacketPlayer.C06PacketPlayerPosLook(mc.player.posX, mc.player.posY - 2, mc.player.posZ,
                     mc.player.rotationYaw, mc.player.rotationPitch, false));
+        } else if (fly_mode.get().equals("Damage")) {
+            damageTick = 0;
         }
 
     }
@@ -130,6 +138,29 @@ public class Flight extends AbstractModule {
             sendPacketNoEvent(new C03PacketPlayer.C04PacketPlayerPosition(
                     mc.player.posX, mc.player.posY + offset, mc.player.posZ, false));
         }
+    }
+
+    private static final double DAMAGE_FALL_STEP = 0.0625D;
+
+    private void fakeFallDamage() {
+        double x = mc.player.posX;
+        double y = mc.player.posY;
+        double z = mc.player.posZ;
+
+        double fallDistanceReq = 3.1D;
+
+        if (mc.player.isPotionActive(Potion.jump)) {
+            fallDistanceReq += mc.player.getActivePotionEffect(Potion.jump).getAmplifier() + 1;
+        }
+
+        int packetCount = (int) Math.ceil(fallDistanceReq / DAMAGE_FALL_STEP);
+
+        for (int i = 0; i < packetCount; i++) {
+            sendPacketNoEvent(new C03PacketPlayer.C04PacketPlayerPosition(x, y + DAMAGE_FALL_STEP, z, false));
+            sendPacketNoEvent(new C03PacketPlayer.C04PacketPlayerPosition(x, y, z, false));
+        }
+
+        sendPacketNoEvent(new C03PacketPlayer(true));
     }
 
     public int projectileSlot() {
@@ -169,7 +200,7 @@ public class Flight extends AbstractModule {
 
     @EventTarget
     public void onPacket(PacketEvent event) {
-        if (fly_mode.get().equals("Hypixel")) {
+        if (fly_mode.get().equals("Rewound")) {
             if (event.getState().equals(PacketEvent.State.INCOMING)) {
                 if (event.getPacket() instanceof S08PacketPlayerPosLook) {
                     if (wait) {
@@ -185,7 +216,7 @@ public class Flight extends AbstractModule {
 
     @EventTarget
     public void onTick(TickUpdateEvent event) {
-        if (fly_mode.get().equals("Hypixel")) {
+        if (fly_mode.get().equals("Rewound")) {
             if (lagExploitTicks > 0) {
                 lagExploitTicks--;
             } else if (wait) {
@@ -194,6 +225,19 @@ public class Flight extends AbstractModule {
 
             if (!wait && mc.player.isMoving()) {
                 tick++;
+            }
+        } else if (fly_mode.get().equals("Damage")) {
+            if (damageTick == 0) {
+                mc.timer.timerSpeed = 1.0F;
+
+                if (mc.player.onGround && mc.player.hurtTime == 0) {
+                    mc.timer.timerSpeed = 0.25F;
+                    fakeFallDamage();
+                    damageTick = 1;
+                }
+            } else {
+                mc.timer.timerSpeed = 1.0F;
+                damageTick++;
             }
         }
 
@@ -218,7 +262,7 @@ public class Flight extends AbstractModule {
 
     @EventTarget
     public void onPre(MotionUpdateEvent event) {
-        if (fly_mode.get().equals("Hypixel")) {
+        if (fly_mode.get().equals("Rewound")) {
             if (event.getState() == MotionUpdateEvent.State.PRE) {
                 mc.player.cameraYaw = view_bobbing.get() / 1000.0F;
 
@@ -235,7 +279,7 @@ public class Flight extends AbstractModule {
                 bruhTick++;
                 bruh = ThreadLocalRandom.current().nextDouble(BRUH_MIN, BRUH_MAX);
                 event.setY(event.getY() + (float) bruh);
-                event.setOnGround((bruhTick % 5 == 0 || up) && ServerUtils.isHypixel());
+                event.setOnGround((bruhTick % 5 == 0 || up) && ServerUtils.isRewound());
             }
         }else if (fly_mode.get().equals("Karhu")){
             final float speed = 1;
@@ -257,14 +301,26 @@ public class Flight extends AbstractModule {
                     //getParent().toggle();
                 }
             }
+        } else if (fly_mode.get().equals("Damage")) {
+            if (event.getState() == MotionUpdateEvent.State.PRE && damageTick > 0) {
+                if (mc.gameSettings.keyBindJump.isKeyDown()) {
+                    mc.player.motionY = speed.get();
+                } else if (mc.gameSettings.keyBindSneak.isKeyDown()) {
+                    mc.player.motionY = -speed.get();
+                } else {
+                    mc.player.motionY = 0.0;
+                }
+            }
         }
 
     }
 
     @EventTarget
     public void onMove(MoveEvent event) {
-        if (fly_mode.get().equals("Hypixel")) {
+        if (fly_mode.get().equals("Rewound")) {
             event.setMoveSpeed(wait ? 0 : speed.get());
+        } else if (fly_mode.get().equals("Damage") && damageTick > 0) {
+            event.setMoveSpeed(speed.get());
         }
 
     }

@@ -839,7 +839,7 @@ public final class Scaffold extends AbstractModule {
 
     @Override
     public void onEnable() {
-        setSuffix("Watchdog");
+        setSuffix("Rewound");
 
         if (mc.player == null || mc.world == null) {
             canDisable = false;

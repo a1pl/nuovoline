@@ -35,7 +35,7 @@ public final class AntiBot extends AbstractModule {
 
     @EventTarget
     public void onPacket(PacketEvent event) {
-        if (ServerUtils.isHypixel()) {
+        if (ServerUtils.isRewound()) {
             if (!ServerUtils.serverIs(Servers.LOBBY)) {
                 if (event.getState().equals(PacketEvent.State.INCOMING)) {
                     if (event.getPacket() instanceof S18PacketEntityTeleport) {
@@ -79,11 +79,11 @@ public final class AntiBot extends AbstractModule {
 
     @EventTarget
     public void onTick(TickUpdateEvent event) {
-        setSuffix("Hypixel");
+        setSuffix("Rewound");
     }
 
     @Override
     public void onEnable() {
-        setSuffix("Hypixel");
+        setSuffix("Rewound");
     }
 }

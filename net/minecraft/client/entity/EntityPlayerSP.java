@@ -1131,7 +1131,7 @@ public class EntityPlayerSP extends AbstractClientPlayer {
     }
 
 /*    public Block groundBlock() {
-        return !ServerUtils.isHypixel() || Nuovoline.getInstance().getModuleManager().getModule(Disabler.class).isEnabled() ? worldObj.getBlockState(new BlockPos(MathHelper.floor_double(posX),
+        return !ServerUtils.isRewound() || Nuovoline.getInstance().getModuleManager().getModule(Disabler.class).isEnabled() ? worldObj.getBlockState(new BlockPos(MathHelper.floor_double(posX),
                 MathHelper.floor_double(getEntityBoundingBox().minY) - 1, MathHelper.floor_double(posZ))).getBlock() : Blocks.stone;
     }*/
 

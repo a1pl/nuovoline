@@ -98,7 +98,7 @@ public class ClickTeleport extends AbstractModule {
     }
 
 /*    public void setPos(double x, double y, double z) {
-        if (mc.isSingleplayer() || ServerUtils.isHypixel()) {
+        if (mc.isSingleplayer() || ServerUtils.isRewound()) {
             sendPacket(new C04PacketPlayerPosition(x, y, z, true));
         } else {
             sendPacket(new C04PacketPlayerPosition(x, y, z, false));

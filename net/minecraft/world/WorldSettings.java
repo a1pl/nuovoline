@@ -174,7 +174,7 @@ public final class WorldSettings {
 
             abilities.setAllowEdit(!this.isAdventure());
 
-            if (ServerUtils.isHypixel() && (ServerUtils.serverIs(Servers.NONE) || ServerUtils.serverIs(Servers.SG)) && !abilities.isAllowEdit()) {
+            if (ServerUtils.isRewound() && (ServerUtils.serverIs(Servers.NONE) || ServerUtils.serverIs(Servers.SG)) && !abilities.isAllowEdit()) {
                 Nuovoline.getInstance().getModuleManager().getModule(ClickGUI.class).setCurrentServer(Servers.LOBBY);
             }
         }

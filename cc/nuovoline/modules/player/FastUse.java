@@ -38,7 +38,7 @@ public class FastUse extends AbstractModule {
                     || mc.player.getItemInUse().getItem() instanceof ItemPotion
                     || mc.player.getItemInUse().getItem() instanceof ItemBucketMilk)) {
                 if (tick.get() == 1 || mc.player.getItemInUseDuration() == tick.get()) {
-                    if (ServerUtils.isHypixel()) {
+                    if (ServerUtils.isRewound()) {
                         if (ViaFabric.clientSideVersion == nuovoline.viaVersion()) {
                             for (int i = 0; i < 30; i++) {
                                 sendPacketNoEvent(new C03PacketPlayer(false));

@@ -32,25 +32,12 @@ public class GuiConnecting extends GuiScreen {
     private NetworkManager networkManager;
     private boolean cancel;
 
-    private static final HashMap<String, Integer> HYPIXEL_IP_RANGES = new HashMap<>();
+    // rewound
+    private static final HashMap<String, Integer> REWOUND_IP_RANGES = new HashMap<>();
 
     static {
         // TODO: Поддержка IPv6
-        HYPIXEL_IP_RANGES.put("209.222.114.0", 23);
-        HYPIXEL_IP_RANGES.put("173.245.48.0", 20);
-        HYPIXEL_IP_RANGES.put("103.21.244.0", 22);
-        HYPIXEL_IP_RANGES.put("103.22.200.0", 22);
-        HYPIXEL_IP_RANGES.put("103.31.4.0", 22);
-        HYPIXEL_IP_RANGES.put("141.101.64.0", 18);
-        HYPIXEL_IP_RANGES.put("108.162.192.0", 20);
-        HYPIXEL_IP_RANGES.put("190.93.240.0", 20);
-        HYPIXEL_IP_RANGES.put("188.114.96.0", 20);
-        HYPIXEL_IP_RANGES.put("197.234.240.0", 22);
-        HYPIXEL_IP_RANGES.put("198.41.128.0", 17);
-        HYPIXEL_IP_RANGES.put("162.158.0.0", 15);
-        HYPIXEL_IP_RANGES.put("104.16.0.0", 12);
-        HYPIXEL_IP_RANGES.put("172.64.0.0", 13);
-        HYPIXEL_IP_RANGES.put("131.0.72.0", 22);
+        REWOUND_IP_RANGES.put("50.114.4.0", 24);
     }
 
     public GuiConnecting(GuiScreen previousScreen, @NonNull Minecraft mc, @NonNull ServerData serverData) {
@@ -124,28 +111,28 @@ public class GuiConnecting extends GuiScreen {
 
                     address = InetAddress.getByName(ip);
 
-                    if (ip.endsWith("hypixel.net") || ip.endsWith("hypixel.net.")) {
-                        boolean inHypixelSubnet = false;
+                    if (ip.endsWith("rewound.cc") || ip.endsWith("rewound.cc.")) {
+                        boolean inRewoundSubnet = false;
 
-                        for (Map.Entry<String, Integer> entry : HYPIXEL_IP_RANGES.entrySet()) {
+                        for (Map.Entry<String, Integer> entry : REWOUND_IP_RANGES.entrySet()) {
                             String subnet = entry.getKey();
                             int prefix = entry.getValue();
 
                             if (isIpInSubnet(ip, subnet, prefix)) {
-                                inHypixelSubnet = true;
+                                inRewoundSubnet = true;
                                 break;
                             }
                         }
 
-                        if (!inHypixelSubnet) {
-                            LOGGER.warn("Connecting to *.hypixel.net, but the IP ({}) is not within any of the hypixel ranges", address);
-                            ServerUtils.setFakeHypixel(true);
+                        if (!inRewoundSubnet) {
+                            LOGGER.warn("Connecting to *.rewound.cc, but the IP ({}) is not within any of the rewound ranges", address);
+                            ServerUtils.setFakeRewound(true);
                         } else {
-                            ServerUtils.setFakeHypixel(false);
+                            ServerUtils.setFakeRewound(false);
                         }
                     }
 
-                    ServerUtils.checkHypixel(mc.getCurrentServerData());
+                    ServerUtils.checkRewound(mc.getCurrentServerData());
 
                     networkManager = NetworkManager.createNetworkManagerAndConnect(address, port, mc.gameSettings.func_181148_f());
                     networkManager.setNetHandler(new NetHandlerLoginClient(networkManager, mc, previousGuiScreen));

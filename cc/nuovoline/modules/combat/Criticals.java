@@ -103,7 +103,7 @@ public final class Criticals extends AbstractModule {
 
     @EventTarget
     public void onMotion(PacketEvent event) {
-        if (ServerUtils.isHypixel()) {
+        if (ServerUtils.isRewound()) {
             if (event.getState().equals(PacketEvent.State.OUTGOING)) {
                 if (getModule(Blink.class).isEnabled() || isEnabled(Speed.class) && mc.player.isMoving()) {
                     return;
@@ -149,11 +149,11 @@ public final class Criticals extends AbstractModule {
 
     @EventTarget
     public void onTick(TickUpdateEvent event) {
-        setSuffix("Watchdog");
+        setSuffix("Rewound");
     }
 
     @Override
     public void onEnable() {
-        setSuffix("Watchdog");
+        setSuffix("Rewound");
     }
 }

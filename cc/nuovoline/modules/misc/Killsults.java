@@ -27,7 +27,6 @@ import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.ThreadLocalRandom;
@@ -42,7 +41,7 @@ public final class Killsults extends AbstractModule {
     private List<EntityPlayer> lastTargets = new CopyOnWriteArrayList<>();
     private List<String> killsults = new CopyOnWriteArrayList<>();
     private final Timer timer = new Timer();
-    private Path path = Paths.get(nuovoline.getPathString() + "Killsults.novo");
+    private Path path = nuovoline.getDataFolder().resolve("Killsults.novo");
     private int order;
     private boolean spectator;
 

@@ -143,7 +143,7 @@ public class InfiniteAura extends AbstractModule {
         String unFormatted = component.getUnformattedText();
         boolean first = !formatted.substring(0, formatted.length() - 2).contains("\u00A7");
         boolean second = formatted.substring(formatted.length() - 2).contains("\u00A7");
-        return ServerUtils.isHypixel() && ServerUtils.serverIs(Servers.BW) && first && second;
+        return ServerUtils.isRewound() && ServerUtils.serverIs(Servers.BW) && first && second;
     }
 
     @EventTarget

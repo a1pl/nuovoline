@@ -44,7 +44,7 @@ public class GuiLogin extends GuiScreen {
     private final Color black = new Color(40, 46, 51);
     private final Color blueish = new Color(0, 150, 135);
     private final Color blue = new Color(0xFF2B71B1);
-    private final String path = Nuovoline.getInstance().getPathString() + "theme.txt";
+    private final String path = Nuovoline.getInstance().getDataFolder().resolve("theme.txt").toString();
 
     public GuiLogin() {
         status = "Idle";

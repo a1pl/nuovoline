@@ -121,7 +121,7 @@ public final class ClickGUI extends AbstractModule {
 
             if (notify) {
                 if (event.getPacket() instanceof C03PacketPlayer) {
-                    if (ServerUtils.isHypixel()) {
+                    if (ServerUtils.isRewound()) {
                         setLanguage = true;
                         nuovoline.getNotificationManager().pop("Nuovoline", "Hypixel bypasses enabled!", NotificationType.INFO);
                     } else {
@@ -152,7 +152,7 @@ public final class ClickGUI extends AbstractModule {
             }
 
         } else {
-            if (setLanguage && ServerUtils.isHypixel() && ServerUtils.serverIs(Servers.LOBBY)) {
+            if (setLanguage && ServerUtils.isRewound() && ServerUtils.serverIs(Servers.LOBBY)) {
                 sendPacketNoEvent(new C01PacketChatMessage("/language english"));
                 setLanguage = false;
             }
@@ -284,7 +284,7 @@ public final class ClickGUI extends AbstractModule {
                 nuovoline.getTaskManager().getFutureTasks().clear();
             }
 
-            if (ServerUtils.isHypixel() && event.getPacket() instanceof S3DPacketDisplayScoreboard) {
+            if (ServerUtils.isRewound() && event.getPacket() instanceof S3DPacketDisplayScoreboard) {
                 S3DPacketDisplayScoreboard packet = (S3DPacketDisplayScoreboard) event.getPacket();
                 String serverName = packet.getServerName();
 
@@ -315,7 +315,7 @@ public final class ClickGUI extends AbstractModule {
 
     @EventTarget
     public void inGameTime(TickUpdateEvent event) {
-        if (ServerUtils.isHypixel() && !ServerUtils.serverIs(Servers.PRE) && !ServerUtils.serverIs(Servers.LOBBY) && !ServerUtils.serverIs(Servers.NONE)) {
+        if (ServerUtils.isRewound() && !ServerUtils.serverIs(Servers.PRE) && !ServerUtils.serverIs(Servers.LOBBY) && !ServerUtils.serverIs(Servers.NONE)) {
             ticks++;
 
         } else if (ticks > 0) {
@@ -374,7 +374,7 @@ public final class ClickGUI extends AbstractModule {
     @EventTarget
     public void onAutoDisable(PacketEvent event) {
         if (event.getState().equals(PacketEvent.State.OUTGOING)) {
-            if (ServerUtils.isHypixel()) {
+            if (ServerUtils.isRewound()) {
                 if (event.getPacket() instanceof C01PacketChatMessage) {
                     C01PacketChatMessage packet = (C01PacketChatMessage) event.getPacket();
 
@@ -383,7 +383,7 @@ public final class ClickGUI extends AbstractModule {
                     }
                 }
 
-                if (ServerUtils.isHypixel()) {
+                if (ServerUtils.isRewound()) {
                     if (ViaFabric.clientSideVersion == nuovoline.viaVersion()) {
                         if (event.getPacket() instanceof C08PacketPlayerBlockPlacement) {
                             C08PacketPlayerBlockPlacement packet = (C08PacketPlayerBlockPlacement) event.getPacket();
@@ -400,7 +400,7 @@ public final class ClickGUI extends AbstractModule {
             }
 
         } else {
-            if (ServerUtils.isHypixel()) {
+            if (ServerUtils.isRewound()) {
                 if (event.getPacket() instanceof S02PacketChat) {
                     S02PacketChat packet = (S02PacketChat) event.getPacket();
                     String formattedText = packet.getChatComponent().getFormattedText();
@@ -528,7 +528,7 @@ public final class ClickGUI extends AbstractModule {
             getModule(ChestStealer.class).toggle();
         }
 
-        if (ServerUtils.isHypixel() && !mc.getNetHandler().getPlayerInfoMap().isEmpty()) {
+        if (ServerUtils.isRewound() && !mc.getNetHandler().getPlayerInfoMap().isEmpty()) {
             mc.getNetHandler().getPlayerInfoMap().clear();
         }
 

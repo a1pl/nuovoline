@@ -46,12 +46,12 @@ public abstract class AbstractClientPlayer extends EntityPlayer {
         Nuovoline.getInstance().getTaskManager().queue(new FutureTask(500) {
             @Override
             public void execute() {
-
+                tryDownloadNuovolineCape(niggastrudel);
             }
 
             @Override
             public void run() {
-                tryDownloadNuovolineCape(niggastrudel);
+
             }
         });
 
