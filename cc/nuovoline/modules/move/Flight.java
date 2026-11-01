@@ -42,7 +42,9 @@ public class Flight extends AbstractModule {
 
     private int tick;
     private int ticks;
-    private int damageTick;
+    private int damageStage;
+    private int damagePacketsRemaining;
+    private double damageX, damageY, damageZ;
 
     private int bruhTick;
     private double bruh;
@@ -98,7 +100,8 @@ public class Flight extends AbstractModule {
             mc.player.motionX = 0;
             mc.player.motionZ = 0;
             mc.timer.timerSpeed = 1.0F;
-            damageTick = 0;
+            damageStage = 0;
+            damagePacketsRemaining = 0;
         }
     }
 
@@ -117,6 +120,13 @@ public class Flight extends AbstractModule {
             lagExploitTicks = LAG_EXPLOIT_TICKS;
             sendLagExploit();
 
+            if (mc.player.onGround && mc.player.hurtTime == 0) {
+                beginFakeFallDamage();
+                damageStage = 1;
+            } else {
+                damageStage = 2;
+            }
+
             int projectile = projectileSlot();
             if (mc.player.onGround && pearl.get() && projectile != -1) {
                 wait = true;
@@ -128,7 +138,8 @@ public class Flight extends AbstractModule {
             PacketUtil.send(new C03PacketPlayer.C06PacketPlayerPosLook(mc.player.posX, mc.player.posY - 2, mc.player.posZ,
                     mc.player.rotationYaw, mc.player.rotationPitch, false));
         } else if (fly_mode.get().equals("Damage")) {
-            damageTick = 0;
+            damageStage = 0;
+            damagePacketsRemaining = 0;
         }
 
     }
@@ -141,11 +152,12 @@ public class Flight extends AbstractModule {
     }
 
     private static final double DAMAGE_FALL_STEP = 0.0625D;
+    private static final int DAMAGE_PACKETS_PER_TICK = 8;
 
-    private void fakeFallDamage() {
-        double x = mc.player.posX;
-        double y = mc.player.posY;
-        double z = mc.player.posZ;
+    private void beginFakeFallDamage() {
+        damageX = mc.player.posX;
+        damageY = mc.player.posY;
+        damageZ = mc.player.posZ;
 
         double fallDistanceReq = 3.1D;
 
@@ -153,14 +165,26 @@ public class Flight extends AbstractModule {
             fallDistanceReq += mc.player.getActivePotionEffect(Potion.jump).getAmplifier() + 1;
         }
 
-        int packetCount = (int) Math.ceil(fallDistanceReq / DAMAGE_FALL_STEP);
+        damagePacketsRemaining = (int) Math.ceil(fallDistanceReq / DAMAGE_FALL_STEP);
+    }
 
-        for (int i = 0; i < packetCount; i++) {
-            sendPacketNoEvent(new C03PacketPlayer.C04PacketPlayerPosition(x, y + DAMAGE_FALL_STEP, z, false));
-            sendPacketNoEvent(new C03PacketPlayer.C04PacketPlayerPosition(x, y, z, false));
+    // sdont get kicked by anti ddos
+    private boolean tickFakeFallDamage() {
+        int batch = Math.min(DAMAGE_PACKETS_PER_TICK, damagePacketsRemaining);
+
+        for (int i = 0; i < batch; i++) {
+            sendPacketNoEvent(new C03PacketPlayer.C04PacketPlayerPosition(damageX, damageY + DAMAGE_FALL_STEP, damageZ, false));
+            sendPacketNoEvent(new C03PacketPlayer.C04PacketPlayerPosition(damageX, damageY, damageZ, false));
         }
 
-        sendPacketNoEvent(new C03PacketPlayer(true));
+        damagePacketsRemaining -= batch;
+
+        if (damagePacketsRemaining <= 0) {
+            sendPacketNoEvent(new C03PacketPlayer(true));
+            return true;
+        }
+
+        return false;
     }
 
     public int projectileSlot() {
@@ -226,19 +250,6 @@ public class Flight extends AbstractModule {
             if (!wait && mc.player.isMoving()) {
                 tick++;
             }
-        } else if (fly_mode.get().equals("Damage")) {
-            if (damageTick == 0) {
-                mc.timer.timerSpeed = 1.0F;
-
-                if (mc.player.onGround && mc.player.hurtTime == 0) {
-                    mc.timer.timerSpeed = 0.25F;
-                    fakeFallDamage();
-                    damageTick = 1;
-                }
-            } else {
-                mc.timer.timerSpeed = 1.0F;
-                damageTick++;
-            }
         }
 
         setSuffix(fly_mode.get());
@@ -264,6 +275,10 @@ public class Flight extends AbstractModule {
     public void onPre(MotionUpdateEvent event) {
         if (fly_mode.get().equals("Rewound")) {
             if (event.getState() == MotionUpdateEvent.State.PRE) {
+                if (damageStage == 1 && tickFakeFallDamage()) {
+                    damageStage = 2;
+                }
+
                 mc.player.cameraYaw = view_bobbing.get() / 1000.0F;
 
                 boolean up = mc.player.movementInput().jump();
@@ -302,13 +317,35 @@ public class Flight extends AbstractModule {
                 }
             }
         } else if (fly_mode.get().equals("Damage")) {
-            if (event.getState() == MotionUpdateEvent.State.PRE && damageTick > 0) {
-                if (mc.gameSettings.keyBindJump.isKeyDown()) {
-                    mc.player.motionY = speed.get();
-                } else if (mc.gameSettings.keyBindSneak.isKeyDown()) {
-                    mc.player.motionY = -speed.get();
-                } else {
-                    mc.player.motionY = 0.0;
+            if (event.getState() == MotionUpdateEvent.State.PRE) {
+                switch (damageStage) {
+                    case 0:
+                        mc.timer.timerSpeed = 1.0F;
+
+                        if (mc.player.onGround && mc.player.hurtTime == 0) {
+                            beginFakeFallDamage();
+                            damageStage = 1;
+                        }
+                        break;
+
+                    case 1:
+                        mc.timer.timerSpeed = 0.25F;
+
+                        if (tickFakeFallDamage()) {
+                            damageStage = 2;
+                            mc.timer.timerSpeed = 1.0F;
+                        }
+                        break;
+
+                    default:
+                        if (mc.gameSettings.keyBindJump.isKeyDown()) {
+                            mc.player.motionY = speed.get();
+                        } else if (mc.gameSettings.keyBindSneak.isKeyDown()) {
+                            mc.player.motionY = -speed.get();
+                        } else {
+                            mc.player.motionY = 0.0;
+                        }
+                        break;
                 }
             }
         }
@@ -319,7 +356,7 @@ public class Flight extends AbstractModule {
     public void onMove(MoveEvent event) {
         if (fly_mode.get().equals("Rewound")) {
             event.setMoveSpeed(wait ? 0 : speed.get());
-        } else if (fly_mode.get().equals("Damage") && damageTick > 0) {
+        } else if (fly_mode.get().equals("Damage") && damageStage == 2) {
             event.setMoveSpeed(speed.get());
         }
 
