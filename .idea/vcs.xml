@@ -4,6 +4,7 @@
     <mapping directory="" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/exhi" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/novo-skid" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/radium" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/rise" vcs="Git" />
   </component>
 </project>

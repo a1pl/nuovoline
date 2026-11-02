@@ -28,7 +28,7 @@ sourceSets {
         }
         resources {
             srcDirs = ['.']
-            include 'assets/**', 'log4j2.xml'
+            include 'assets/**', 'log4j2.xml', 'pack.png'
         }
     }
 }
